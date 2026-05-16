@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/main.css?v=202605161310" />
+  <link rel="stylesheet" href="assets/css/main.css?v=202605161315" />
   <link rel="icon" type="image/png" href="assets/images/logo/mendieta-logo.png" />
 </head>
 
@@ -72,35 +72,60 @@
 
   <main>
 
-    <!-- ============================== ORDER BAR ============================== -->
-    <section class="order-bar">
-      <div class="container">
-        <div class="order-bar__head">
-          <div class="order-bar__text">
-            <h1 class="order-bar__title">Hacé tu <em>pedido</em>.</h1>
-            <p class="order-bar__meta">
-              <span class="order-bar__pill">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <circle cx="12" cy="12" r="9"/>
-                  <path d="M12 7v5l3 2"/>
-                </svg>
-                L–V 7:00–21:00 · S–D 7:30–21:00
-              </span>
-              <span class="order-bar__pill">
+    <!-- ============================== BANNER PROMO 'A CASA' ============================== -->
+    <section class="promo-banner">
+      <div class="container promo-banner__inner">
+        <figure class="promo-banner__poster" aria-hidden="true">
+          <img src="assets/images/promo/mendieta-a-casa.png"
+               alt=""
+               width="340" height="540"
+               loading="eager"
+               decoding="async" />
+        </figure>
+
+        <div class="promo-banner__copy">
+          <h1 class="promo-banner__title">Mendieta <em>a casa</em>.</h1>
+          <p class="promo-banner__lead">
+            Hacé tu pedido online y lo llevamos. Recién hecho, todos los días.
+          </p>
+
+          <ul class="promo-banner__points">
+            <li>
+              <span class="promo-banner__icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 22s-7-7.5-7-13a7 7 0 0 1 14 0c0 5.5-7 13-7 13z"/>
-                  <circle cx="12" cy="9" r="2.5"/>
+                  <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
                 </svg>
-                Mallorca, 517 · Barcelona
               </span>
-            </p>
-          </div>
+              <span><strong>24 h de antelación.</strong> Para preparar todo recién hecho.</span>
+            </li>
+            <li>
+              <span class="promo-banner__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 11h20"/>
+                </svg>
+              </span>
+              <span><strong>Pago en tarjeta o efectivo</strong> al recibir.</span>
+            </li>
+            <li>
+              <span class="promo-banner__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s-7-7.5-7-13a7 7 0 0 1 14 0c0 5.5-7 13-7 13z"/><circle cx="12" cy="9" r="2.5"/>
+                </svg>
+              </span>
+              <span><strong>Mallorca, 517 · Barcelona.</strong> L–V 7–21h · S–D 7:30–21h.</span>
+            </li>
+          </ul>
+
+          <a href="#categorias" class="btn btn-primary promo-banner__cta">
+            <span>Elegir productos</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </a>
         </div>
       </div>
     </section>
 
     <!-- ============================== GRILLA DE CATEGORÍAS ============================== -->
-    <section class="cat-grid-section">
+    <section class="cat-grid-section" id="categorias">
       <div class="container">
         <h2 class="cat-grid-title">Elegí una categoría</h2>
         <div class="cat-grid">

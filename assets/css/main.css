@@ -391,6 +391,95 @@ a { color: inherit; text-decoration: none; }
 /* Todas comparten el mismo rojo bordó para mantener identidad de marca,
    el toque de variedad lo dará el icono y la foto cuando lleguen. */
 
+/* ========================== PROMO BANNER 'A CASA' ==========================
+   Pieza principal de la home: afiche del cliente + condiciones del delivery
+   (24h antelacion, pago en tarjeta/efectivo, direccion + horario). */
+.promo-banner {
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(1rem, 2vw, 1.5rem);
+}
+.promo-banner__inner {
+  display: grid;
+  gap: clamp(1.4rem, 3vw, 2.5rem);
+  align-items: center;
+}
+@media (min-width: 760px) {
+  .promo-banner__inner { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
+}
+
+.promo-banner__poster {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+.promo-banner__poster img {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-2);
+  border: 1px solid var(--color-line);
+}
+
+.promo-banner__copy { display: flex; flex-direction: column; gap: 1rem; }
+
+.promo-banner__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 1.6rem + 4vw, 4rem);
+  line-height: 1;
+  letter-spacing: 0.005em;
+  margin: 0;
+  color: var(--color-ink);
+  text-transform: lowercase;
+}
+.promo-banner__title em {
+  font-style: normal;
+  color: var(--color-display);   /* "a casa" en el color de marca de zona pedido */
+}
+.promo-banner__lead {
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+  margin: 0;
+  max-width: 32rem;
+}
+
+.promo-banner__points {
+  list-style: none;
+  padding: 0;
+  margin: 0.6rem 0 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.promo-banner__points li {
+  display: flex;
+  gap: 0.85rem;
+  align-items: start;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--color-ink-soft);
+}
+.promo-banner__points strong { color: var(--color-ink); font-weight: 600; }
+
+.promo-banner__icon {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--color-bg-cream);
+  border: 1.5px solid var(--color-brand);
+  color: var(--color-brand);
+  display: inline-grid;
+  place-items: center;
+}
+.promo-banner__icon svg { width: 18px; height: 18px; }
+
+.promo-banner__cta {
+  width: auto;
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
+.promo-banner__cta svg { width: 16px; height: 16px; }
+
 /* ========================== ORDER BAR ========================== */
 .order-bar {
   padding: clamp(1.4rem, 3vw, 2.2rem) 0 clamp(1rem, 2.5vw, 1.6rem);
@@ -902,6 +991,27 @@ body.has-cart-bar { padding-bottom: 88px; }
   font-size: 1.6rem;
   color: var(--color-ink);
 }
+
+/* Aviso 24h antelación + medios de pago dentro del drawer del carrito */
+.checkout__notice {
+  display: flex;
+  gap: 0.7rem;
+  align-items: start;
+  background: var(--color-bg-cream);
+  border: 1px solid color-mix(in srgb, var(--color-brand) 30%, transparent);
+  border-radius: var(--r-sm);
+  padding: 0.8rem 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--color-ink-soft);
+}
+.checkout__notice svg {
+  width: 18px; height: 18px;
+  color: var(--color-brand);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.checkout__notice strong { color: var(--color-ink); font-weight: 600; }
 
 .form-field { display: flex; flex-direction: column; gap: 0.3rem; }
 .form-field label {

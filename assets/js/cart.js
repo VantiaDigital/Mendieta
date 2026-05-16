@@ -161,6 +161,14 @@
           <strong>${fmtPrice(total)}</strong>
         </div>
 
+        <div class="checkout__notice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <div>
+            <strong>24 h de antelación.</strong> Para preparar todo recién hecho.<br>
+            <span>Pago en tarjeta o efectivo al recibir.</span>
+          </div>
+        </div>
+
         <div class="form-field" data-field="name">
           <label for="ck-name">Nombre</label>
           <input id="ck-name" name="name" autocomplete="name" required placeholder="Tu nombre" />
@@ -291,6 +299,9 @@
     });
     lines.push('');
     lines.push(`💰 *TOTAL: ${fmtPrice(totalPrice())}*`);
+    lines.push('');
+    lines.push('⏰ Pedido con 24h de antelación.');
+    lines.push('💳 Pago en tarjeta o efectivo al recibir.');
     if (form.notes) {
       lines.push('');
       lines.push(`📝 Notas: ${form.notes}`);
