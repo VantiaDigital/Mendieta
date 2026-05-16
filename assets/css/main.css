@@ -1425,47 +1425,84 @@ body.has-cart-bar { padding-bottom: 88px; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .cta-row .btn { width: auto; }
 
-/* Contact */
+/* Contact — tono "papel corporativo" diferente al de pedido */
+body.page-contacto { background: #F5F2EA; }
+body.page-contacto .site-header { background: #FFFFFF; }
+body.page-contacto .mobile-nav { background: #FFFFFF; }
+
 .contact-grid {
   display: grid;
   gap: 1rem;
 }
 @media (min-width: 720px) { .contact-grid { grid-template-columns: repeat(2, 1fr); } }
+/* Contact cards — look corporate-pro:
+   - Fondo BLANCO PURO (no crema; se separa visualmente de la zona pedido)
+   - Sin sombra base, borde fino + barra inferior fina en color de marca
+   - Hover: sombra cargada y subida sutil
+   - Iconografía gris muy clara con icono en color de marca */
 .contact-card {
-  background: var(--color-bg-cream);
-  border: 1px solid color-mix(in srgb, var(--color-brand) 18%, transparent);
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid var(--color-line);
   border-radius: var(--r-md);
-  padding: 1.4rem;
+  padding: 1.6rem 1.4rem 1.7rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
-  box-shadow: var(--shadow-1);
+  gap: 0.55rem;
+  transition: transform 0.35s var(--ease), border-color 0.3s var(--ease-soft), box-shadow 0.35s var(--ease-soft);
+  overflow: hidden;
+  isolation: isolate;
+}
+.contact-card::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease);
 }
 .contact-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-2);
   border-color: var(--color-line-strong);
 }
+.contact-card:hover::after { transform: scaleX(1); }
+
 .contact-card__icon {
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  background: #FFFFFF;
-  border: 1.5px solid var(--color-brand);
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: #F5F2EA;                /* gris cálido muy claro, no crema */
+  border: none;
   display: inline-grid;
   place-items: center;
   color: var(--color-brand);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
-.contact-card__icon svg { width: 18px; height: 18px; }
+.contact-card__icon svg { width: 20px; height: 20px; }
 .contact-card h3 {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   margin: 0;
   color: var(--color-ink);
+  letter-spacing: 0.005em;
+  text-transform: lowercase;
 }
-.contact-card p { margin: 0; color: var(--color-ink-soft); font-size: 0.94rem; }
-.contact-card .btn { margin-top: auto; width: auto; align-self: flex-start; }
+.contact-card p {
+  margin: 0;
+  color: var(--color-ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.contact-card .btn {
+  margin-top: auto;
+  width: auto;
+  align-self: flex-start;
+  font-size: 0.85rem;
+  padding: 0.6rem 1rem;
+  height: auto;
+}
 
 /* History */
 .story-image {
