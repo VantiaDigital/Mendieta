@@ -28,8 +28,11 @@
   --color-line: rgba(42, 40, 24, 0.12);
   --color-line-strong: rgba(42, 40, 24, 0.22);
 
-  /* — Tipografía — */
-  --font-display: 'DM Serif Display', Georgia, serif;
+  /* — Tipografía —
+     Display: Alfa Slab One — slab serif cálida estilo "cartel argentino"
+              de panadería / circo (acerca al feel del feed de @pasteleriamendieta).
+     Body: Inter — neutra legible. */
+  --font-display: 'Alfa Slab One', Georgia, serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* — Layout — */
@@ -54,11 +57,14 @@
 }
 
 /* ========================== TEMAS ==========================
-   theme-info  → páginas institucionales (historia/local/contacto)
-                 brand = ROJO terracota (color nuevo del logo)
-   theme-order → páginas de pedido (home + categorías)
-                 brand = NARANJA (el color anterior del logo, contraste con
-                 la zona de info; el rojo queda solo para "info") */
+   En el feed real de Mendieta TODOS los títulos display van en ROJO BORDÓ
+   sobre fondo amarillo crema. El sistema usa siempre el rojo para los
+   títulos editoriales (--color-display); --color-brand cambia para los
+   acentos de UI (CTA naranja en zona de pedido, rojo en zona institucional)
+   y así diferenciar visualmente "estás pidiendo" vs "estás leyendo info". */
+:root {
+  --color-display: var(--color-red);     /* color de los títulos display */
+}
 body.theme-info {
   --color-brand: var(--color-red);
   --color-brand-dark: var(--color-red-dark);
@@ -123,10 +129,11 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: 0.55rem;
   font-family: var(--font-display);
-  font-size: 1.45rem;
-  letter-spacing: -0.01em;
-  color: var(--color-ink);
+  font-size: 1.35rem;
+  letter-spacing: 0.005em;
+  color: var(--color-display);
   line-height: 1;
+  text-transform: lowercase;
 }
 .brand__logo {
   width: 36px; height: 36px;
@@ -136,10 +143,12 @@ a { color: inherit; text-decoration: none; }
   background: var(--color-bg-soft);
 }
 .brand__dot {
-  width: 7px; height: 7px;
+  width: 6px; height: 6px;
   border-radius: 50%;
-  background: var(--color-brand);
+  background: var(--color-red);
   display: inline-block;
+  margin-left: 1px;
+  transform: translateY(-1px);
 }
 .brand__sub {
   display: none;
@@ -148,7 +157,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-muted);
+  color: var(--color-ink-soft);
   margin-left: 0.35rem;
   align-self: center;
 }
@@ -251,13 +260,24 @@ a { color: inherit; text-decoration: none; }
   padding: 0 0 clamp(3rem, 6vw, 5rem);
 }
 .cat-grid-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 0.95rem + 0.6vw, 1.4rem);
-  font-style: italic;
-  font-weight: 400;
-  color: var(--color-ink-soft);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-red);
   margin: 0 0 1rem;
-  letter-spacing: -0.005em;
+  text-align: center;
+  position: relative;
+}
+.cat-grid-title::before, .cat-grid-title::after {
+  content: '';
+  display: inline-block;
+  width: 36px; height: 1.5px;
+  background: var(--color-red);
+  vertical-align: middle;
+  margin: 0 0.85rem;
+  opacity: 0.45;
 }
 .cat-grid {
   display: grid;
@@ -271,46 +291,61 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  padding: 1.4rem 1.4rem 1.2rem;
-  border-radius: var(--r-lg);
-  background: var(--color-card);
-  border: 1px solid var(--color-line);
+  gap: 0.6rem;
+  padding: 1.6rem 1.4rem 1.3rem;
+  border-radius: var(--r-md);
+  background: var(--color-bg-soft);
+  border: 1.5px solid var(--color-red);
   color: var(--color-ink);
-  min-height: 200px;
+  min-height: 220px;
   overflow: hidden;
   isolation: isolate;
-  transition: transform 0.4s var(--ease), border-color 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
+  transition: transform 0.4s var(--ease), background 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
+  text-align: center;
 }
+.cat-card::before, .cat-card::after {
+  /* Esquinas decorativas tipo afiche viejo */
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  border: 1.5px solid var(--color-red);
+  pointer-events: none;
+}
+.cat-card::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+.cat-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+
 .cat-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-2);
-  border-color: var(--color-line-strong);
+  background: #FFFCE8;
+  box-shadow: 0 18px 38px -16px rgba(140,40,20,0.32);
 }
 .cat-card__icon {
   display: inline-grid;
   place-items: center;
   width: 56px; height: 56px;
-  border-radius: var(--r-md);
-  background: rgba(255,255,255,0.5);
-  color: var(--color-ink);
-  margin-bottom: 0.3rem;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-red);
+  color: var(--color-red);
+  margin: 0 auto 0.4rem;
   transition: transform 0.4s var(--ease);
 }
 .cat-card:hover .cat-card__icon { transform: scale(1.08) rotate(-3deg); }
-.cat-card__icon svg { width: 32px; height: 32px; }
+.cat-card__icon svg { width: 30px; height: 30px; }
 .cat-card__name {
   font-family: var(--font-display);
-  font-size: clamp(1.4rem, 1.2rem + 0.7vw, 1.75rem);
-  line-height: 1.1;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  line-height: 1.02;
   margin: 0;
-  letter-spacing: -0.015em;
-  color: var(--color-ink);
+  letter-spacing: 0.005em;
+  color: var(--color-display);
+  text-transform: lowercase;
 }
 .cat-card__caption {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-style: italic;
-  font-size: 0.98rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
   color: var(--color-ink-soft);
   margin: 0;
   flex: 1;
@@ -318,21 +353,28 @@ a { color: inherit; text-decoration: none; }
 .cat-card__cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  font-size: 0.86rem;
-  font-weight: 500;
-  color: var(--color-ink);
-  margin-top: 0.4rem;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-red);
+  margin-top: 0.3rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(140,40,20,0.18);
 }
-.cat-card__cta svg { width: 14px; height: 14px; transition: transform 0.4s var(--ease); }
+.cat-card__cta svg { width: 13px; height: 13px; transition: transform 0.4s var(--ease); }
 .cat-card:hover .cat-card__cta svg { transform: translateX(4px); }
 
-/* Color de fondo por categoría (gradientes cálidos derivados de la paleta) */
-.cat-card--facturas { background: linear-gradient(135deg, #FEF9C0 0%, #FAD25B 100%); }
-.cat-card--dulces   { background: linear-gradient(135deg, #FAD25B 0%, #FFB759 100%); }
-.cat-card--tartas   { background: linear-gradient(135deg, #FFB759 0%, #E89636 100%); }
-.cat-card--salados  { background: linear-gradient(135deg, #FAF6CA 0%, #A7A177 100%); }
-.cat-card--bebidas  { background: linear-gradient(135deg, #FFFCE8 0%, #FAD25B 100%); }
+/* Acento por categoría: cambia el color de borde y del icono */
+.cat-card--facturas { --cat-accent: var(--color-red); }
+.cat-card--dulces   { --cat-accent: var(--color-red); }
+.cat-card--tartas   { --cat-accent: var(--color-red); }
+.cat-card--salados  { --cat-accent: var(--color-red); }
+.cat-card--bebidas  { --cat-accent: var(--color-red); }
+/* Todas comparten el mismo rojo bordó para mantener identidad de marca,
+   el toque de variedad lo dará el icono y la foto cuando lleguen. */
 
 /* ========================== ORDER BAR ========================== */
 .order-bar {
@@ -363,12 +405,13 @@ a { color: inherit; text-decoration: none; }
 .order-bar__title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
-  line-height: 1;
+  line-height: 1.05;
   margin: 0;
-  letter-spacing: -0.02em;
-  color: var(--color-ink);
+  letter-spacing: 0.005em;
+  color: var(--color-display);
+  text-transform: lowercase;
 }
-.order-bar__title em { font-style: italic; color: var(--color-brand); }
+.order-bar__title em { font-style: normal; color: var(--color-ink); }
 .order-bar__meta {
   display: flex;
   flex-wrap: wrap;
@@ -385,7 +428,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.82rem;
   color: var(--color-ink-soft);
 }
-.order-bar__pill svg { width: 14px; height: 14px; color: var(--color-brand); flex-shrink: 0; }
+.order-bar__pill svg { width: 14px; height: 14px; color: var(--color-red); flex-shrink: 0; }
 .order-bar__pill--open svg { color: #2F8F4E; }
 
 /* ========================== TABS ========================== */
@@ -446,10 +489,11 @@ a { color: inherit; text-decoration: none; }
 .cat-page-title {
   font-family: var(--font-display);
   font-size: clamp(2.2rem, 1.5rem + 3.2vw, 3.8rem);
-  line-height: 1;
-  letter-spacing: -0.025em;
+  line-height: 1.02;
+  letter-spacing: 0.005em;
   margin: 0 0 0.4rem;
-  color: var(--color-ink);
+  color: var(--color-display);
+  text-transform: lowercase;
 }
 .cat-page-caption {
   font-family: var(--font-display);
@@ -473,8 +517,9 @@ a { color: inherit; text-decoration: none; }
   font-size: clamp(1.55rem, 1.2rem + 1.2vw, 2rem);
   line-height: 1.05;
   margin: 0 0 0.2rem;
-  letter-spacing: -0.015em;
-  color: var(--color-ink);
+  letter-spacing: 0.005em;
+  color: var(--color-display);
+  text-transform: lowercase;
 }
 .cat__caption {
   font-family: var(--font-display);
@@ -550,11 +595,12 @@ a { color: inherit; text-decoration: none; }
 }
 .product__name {
   font-family: var(--font-display);
-  font-size: 1.08rem;
-  line-height: 1.18;
+  font-size: 1.05rem;
+  line-height: 1.15;
   margin: 0;
-  letter-spacing: -0.005em;
-  color: var(--color-ink);
+  letter-spacing: 0.005em;
+  color: var(--color-display);
+  text-transform: lowercase;
 }
 .product__desc {
   font-size: 0.84rem;
@@ -672,10 +718,11 @@ a { color: inherit; text-decoration: none; }
 }
 .drawer__head h3 {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   margin: 0;
-  letter-spacing: -0.01em;
-  color: var(--color-ink);
+  letter-spacing: 0.005em;
+  color: var(--color-display);
+  text-transform: lowercase;
 }
 .drawer__close {
   width: 36px; height: 36px;
@@ -848,29 +895,31 @@ a { color: inherit; text-decoration: none; }
 }
 .page__head { margin-bottom: clamp(1.5rem, 4vw, 2.5rem); max-width: 720px; }
 .eyebrow {
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-brand);
+  color: var(--color-red);
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.6rem;
 }
 .eyebrow::before {
   content: '';
-  width: 24px; height: 1px;
+  width: 28px; height: 1.5px;
   background: currentColor;
+  opacity: 0.8;
 }
 .page__title {
   font-family: var(--font-display);
   font-size: clamp(2.4rem, 1.6rem + 3.6vw, 4.2rem);
-  line-height: 1;
-  letter-spacing: -0.025em;
+  line-height: 1.02;
+  letter-spacing: 0.005em;
   margin: 0.7rem 0 0.6rem;
-  color: var(--color-ink);
+  color: var(--color-display);
+  text-transform: lowercase;
 }
-.page__title em { font-style: italic; color: var(--color-brand); }
+.page__title em { font-style: normal; color: var(--color-ink); }
 .page__lead {
   font-family: var(--font-display);
   font-style: italic;
@@ -1034,9 +1083,11 @@ a { color: inherit; text-decoration: none; }
 @media (min-width: 760px) { .site-footer__top { grid-template-columns: 1.4fr 1fr 1fr; } }
 .site-footer__brand {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin: 0 0 0.4rem;
-  letter-spacing: -0.015em;
+  letter-spacing: 0.005em;
+  color: var(--color-orange);   /* en footer oscuro queremos calidez, no rojo */
+  text-transform: lowercase;
 }
 .site-footer__claim {
   color: rgba(245, 237, 221, 0.6);
