@@ -64,10 +64,41 @@
   const body = document.getElementById('drawerBody');
   const checkoutBtn = document.getElementById('checkoutBtn');
 
-  /* ---- Render del badge en el header ---- */
+  /* ---- Bottom cart bar móvil (se inyecta una sola vez al cargar) ---- */
+  let mobileBar = document.getElementById('mobileCartBar');
+  if (!mobileBar && drawer) {
+    mobileBar = document.createElement('div');
+    mobileBar.className = 'mobile-cart-bar';
+    mobileBar.id = 'mobileCartBar';
+    mobileBar.innerHTML = `
+      <button class="mobile-cart-bar__btn" type="button" id="mobileCartBarBtn" aria-label="Ver pedido">
+        <span class="mobile-cart-bar__count" id="mobileCartBarCount">0</span>
+        <span class="mobile-cart-bar__label">Ver pedido</span>
+        <span class="mobile-cart-bar__total" id="mobileCartBarTotal">€0,00</span>
+        <span class="mobile-cart-bar__arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
+    `;
+    document.body.appendChild(mobileBar);
+    mobileBar.querySelector('#mobileCartBarBtn').addEventListener('click', () => openDrawer());
+  }
+  const mobileBarCount = mobileBar?.querySelector('#mobileCartBarCount');
+  const mobileBarTotal = mobileBar?.querySelector('#mobileCartBarTotal');
+
+  /* ---- Render del badge en el header + mobile cart bar ---- */
   function renderCounter() {
     const n = totalItems();
     if (countEl) countEl.textContent = n > 0 ? n : '';
+    // Mobile cart bar: aparece si hay items, oculta si no
+    if (mobileBar) {
+      mobileBar.classList.toggle('is-visible', n > 0);
+      document.body.classList.toggle('has-cart-bar', n > 0);
+      if (n > 0) {
+        if (mobileBarCount) mobileBarCount.textContent = n;
+        if (mobileBarTotal) mobileBarTotal.textContent = fmtPrice(totalPrice());
+      }
+    }
   }
 
   /* ---- Render de los controles +/− en cada producto ---- */

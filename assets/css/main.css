@@ -16,15 +16,17 @@
   --color-ink-soft: #736E41;       /* oliva oscuro (secundario) */
   --color-muted: #A7A177;          /* oliva claro */
 
-  --color-red: #B4351D;            /* rojo terracota (color nuevo del logo) */
+  --color-red: #B4351D;            /* rojo terracota (zona INFO) */
   --color-red-dark: #8C2814;
-  --color-orange: #FFB759;         /* naranja (color anterior del logo) */
-  --color-orange-dark: #E89636;
+  --color-orange-light: #FFB759;   /* naranja claro (acentos suaves) */
+  --color-orange: #D8551A;         /* NARANJA OSCURO (zona PEDIDO, legible para texto display) */
+  --color-orange-dark: #B53F0E;
   --color-butter: #FAD25B;         /* amarillo mostaza */
 
-  /* --color-brand: alias que cambia según tema (theme-info / theme-order) */
+  /* Aliases que cambian según el tema en body.theme-* */
   --color-brand: var(--color-red);
   --color-brand-dark: var(--color-red-dark);
+  --color-display: var(--color-red);
 
   --color-line: rgba(42, 40, 24, 0.12);
   --color-line-strong: rgba(42, 40, 24, 0.22);
@@ -47,10 +49,12 @@
   --r-lg: 22px;
   --r-pill: 999px;
 
-  /* — Sombras — */
-  --shadow-1: 0 1px 0 rgba(26,20,16,0.04), 0 6px 18px -10px rgba(26,20,16,0.12);
-  --shadow-2: 0 1px 0 rgba(26,20,16,0.05), 0 12px 28px -10px rgba(26,20,16,0.18);
-  --shadow-float: 0 14px 32px -8px rgba(26,20,16,0.32);
+  /* — Sombras (más sofisticadas, multi-capa) — */
+  --shadow-1: 0 1px 2px rgba(26,20,16,0.04), 0 8px 20px -10px rgba(26,20,16,0.14);
+  --shadow-2: 0 2px 4px rgba(26,20,16,0.06), 0 16px 32px -12px rgba(26,20,16,0.20);
+  --shadow-3: 0 4px 8px rgba(26,20,16,0.08), 0 24px 48px -16px rgba(26,20,16,0.28);
+  --shadow-float: 0 12px 28px -6px rgba(26,20,16,0.30), 0 4px 8px rgba(26,20,16,0.10);
+  --shadow-inset: inset 0 1px 0 rgba(255,255,255,0.6);
 
   /* — Animación — */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -58,21 +62,20 @@
 }
 
 /* ========================== TEMAS ==========================
-   En el feed real de Mendieta TODOS los títulos display van en ROJO BORDÓ
-   sobre fondo amarillo crema. El sistema usa siempre el rojo para los
-   títulos editoriales (--color-display); --color-brand cambia para los
-   acentos de UI (CTA naranja en zona de pedido, rojo en zona institucional)
-   y así diferenciar visualmente "estás pidiendo" vs "estás leyendo info". */
-:root {
-  --color-display: var(--color-red);     /* color de los títulos display */
-}
+   theme-order → páginas de pedido (home + categorías)
+      Todo en NARANJA OSCURO (#D8551A). Título display, eyebrows,
+      borde del logo, marco de cards, links hover, CTA.
+   theme-info  → páginas institucionales (historia/local/contacto)
+      Todo en ROJO TERRACOTA (#B4351D). Mismo tratamiento pero rojo. */
 body.theme-info {
   --color-brand: var(--color-red);
   --color-brand-dark: var(--color-red-dark);
+  --color-display: var(--color-red);
 }
 body.theme-order {
   --color-brand: var(--color-orange);
   --color-brand-dark: var(--color-orange-dark);
+  --color-display: var(--color-orange);
 }
 
 /* ========================== RESET ========================== */
@@ -142,7 +145,7 @@ a { color: inherit; text-decoration: none; }
   display: block;
   flex-shrink: 0;
   background: var(--color-bg-soft);
-  border: 1.5px solid var(--color-red);
+  border: 1.5px solid var(--color-brand);
   object-fit: contain;        /* el perro completo dentro del círculo */
   object-position: center;
   padding: 3px;
@@ -150,7 +153,7 @@ a { color: inherit; text-decoration: none; }
 .brand__dot {
   width: 6px; height: 6px;
   border-radius: 50%;
-  background: var(--color-red);
+  background: var(--color-brand);
   display: inline-block;
   margin-left: 1px;
   transform: translateY(-1px);
@@ -203,29 +206,36 @@ a { color: inherit; text-decoration: none; }
 .cart-button {
   position: relative;
   height: 40px;
-  padding: 0 1rem 0 0.85rem;
+  padding: 0 1.1rem 0 0.95rem;
   border-radius: var(--r-pill);
-  background: var(--color-ink);
-  color: var(--color-bg);
+  background: var(--color-brand);
+  color: #fff;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   font-size: 0.88rem;
-  font-weight: 500;
-  transition: background 0.25s var(--ease-soft), transform 0.3s var(--ease);
+  font-weight: 600;
+  transition: background 0.25s var(--ease-soft), transform 0.25s var(--ease), box-shadow 0.25s var(--ease-soft);
+  box-shadow: 0 4px 12px -3px color-mix(in srgb, var(--color-brand) 55%, transparent);
 }
-.cart-button:hover { background: var(--color-brand); transform: translateY(-1px); }
+.cart-button:hover { background: var(--color-brand-dark); transform: translateY(-2px); box-shadow: 0 8px 16px -4px color-mix(in srgb, var(--color-brand) 60%, transparent); }
+.cart-button:active { transform: translateY(0); }
 .cart-button svg { width: 18px; height: 18px; }
+@media (max-width: 480px) {
+  .cart-button__label { display: none; }    /* sólo icono + badge en móvil */
+  .cart-button { padding: 0 0.85rem; height: 42px; }
+}
 .cart-button__count {
-  background: var(--color-butter);
+  background: var(--color-bg-cream);
   color: var(--color-ink);
   min-width: 22px; height: 22px;
   border-radius: var(--r-pill);
   padding: 0 7px;
   display: inline-grid;
   place-items: center;
-  font-size: 0.74rem;
-  font-weight: 600;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border: 1.5px solid var(--color-brand);
 }
 .cart-button__count:empty { display: none; }
 
@@ -270,7 +280,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: var(--color-brand);
   margin: 0 0 1rem;
   text-align: center;
   position: relative;
@@ -279,7 +289,7 @@ a { color: inherit; text-decoration: none; }
   content: '';
   display: inline-block;
   width: 36px; height: 1.5px;
-  background: var(--color-red);
+  background: var(--color-brand);
   vertical-align: middle;
   margin: 0 0.85rem;
   opacity: 0.45;
@@ -296,33 +306,33 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  padding: 1.6rem 1.4rem 1.3rem;
-  border-radius: var(--r-md);
-  background: var(--color-bg-soft);
-  border: 1.5px solid var(--color-red);
+  gap: 0.7rem;
+  padding: 2rem 1.5rem 1.6rem;
+  border-radius: var(--r-lg);
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
   color: var(--color-ink);
-  min-height: 220px;
+  min-height: 240px;
   overflow: hidden;
   isolation: isolate;
-  transition: transform 0.4s var(--ease), background 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
+  transition: transform 0.45s var(--ease), border-color 0.3s var(--ease-soft), box-shadow 0.35s var(--ease-soft);
   text-align: center;
+  box-shadow: var(--shadow-1);
 }
-.cat-card::before, .cat-card::after {
-  /* Esquinas decorativas tipo afiche viejo */
+.cat-card::before {
+  /* Banda superior de marca */
   content: '';
   position: absolute;
-  width: 14px; height: 14px;
-  border: 1.5px solid var(--color-red);
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--color-brand);
   pointer-events: none;
 }
-.cat-card::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
-.cat-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
 
 .cat-card:hover {
-  transform: translateY(-4px);
-  background: #FFFCE8;
-  box-shadow: 0 18px 38px -16px rgba(140,40,20,0.32);
+  transform: translateY(-6px);
+  border-color: var(--color-brand);
+  box-shadow: var(--shadow-3);
 }
 .cat-card__icon {
   display: inline-grid;
@@ -330,8 +340,8 @@ a { color: inherit; text-decoration: none; }
   width: 56px; height: 56px;
   border-radius: 50%;
   background: var(--color-bg-cream);    /* amarillo crema, estilo highlights de IG */
-  border: 1.5px solid var(--color-red);
-  color: var(--color-red);
+  border: 1.5px solid var(--color-brand);
+  color: var(--color-brand);
   margin: 0 auto 0.4rem;
   transition: transform 0.4s var(--ease);
 }
@@ -364,7 +374,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: var(--color-brand);
   margin-top: 0.3rem;
   padding-top: 0.7rem;
   border-top: 1px solid rgba(140,40,20,0.18);
@@ -373,11 +383,11 @@ a { color: inherit; text-decoration: none; }
 .cat-card:hover .cat-card__cta svg { transform: translateX(4px); }
 
 /* Acento por categoría: cambia el color de borde y del icono */
-.cat-card--facturas { --cat-accent: var(--color-red); }
-.cat-card--dulces   { --cat-accent: var(--color-red); }
-.cat-card--tartas   { --cat-accent: var(--color-red); }
-.cat-card--salados  { --cat-accent: var(--color-red); }
-.cat-card--bebidas  { --cat-accent: var(--color-red); }
+.cat-card--facturas { --cat-accent: var(--color-brand); }
+.cat-card--dulces   { --cat-accent: var(--color-brand); }
+.cat-card--tartas   { --cat-accent: var(--color-brand); }
+.cat-card--salados  { --cat-accent: var(--color-brand); }
+.cat-card--bebidas  { --cat-accent: var(--color-brand); }
 /* Todas comparten el mismo rojo bordó para mantener identidad de marca,
    el toque de variedad lo dará el icono y la foto cuando lleguen. */
 
@@ -433,7 +443,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.82rem;
   color: var(--color-ink-soft);
 }
-.order-bar__pill svg { width: 14px; height: 14px; color: var(--color-red); flex-shrink: 0; }
+.order-bar__pill svg { width: 14px; height: 14px; color: var(--color-brand); flex-shrink: 0; }
 .order-bar__pill--open svg { color: #2F8F4E; }
 
 /* ========================== TABS ========================== */
@@ -544,19 +554,20 @@ a { color: inherit; text-decoration: none; }
 
 .product {
   display: grid;
-  grid-template-columns: 96px 1fr;
-  gap: 0.85rem;
-  padding: 0.85rem;
+  grid-template-columns: 104px 1fr;
+  gap: 1rem;
+  padding: 0.95rem;
   background: var(--color-card);
   border-radius: var(--r-md);
   border: 1px solid var(--color-line);
   transition: transform 0.3s var(--ease), border-color 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
   position: relative;
-  min-height: 116px;
+  min-height: 128px;
+  box-shadow: var(--shadow-1);
 }
-@media (min-width: 480px) { .product { grid-template-columns: 110px 1fr; min-height: 130px; } }
+@media (min-width: 480px) { .product { grid-template-columns: 120px 1fr; min-height: 140px; } }
 .product:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-2);
   border-color: var(--color-line-strong);
 }
@@ -638,42 +649,50 @@ a { color: inherit; text-decoration: none; }
 }
 
 .product__add {
-  background: var(--color-ink);
-  color: var(--color-bg);
+  background: var(--color-brand);
+  color: #fff;
   border-radius: var(--r-pill);
-  width: 34px; height: 34px;
+  width: 42px; height: 42px;
   display: inline-grid;
   place-items: center;
-  transition: background 0.25s var(--ease-soft), transform 0.3s var(--ease);
+  transition: background 0.25s var(--ease-soft), transform 0.25s var(--ease), box-shadow 0.25s var(--ease-soft);
   flex-shrink: 0;
+  box-shadow: 0 4px 10px -2px color-mix(in srgb, var(--color-brand) 50%, transparent);
 }
-.product__add:hover { background: var(--color-brand); transform: scale(1.08); }
-.product__add svg { width: 16px; height: 16px; }
+.product__add:hover { background: var(--color-brand-dark); transform: scale(1.08); }
+.product__add:active { transform: scale(0.95); }
+.product__add svg { width: 18px; height: 18px; }
+@media (min-width: 720px) { .product__add { width: 38px; height: 38px; } }
 
 .product__add--qty {
   display: inline-flex;
   align-items: center;
-  background: var(--color-ink);
-  color: var(--color-bg);
+  background: var(--color-brand);
+  color: #fff;
   border-radius: var(--r-pill);
-  height: 34px;
+  height: 42px;
   width: auto;
-  padding: 0 2px;
+  padding: 0 4px;
+  box-shadow: 0 4px 10px -2px color-mix(in srgb, var(--color-brand) 50%, transparent);
 }
+@media (min-width: 720px) { .product__add--qty { height: 38px; } }
 .product__add--qty button {
-  width: 30px; height: 30px;
+  width: 34px; height: 34px;
   border-radius: var(--r-pill);
-  color: var(--color-bg);
+  color: #fff;
   display: inline-grid;
   place-items: center;
-  font-size: 1rem;
-}
-.product__add--qty button:hover { background: rgba(255,255,255,0.12); }
-.product__add--qty span {
-  min-width: 22px;
-  text-align: center;
+  font-size: 1.1rem;
   font-weight: 600;
-  font-size: 0.92rem;
+  transition: background 0.2s var(--ease-soft);
+}
+.product__add--qty button:hover { background: rgba(255,255,255,0.18); }
+.product__add--qty button:active { background: rgba(255,255,255,0.28); }
+.product__add--qty span {
+  min-width: 26px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.98rem;
 }
 
 .product__add--disabled {
@@ -687,6 +706,67 @@ a { color: inherit; text-decoration: none; }
   cursor: default;
 }
 .product__add--disabled:hover { background: transparent; transform: none; }
+
+/* ========================== STICKY MOBILE CART BAR ==========================
+   Aparece fija al fondo del viewport en móvil/tablet cuando hay items
+   en el carrito. Tap → abre el drawer. UX típica de Glovo / Uber Eats. */
+.mobile-cart-bar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 70;
+  padding: 0.75rem clamp(0.85rem, 3vw, 1.25rem);
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0));
+  background: linear-gradient(180deg, transparent 0%, rgba(26,20,16,0.06) 14%, rgba(26,20,16,0.06) 100%);
+  pointer-events: none;
+  transform: translateY(110%);
+  transition: transform 0.4s var(--ease);
+}
+.mobile-cart-bar.is-visible { transform: translateY(0); pointer-events: auto; }
+@media (min-width: 760px) { .mobile-cart-bar { display: none; } }
+
+.mobile-cart-bar__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.95rem 1.1rem;
+  border-radius: var(--r-pill);
+  background: var(--color-brand);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: var(--shadow-float);
+  transition: background 0.25s var(--ease-soft), transform 0.2s var(--ease);
+}
+.mobile-cart-bar__btn:active { transform: scale(0.98); }
+.mobile-cart-bar__btn:hover { background: var(--color-brand-dark); }
+
+.mobile-cart-bar__count {
+  background: rgba(255,255,255,0.22);
+  border: 1.5px solid rgba(255,255,255,0.55);
+  min-width: 28px; height: 28px;
+  border-radius: var(--r-pill);
+  padding: 0 8px;
+  display: inline-grid;
+  place-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.mobile-cart-bar__label { flex: 1; text-align: left; font-size: 0.95rem; }
+.mobile-cart-bar__total {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.005em;
+}
+.mobile-cart-bar__arrow {
+  width: 28px; height: 28px;
+  display: inline-grid;
+  place-items: center;
+}
+.mobile-cart-bar__arrow svg { width: 16px; height: 16px; }
+
+/* Espacio inferior cuando la barra está visible para no tapar contenido */
+body.has-cart-bar { padding-bottom: 88px; }
+@media (min-width: 760px) { body.has-cart-bar { padding-bottom: 0; } }
 
 /* ========================== DRAWER ========================== */
 .drawer-overlay {
@@ -879,9 +959,19 @@ a { color: inherit; text-decoration: none; }
   transition: background 0.25s var(--ease-soft), color 0.25s var(--ease-soft), transform 0.3s var(--ease);
   width: 100%;
 }
-.btn-primary { background: var(--color-ink); color: var(--color-bg); }
-.btn-primary:hover { background: var(--color-brand); transform: translateY(-1px); }
-.btn-primary:disabled { background: var(--color-muted); color: var(--color-bg); cursor: not-allowed; transform: none; }
+.btn-primary {
+  background: var(--color-brand);
+  color: #fff;
+  box-shadow: 0 4px 14px -3px color-mix(in srgb, var(--color-brand) 55%, transparent);
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: var(--color-brand-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px color-mix(in srgb, var(--color-brand) 65%, transparent);
+}
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:disabled { background: var(--color-muted); color: #fff; cursor: not-allowed; transform: none; box-shadow: none; }
 .btn-brand { background: var(--color-brand); color: #fff; }
 .btn-brand:hover { background: var(--color-brand-dark); }
 .btn-ghost {
@@ -904,7 +994,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-red);
+  color: var(--color-brand);
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
