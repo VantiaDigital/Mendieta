@@ -774,6 +774,15 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--color-ink);
 }
 
+/* ========================== CATALOGO COMPLETO EN HOME ==========================
+   Reusa los estilos del catalogo de las paginas de categoria (.cat, .product,
+   .tabs) pero con margenes mas separados para que se diferencie del bloque
+   de destacados y del de como funciona. */
+.catalog-home {
+  padding: clamp(2rem, 4vw, 3rem) 0 clamp(2rem, 4vw, 3rem);
+}
+.tabs--catalog { margin-top: clamp(1rem, 2vw, 1.5rem); }
+
 /* ========================== CABECERA DE CATEGORÍA ========================== */
 .cat-page-head {
   padding: clamp(1.4rem, 3.5vw, 2.5rem) 0 clamp(1rem, 2.5vw, 1.6rem);
