@@ -16,9 +16,12 @@
   --color-ink-soft: #736E41;       /* oliva oscuro (secundario) */
   --color-muted: #A7A177;          /* oliva claro */
 
-  /* — Acentos principales — */
-  --color-orange: #B5430E;         /* NARANJA CARTEL (color principal de marca, extraído del cartel del local) */
-  --color-orange-dark: #8C320A;
+  /* — Acentos principales —
+     Naranja con HUE 26° (claramente naranja, no rojo).
+     Inspirado en el cartel del local pero con más vibración para que
+     se lea "naranja" y no "terracota" sobre el fondo blanco hueso. */
+  --color-orange: #D45714;
+  --color-orange-dark: #A03D0C;
   --color-orange-light: #FFB759;   /* naranja claro (acentos suaves) */
   --color-butter: #FAD25B;         /* amarillo mostaza */
 
