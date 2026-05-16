@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Logo Mendieta — recreación SVG aproximada del avatar del Instagram.
+  Es una INTERPRETACIÓN del logo original mientras llega el archivo oficial.
+  Si tenés el SVG o PNG real, reemplazá este archivo por el oficial
+  (mismo path: assets/images/logo/mendieta-logo.svg).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Mendieta">
+  <!-- Fondo circular crema -->
+  <circle cx="128" cy="128" r="124" fill="#FAF6CA" stroke="#E8DEAB" stroke-width="2"/>
+
+  <!-- Personaje Mendieta — línea oliva oscura, estilo viñeta argentina -->
+  <g fill="none" stroke="#2A2818" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Sombrero / copete (3 pinches arriba de la cabeza) -->
+    <path d="M114 56 L116 42 L119 53 L124 38 L127 52 L132 40 L135 52 L140 42 L142 56" />
+
+    <!-- Cabeza (forma alargada con frente ancha) -->
+    <path d="M108 56 C 102 68, 100 84, 108 96 C 116 105, 126 108, 134 106 C 144 104, 152 96, 156 86 L 156 70 C 152 60, 144 54, 134 53 Z" />
+
+    <!-- Mostacho grueso (mancha rellena) -->
+    <path d="M122 92 C 116 94, 112 99, 114 104 C 118 108, 130 108, 138 105 C 144 102, 148 96, 142 92 C 134 90, 128 91, 122 92 Z" fill="#2A2818" />
+
+    <!-- Nariz larga y puntiaguda -->
+    <path d="M134 86 L 162 102 L 142 100" stroke-width="3" fill="none" />
+
+    <!-- Ojo cerrado / dormitando (curva pequeña) -->
+    <path d="M122 80 q 4 -3 8 0" />
+
+    <!-- Ceja sutil -->
+    <path d="M120 74 q 5 -2 10 0" />
+
+    <!-- Cuello -->
+    <path d="M122 108 L 122 124 M 138 108 L 138 124" />
+
+    <!-- Hombros / poncho — caída suave -->
+    <path d="M122 124 C 108 130, 98 142, 96 158 M 138 124 C 152 130, 162 142, 164 158" />
+
+    <!-- Brazos cruzados / manos juntas adelante -->
+    <path d="M96 158 C 104 168, 116 174, 128 174 C 140 174, 152 168, 164 158" />
+    <path d="M118 168 q 10 6 24 0" stroke-width="2.5" />
+    <path d="M122 174 l 0 6 M 128 174 l 0 6 M 134 174 l 0 6" stroke-width="2" />
+
+    <!-- Cuerpo / piernas — sentado con rodillas juntas -->
+    <path d="M96 158 C 86 180, 82 200, 86 218" />
+    <path d="M164 158 C 174 180, 178 200, 174 218" />
+
+    <!-- Suelo / sombra (línea base curva) -->
+    <path d="M76 220 q 52 8 104 0" stroke-width="2.5" />
+  </g>
+</svg>
