@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/main.css?v=202605161355" />
+  <link rel="stylesheet" href="assets/css/main.css?v=202605161400" />
   <link rel="icon" type="image/png" href="assets/images/logo/mendieta-logo.png" />
 </head>
 
@@ -103,7 +103,7 @@
             <img src="assets/images/photos/prod-capuchino-md.jpg" alt="" loading="eager" decoding="async" />
           </figure>
           <figure class="hero__photo hero__photo--bot">
-            <img src="assets/images/photos/prod-salados-md.jpg" alt="" loading="lazy" decoding="async" />
+            <img src="assets/images/photos/prod-cafe-latte-md.jpg" alt="" loading="lazy" decoding="async" />
           </figure>
         </div>
       </div>
@@ -151,9 +151,8 @@
           <p class="section-head__lead">Tocá <strong>+</strong> y van directo a tu pedido.</p>
         </header>
 
-        <div class="featured__grid">
-          <!-- Estos featured cards los renderiza JS leyendo de menu-data.js
-               (solo productos con campo `featured: true` o los marcados como hero) -->
+        <div class="featured__grid featured__grid--3">
+          <!-- Solo productos con FOTO REAL identificada. No fotos genéricas. -->
           <article class="featured-card" data-product="medialuna-manteca">
             <div class="featured-card__photo">
               <img src="assets/images/photos/prod-medialuna-md.jpg" alt="Medialuna de manteca" loading="lazy" decoding="async" />
@@ -190,7 +189,7 @@
             </div>
           </article>
 
-          <article class="featured-card" data-product="cortado">
+          <article class="featured-card" data-product="capuchino">
             <div class="featured-card__photo">
               <img src="assets/images/photos/prod-capuchino-md.jpg" alt="Capuchino con cacao" loading="lazy" decoding="async" />
             </div>
@@ -199,26 +198,8 @@
               <p class="featured-card__desc">Espuma firme, cacao espolvoreado.</p>
               <div class="featured-card__foot">
                 <span class="featured-card__price">a consultar</span>
-                <div class="product__add-slot" data-slot="cortado">
-                  <button class="product__add" data-add="cortado" aria-label="Agregar Capuchino">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="featured-card" data-product="prepizza">
-            <div class="featured-card__photo">
-              <img src="assets/images/photos/prod-salados-md.jpg" alt="Salados de hojaldre" loading="lazy" decoding="async" />
-            </div>
-            <div class="featured-card__body">
-              <h3 class="featured-card__name">Salados de hojaldre</h3>
-              <p class="featured-card__desc">Crocantes, recién hechos, para llevar.</p>
-              <div class="featured-card__foot">
-                <span class="featured-card__price">a consultar</span>
-                <div class="product__add-slot" data-slot="prepizza">
-                  <button class="product__add" data-add="prepizza" aria-label="Agregar Salados de hojaldre">
+                <div class="product__add-slot" data-slot="capuchino">
+                  <button class="product__add" data-add="capuchino" aria-label="Agregar Capuchino">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                   </button>
                 </div>

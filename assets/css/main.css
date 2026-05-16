@@ -535,6 +535,15 @@ a { color: inherit; text-decoration: none; }
 @media (min-width: 720px) { .featured__grid { grid-template-columns: repeat(3, 1fr); gap: 1.1rem; } }
 @media (min-width: 1080px) { .featured__grid { grid-template-columns: repeat(4, 1fr); } }
 
+/* Variante con 3 destacados: nunca pasa de 3 columnas en desktop y se centra */
+.featured__grid--3 {
+  max-width: 920px;
+  margin-inline: auto;
+}
+@media (min-width: 1080px) {
+  .featured__grid--3 { grid-template-columns: repeat(3, 1fr); }
+}
+
 .featured-card {
   background: var(--color-card);
   border-radius: var(--r-lg);
