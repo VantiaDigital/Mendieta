@@ -73,14 +73,11 @@
   /* ---- Render de los controles +/− en cada producto ---- */
   function renderAddSlots() {
     if (!window.MendietaMenuRender) return;
-    // Construir set de ids que están en el carrito
     const map = new Map(cart.map((it) => [it.id, it.qty]));
-    // Re-renderizar todos los slots conocidos (los que tengan precio)
+    // Re-renderiza todos los slots según cantidad en carrito
     document.querySelectorAll('.product__add-slot[data-slot]').forEach((slot) => {
       const id = slot.dataset.slot;
-      // Si el producto no tiene precio, no hacemos nada (queda "consultar")
-      const product = productById.get(id);
-      if (!product || product.price == null) return;
+      if (!productById.has(id)) return;
       window.MendietaMenuRender.renderAddSlot(id, map.get(id) || 0);
     });
   }
@@ -166,7 +163,9 @@
   /* ---- Operations ---- */
   function add(id) {
     const p = productById.get(id);
-    if (!p || p.price == null) return;
+    if (!p) return;
+    // Productos con precio null SÍ se pueden agregar; aparecen en el mensaje
+    // de WhatsApp como "a consultar" y el local confirma el precio.
     const existing = cart.find((x) => x.id === id);
     if (existing) existing.qty += 1;
     else cart.push({ id, qty: 1 });

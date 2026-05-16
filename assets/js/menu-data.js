@@ -232,12 +232,14 @@ window.MENDIETA_MENU = {
           name: 'Café',
           description: 'Espresso corto. Tueste de tostadora local.',
           price: null,
+          image: 'assets/images/photos/cafe-latte-art-2-md.jpg',
         },
         {
           id: 'cafe-con-leche',
           name: 'Café con leche',
           description: 'Café con leche caliente, espuma cremosa.',
           price: null,
+          image: 'assets/images/photos/cafe-latte-art-1-md.jpg',
         },
         {
           id: 'cafe-sin-lactosa',
@@ -245,12 +247,14 @@ window.MENDIETA_MENU = {
           description: 'Mismo café, leche sin lactosa.',
           price: 1.70,
           tags: ['sin lactosa'],
+          image: 'assets/images/photos/cafe-latte-art-2-md.jpg',
         },
         {
           id: 'latte',
           name: 'Latte',
           description: 'Café con leche en taza larga.',
           price: null,
+          image: 'assets/images/photos/cafe-latte-art-1-md.jpg',
         },
         {
           id: 'cortado',

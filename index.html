@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#F5EDDD" />
-  <meta name="description" content="Pedí online en Mendieta — pastelería argentina en Barcelona. Facturas, alfajores, empanadas y café. Entrega por WhatsApp." />
+  <meta name="theme-color" content="#FEF9C0" />
+  <meta name="description" content="Pedí online en Mendieta — pastelería argentina en Barcelona. Facturas, alfajores, empanadas, tartas y café. Entrega por WhatsApp." />
   <meta name="author" content="Mendieta · Pastelería Argentina" />
 
   <meta property="og:type" content="website" />
@@ -21,10 +21,10 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231A1410'/%3E%3Cpath d='M22 16c-7 4-11 12-11 20s4 16 11 20c-3-6-4.5-12.5-4.5-20S19 22 22 16z' fill='%23E8B842'/%3E%3Cpath d='M22 16c10-3 22 4 26 16-4 12-16 19-26 16 6-4 9.5-10.5 9.5-16S28 20 22 16z' fill='%23C98F4A'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232A2818'/%3E%3Cpath d='M22 16c-7 4-11 12-11 20s4 16 11 20c-3-6-4.5-12.5-4.5-20S19 22 22 16z' fill='%23FAD25B'/%3E%3Cpath d='M22 16c10-3 22 4 26 16-4 12-16 19-26 16 6-4 9.5-10.5 9.5-16S28 20 22 16z' fill='%23FFB759'/%3E%3C/svg%3E" />
 </head>
 
-<body>
+<body class="theme-order">
 
   <!-- ============================== HEADER ============================== -->
   <header class="site-header" id="siteHeader">
@@ -100,30 +100,60 @@
               </span>
             </p>
           </div>
-          <figure class="order-bar__photo" aria-hidden="true">
-            <img
-              src="assets/images/photos/cafe-latte-art-1-md.jpg"
-              srcset="assets/images/photos/cafe-latte-art-1-md.jpg 800w, assets/images/photos/cafe-latte-art-1-lg.jpg 1600w"
-              sizes="(min-width: 760px) 28vw, 0px"
-              alt=""
-              loading="eager"
-              decoding="async" />
-          </figure>
         </div>
       </div>
     </section>
 
-    <!-- ============================== TABS ============================== -->
-    <div class="tabs">
+    <!-- ============================== GRILLA DE CATEGORÍAS ============================== -->
+    <section class="cat-grid-section">
       <div class="container">
-        <div class="tabs__inner" id="menuTabs" role="tablist" aria-label="Categorías"></div>
-      </div>
-    </div>
+        <h2 class="cat-grid-title">Elegí una categoría</h2>
+        <div class="cat-grid">
+          <a class="cat-card cat-card--facturas" href="pages/pedido/facturas.html" data-reveal>
+            <span class="cat-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="50" cy="50" r="32"/><path d="M30 50c0-12 9-22 20-22s20 10 20 22"/><path d="M38 50h24M42 60h16"/></svg>
+            </span>
+            <h3 class="cat-card__name">Facturas</h3>
+            <p class="cat-card__caption">Las clásicas, recién horneadas cada mañana.</p>
+            <span class="cat-card__cta">Ver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
 
-    <!-- ============================== CATÁLOGO ============================== -->
-    <section class="catalog">
-      <div class="container">
-        <div id="menuRoot"></div>
+          <a class="cat-card cat-card--dulces" href="pages/pedido/dulces.html" data-reveal>
+            <span class="cat-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="50" cy="50" r="30"/><path d="M22 50h56"/></svg>
+            </span>
+            <h3 class="cat-card__name">Dulces y alfajores</h3>
+            <p class="cat-card__caption">Lo que se lleva con el café.</p>
+            <span class="cat-card__cta">Ver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="cat-card cat-card--tartas" href="pages/pedido/tartas.html" data-reveal>
+            <span class="cat-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.4"><ellipse cx="50" cy="68" rx="32" ry="10"/><path d="M18 68v-18a32 10 0 0 0 64 0V68"/><path d="M50 46v14"/></svg>
+            </span>
+            <h3 class="cat-card__name">Tartas y tortas</h3>
+            <p class="cat-card__caption">Caseras, por porción o enteras.</p>
+            <span class="cat-card__cta">Ver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="cat-card cat-card--salados" href="pages/pedido/salados.html" data-reveal>
+            <span class="cat-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 56c0-14 14-26 32-26s32 12 32 26v6H18z"/><path d="M28 60c2-3 4-3 6 0s4 3 6 0s4-3 6 0s4 3 6 0s4-3 6 0s4 3 6 0"/></svg>
+            </span>
+            <h3 class="cat-card__name">Salados</h3>
+            <p class="cat-card__caption">Para la pausa del mediodía.</p>
+            <span class="cat-card__cta">Ver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+
+          <a class="cat-card cat-card--bebidas" href="pages/pedido/bebidas.html" data-reveal>
+            <span class="cat-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M24 38h44v22c0 10-10 18-22 18s-22-8-22-18z"/><path d="M68 44h6c4 0 8 4 8 8s-4 8-8 8h-6"/><path d="M40 26c-2 3-2 6 0 9M52 26c-2 3-2 6 0 9"/></svg>
+            </span>
+            <h3 class="cat-card__name">Bebidas</h3>
+            <p class="cat-card__caption">El café que acompaña, y el resto también.</p>
+            <span class="cat-card__cta">Ver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -193,7 +223,6 @@
   </aside>
 
   <script src="assets/js/menu-data.js" defer></script>
-  <script src="assets/js/menu.js" defer></script>
   <script src="assets/js/cart.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>

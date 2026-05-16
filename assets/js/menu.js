@@ -12,8 +12,14 @@
   if (!data || !data.categories) return;
 
   const root = document.getElementById('menuRoot');
-  const tabs = document.getElementById('menuTabs');
-  if (!root || !tabs) return;
+  if (!root) return;
+  const tabs = document.getElementById('menuTabs'); // opcional (solo en vista todo-en-uno)
+
+  // Si la página declara `window.MENDIETA_CATEGORY = 'facturas'`, filtramos
+  const filterCat = window.MENDIETA_CATEGORY || null;
+  const categoriesToRender = filterCat
+    ? data.categories.filter((c) => c.id === filterCat)
+    : data.categories;
 
   /* ---- helpers ---- */
   const fmt = (price) => {
@@ -74,19 +80,21 @@
     return ICONS.default;
   }
 
-  /* ---- Render tabs ---- */
-  data.categories.forEach((cat, i) => {
-    const t = document.createElement('button');
-    t.className = 'tab' + (i === 0 ? ' is-active' : '');
-    t.type = 'button';
-    t.dataset.cat = cat.id;
-    t.textContent = cat.name;
-    t.setAttribute('role', 'tab');
-    tabs.appendChild(t);
-  });
+  /* ---- Render tabs (solo si existe el contenedor) ---- */
+  if (tabs) {
+    categoriesToRender.forEach((cat, i) => {
+      const t = document.createElement('button');
+      t.className = 'tab' + (i === 0 ? ' is-active' : '');
+      t.type = 'button';
+      t.dataset.cat = cat.id;
+      t.textContent = cat.name;
+      t.setAttribute('role', 'tab');
+      tabs.appendChild(t);
+    });
+  }
 
   /* ---- Render categorías ---- */
-  data.categories.forEach((cat, catIndex) => {
+  categoriesToRender.forEach((cat, catIndex) => {
     const section = document.createElement('section');
     section.className = 'cat';
     section.id = `cat-${cat.id}`;
@@ -108,10 +116,15 @@
       const priceLabel = fmt(item.price);
       const tagHtml = (item.tags || []).slice(0, 1).map((t) => `<span class="product__tag">${t}</span>`).join('');
 
+      // Media: foto si existe, si no SVG ilustrativo
+      const mediaInner = item.image
+        ? `<img src="${item.image}" alt="${item.name}" loading="lazy" decoding="async" />`
+        : iconFor(item.name);
+
       article.innerHTML = `
-        <div class="product__media" aria-hidden="true">
+        <div class="product__media ${item.image ? 'product__media--photo' : ''}" aria-hidden="true">
           ${tagHtml}
-          ${iconFor(item.name)}
+          ${mediaInner}
         </div>
         <div class="product__body">
           <h3 class="product__name">${item.name}</h3>
@@ -120,16 +133,12 @@
             ${
               priceLabel
                 ? `<span class="product__price">${priceLabel}</span>`
-                : `<span class="product__price product__price--ask">consultar</span>`
+                : `<span class="product__price product__price--ask">a consultar</span>`
             }
             <div class="product__add-slot" data-slot="${item.id}">
-              ${
-                priceLabel
-                  ? `<button class="product__add" data-add="${item.id}" aria-label="Agregar ${item.name}">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    </button>`
-                  : `<span class="product__add product__add--disabled">consultar</span>`
-              }
+              <button class="product__add" data-add="${item.id}" aria-label="Agregar ${item.name}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
             </div>
           </div>
         </div>
@@ -140,7 +149,11 @@
     root.appendChild(section);
   });
 
-  /* ---- Tabs activos según scroll ---- */
+  /* ---- Tabs activos según scroll (solo si hay tabs) ---- */
+  if (!tabs) {
+    // Página de categoría única: no hay tabs, salimos
+    return setupRenderApi();
+  }
   const tabButtons = Array.from(tabs.querySelectorAll('.tab'));
   const sections = Array.from(root.querySelectorAll('.cat'));
   const setActive = (id) => {
@@ -181,26 +194,30 @@
     });
   });
 
+  setupRenderApi();
+
   // Exponer API para que cart.js pueda re-renderizar el botón ± de un producto
-  window.MendietaMenuRender = {
-    renderAddSlot(productId, qty) {
-      const slot = document.querySelector(`.product__add-slot[data-slot="${productId}"]`);
-      if (!slot) return;
-      if (qty > 0) {
-        slot.innerHTML = `
-          <div class="product__add product__add--qty" data-qty-for="${productId}">
-            <button type="button" data-dec="${productId}" aria-label="Quitar uno">−</button>
-            <span>${qty}</span>
-            <button type="button" data-inc="${productId}" aria-label="Sumar uno">+</button>
-          </div>
-        `;
-      } else {
-        slot.innerHTML = `
-          <button class="product__add" data-add="${productId}" aria-label="Agregar al pedido">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-        `;
-      }
-    },
-  };
+  function setupRenderApi() {
+    window.MendietaMenuRender = {
+      renderAddSlot(productId, qty) {
+        const slot = document.querySelector(`.product__add-slot[data-slot="${productId}"]`);
+        if (!slot) return;
+        if (qty > 0) {
+          slot.innerHTML = `
+            <div class="product__add product__add--qty" data-qty-for="${productId}">
+              <button type="button" data-dec="${productId}" aria-label="Quitar uno">−</button>
+              <span>${qty}</span>
+              <button type="button" data-inc="${productId}" aria-label="Sumar uno">+</button>
+            </div>
+          `;
+        } else {
+          slot.innerHTML = `
+            <button class="product__add" data-add="${productId}" aria-label="Agregar al pedido">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          `;
+        }
+      },
+    };
+  }
 })();
