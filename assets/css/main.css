@@ -8,9 +8,10 @@
 
 :root {
   /* — Paleta OFICIAL de Mendieta (extraída de los PDFs de Coolors) — */
-  --color-bg: #FEF9C0;            /* amarillo crema (fondo principal) */
-  --color-bg-soft: #FAF6CA;       /* variante más suave */
-  --color-card: #FFFCE8;          /* tarjetas (crema casi blanco) */
+  --color-bg: #FBF7EE;            /* blanco hueso sutil (fondo principal de body) */
+  --color-bg-cream: #FEF9C0;      /* amarillo crema oficial (acentos: header, cards, banners) */
+  --color-bg-soft: #FAF6CA;       /* variante crema más suave (cards de zonas calidas) */
+  --color-card: #FFFFFF;          /* tarjetas (blanco puro, mejor contraste) */
   --color-ink: #2A2818;            /* texto principal (oliva muy oscuro) */
   --color-ink-soft: #736E41;       /* oliva oscuro (secundario) */
   --color-muted: #A7A177;          /* oliva claro */
@@ -115,7 +116,7 @@ a { color: inherit; text-decoration: none; }
   top: 0;
   z-index: 40;
   height: var(--header-h);
-  background: var(--color-bg);
+  background: var(--color-bg-cream);     /* amarillo como acento de marca */
   border-bottom: 1px solid var(--color-line);
 }
 .site-header__inner {
@@ -241,7 +242,7 @@ a { color: inherit; text-decoration: none; }
 .mobile-nav {
   position: fixed;
   inset: 0;
-  background: var(--color-bg);
+  background: var(--color-bg-cream);    /* mismo amarillo que el header */
   z-index: 35;
   padding: calc(var(--header-h) + 16px) clamp(1rem, 4vw, 2rem) 2rem;
   transform: translateY(-100%);
@@ -328,7 +329,7 @@ a { color: inherit; text-decoration: none; }
   place-items: center;
   width: 56px; height: 56px;
   border-radius: 50%;
-  background: var(--color-bg);
+  background: var(--color-bg-cream);    /* amarillo crema, estilo highlights de IG */
   border: 1.5px solid var(--color-red);
   color: var(--color-red);
   margin: 0 auto 0.4rem;
@@ -440,7 +441,7 @@ a { color: inherit; text-decoration: none; }
   position: sticky;
   top: var(--header-h);
   z-index: 25;
-  background: var(--color-bg);
+  background: var(--color-bg);    /* hereda el blanco hueso */
   border-bottom: 1px solid var(--color-line);
 }
 .tabs__inner {
