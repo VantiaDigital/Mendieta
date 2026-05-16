@@ -30,10 +30,13 @@
   --color-red: #B4351D;
   --color-red-dark: #8C2814;
 
-  /* Color de marca (ahora UNIFICADO — un solo naranja en toda la web) */
+  /* --color-brand: acento de marca (bordes, círculos de iconos, banda superior
+     de cards, CTAs hover, sombras de color). Sigue siendo NARANJA.
+     --color-display: color de los TÍTULOS display. Sobrio (negro oliva
+     cálido). Editorial premium, no compite con las fotos. */
   --color-brand: var(--color-orange);
   --color-brand-dark: var(--color-orange-dark);
-  --color-display: var(--color-orange);
+  --color-display: var(--color-ink);
 
   --color-line: rgba(42, 40, 24, 0.12);
   --color-line-strong: rgba(42, 40, 24, 0.22);
@@ -149,12 +152,13 @@ a { color: inherit; text-decoration: none; }
   padding: 3px;
 }
 .brand__dot {
-  width: 6px; height: 6px;
+  width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--color-brand);
   display: inline-block;
-  margin-left: 1px;
+  margin-left: 2px;
   transform: translateY(-1px);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand) 18%, transparent);
 }
 .brand__sub {
   display: none;
@@ -441,7 +445,7 @@ a { color: inherit; text-decoration: none; }
 }
 .promo-banner__title em {
   font-style: normal;
-  color: var(--color-display);   /* "a casa" en el color de marca de zona pedido */
+  color: var(--color-brand);     /* "a casa" en naranja como acento dentro del título */
 }
 .promo-banner__lead {
   font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
@@ -523,7 +527,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--color-display);
   text-transform: lowercase;
 }
-.order-bar__title em { font-style: normal; color: var(--color-ink); }
+.order-bar__title em { font-style: normal; color: var(--color-brand); }
 .order-bar__meta {
   display: flex;
   flex-wrap: wrap;
@@ -1132,7 +1136,7 @@ body.has-cart-bar { padding-bottom: 88px; }
   color: var(--color-display);
   text-transform: lowercase;
 }
-.page__title em { font-style: normal; color: var(--color-ink); }
+.page__title em { font-style: normal; color: var(--color-brand); }
 .page__lead {
   font-family: var(--font-display);
   font-style: italic;
