@@ -39,6 +39,14 @@ JOBS = [
     # Crop top 0.30 para sacar el texto overlay "Cuando vas a Mendieta solo por un café"
     # que viene del reel y duplicaría info de la página.
     {"src": "exterior-local-frame.jpg", "slug": "exterior-local", "crop": (0.0, 0.30, 1.0, 1.0), "ratio": "portrait", "enhance": "medium"},
+
+    # PRODUCTOS DESTACADOS — frames de los reels recortados para sacar overlays de texto.
+    # Cada uno enfoca un producto/categoría hero para usar en la grilla de destacados de la home.
+    {"src": "raw-medialuna.jpg", "slug": "prod-medialuna", "crop": (0.0, 0.42, 1.0, 1.0), "ratio": "square", "enhance": "strong"},
+    {"src": "raw-cafes-cenital.jpg", "slug": "prod-cafe-latte", "crop": (0.0, 0.62, 1.0, 1.0), "ratio": "square", "enhance": "medium"},
+    {"src": "raw-salados.jpg", "slug": "prod-salados", "crop": (0.0, 0.40, 1.0, 1.0), "ratio": "square", "enhance": "medium"},
+    {"src": "raw-capuchino.jpg", "slug": "prod-capuchino", "crop": (0.05, 0.28, 0.95, 0.88), "ratio": "square", "enhance": "soft"},
+    {"src": "raw-combo.jpg", "slug": "prod-combo-merienda", "crop": (0.0, 0.42, 1.0, 1.0), "ratio": "landscape", "enhance": "medium"},
 ]
 
 RATIOS = {

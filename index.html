@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/main.css?v=202605161335" />
+  <link rel="stylesheet" href="assets/css/main.css?v=202605161342" />
   <link rel="icon" type="image/png" href="assets/images/logo/mendieta-logo.png" />
 </head>
 
@@ -72,54 +72,159 @@
 
   <main>
 
-    <!-- ============================== BANNER PROMO 'A CASA' ============================== -->
-    <section class="promo-banner">
-      <div class="container promo-banner__inner">
-        <figure class="promo-banner__poster" aria-hidden="true">
-          <img src="assets/images/promo/mendieta-a-casa.png"
-               alt=""
-               width="340" height="540"
-               loading="eager"
-               decoding="async" />
-        </figure>
-
-        <div class="promo-banner__copy">
-          <h1 class="promo-banner__title">Mendieta <em>a casa</em>.</h1>
-          <p class="promo-banner__lead">
-            Hacé tu pedido online y lo llevamos. Recién hecho, todos los días.
+    <!-- ============================== HERO ============================== -->
+    <section class="hero">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <span class="hero__eyebrow">Pastelería argentina · Barcelona</span>
+          <h1 class="hero__title">
+            Recién hecho. <em>Hoy mismo.</em>
+          </h1>
+          <p class="hero__lead">
+            Medialunas hojaldradas, alfajores como en casa, empanadas al horno
+            y café que acompaña. Pedí online y te lo llevamos.
           </p>
+          <div class="hero__cta">
+            <a href="#destacados" class="btn btn-primary">
+              <span>Empezar pedido</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#como-funciona" class="btn btn-ghost btn--inline">
+              <span>Cómo funciona</span>
+            </a>
+          </div>
+        </div>
 
-          <ul class="promo-banner__points">
-            <li>
-              <span class="promo-banner__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
-                </svg>
-              </span>
-              <span><strong>24 h de antelación.</strong> Para preparar todo recién hecho.</span>
-            </li>
-            <li>
-              <span class="promo-banner__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 11h20"/>
-                </svg>
-              </span>
-              <span><strong>Pago en tarjeta o efectivo</strong> al recibir.</span>
-            </li>
-            <li>
-              <span class="promo-banner__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 22s-7-7.5-7-13a7 7 0 0 1 14 0c0 5.5-7 13-7 13z"/><circle cx="12" cy="9" r="2.5"/>
-                </svg>
-              </span>
-              <span><strong>Mallorca, 517 · Barcelona.</strong> L–V 7–21h · S–D 7:30–21h.</span>
-            </li>
-          </ul>
+        <div class="hero__collage" aria-hidden="true">
+          <figure class="hero__photo hero__photo--big">
+            <img src="assets/images/photos/prod-medialuna-md.jpg" alt="" loading="eager" decoding="async" />
+          </figure>
+          <figure class="hero__photo hero__photo--top">
+            <img src="assets/images/photos/prod-capuchino-md.jpg" alt="" loading="eager" decoding="async" />
+          </figure>
+          <figure class="hero__photo hero__photo--bot">
+            <img src="assets/images/photos/prod-salados-md.jpg" alt="" loading="lazy" decoding="async" />
+          </figure>
+        </div>
+      </div>
+    </section>
 
-          <a href="#categorias" class="btn btn-primary promo-banner__cta">
-            <span>Elegir productos</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-          </a>
+    <!-- ============================== STRIP DE BENEFICIOS ============================== -->
+    <section class="benefits-strip">
+      <div class="container benefits-strip__inner">
+        <div class="benefit">
+          <span class="benefit__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v6M10 2v6M14 2v6M3 8h14l-1 13H4z"/></svg>
+          </span>
+          <div>
+            <strong>Recién horneado</strong>
+            <span>Todo lo del día se prepara la noche/madrugada anterior.</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <span class="benefit__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </span>
+          <div>
+            <strong>24 h de antelación</strong>
+            <span>El tiempo justo para que todo salga del horno para vos.</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <span class="benefit__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 11h20"/></svg>
+          </span>
+          <div>
+            <strong>Tarjeta o efectivo</strong>
+            <span>Pagás al recibir, sin trámites online.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== DESTACADOS ============================== -->
+    <section class="featured" id="destacados">
+      <div class="container">
+        <header class="section-head">
+          <span class="section-head__eyebrow">Hoy en la vitrina</span>
+          <h2 class="section-head__title">Lo que sale del <em>horno</em>.</h2>
+          <p class="section-head__lead">Los favoritos de los mendieteros. Tocá <strong>+</strong> y van directo a tu pedido.</p>
+        </header>
+
+        <div class="featured__grid">
+          <!-- Estos featured cards los renderiza JS leyendo de menu-data.js
+               (solo productos con campo `featured: true` o los marcados como hero) -->
+          <article class="featured-card" data-product="medialuna-manteca">
+            <div class="featured-card__photo">
+              <img src="assets/images/photos/prod-medialuna-md.jpg" alt="Medialuna de manteca" loading="lazy" decoding="async" />
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__name">Medialuna de manteca</h3>
+              <p class="featured-card__desc">Hojaldrada, brillante, recién horneada.</p>
+              <div class="featured-card__foot">
+                <span class="featured-card__price">a consultar</span>
+                <div class="product__add-slot" data-slot="medialuna-manteca">
+                  <button class="product__add" data-add="medialuna-manteca" aria-label="Agregar Medialuna de manteca">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="featured-card" data-product="cafe-con-leche">
+            <div class="featured-card__photo">
+              <img src="assets/images/photos/prod-cafe-latte-md.jpg" alt="Café con leche con latte art" loading="lazy" decoding="async" />
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__name">Café con leche</h3>
+              <p class="featured-card__desc">Espuma cremosa, dibujo de la casa.</p>
+              <div class="featured-card__foot">
+                <span class="featured-card__price">a consultar</span>
+                <div class="product__add-slot" data-slot="cafe-con-leche">
+                  <button class="product__add" data-add="cafe-con-leche" aria-label="Agregar Café con leche">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="featured-card" data-product="cortado">
+            <div class="featured-card__photo">
+              <img src="assets/images/photos/prod-capuchino-md.jpg" alt="Capuchino con cacao" loading="lazy" decoding="async" />
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__name">Capuchino</h3>
+              <p class="featured-card__desc">Espuma firme, cacao espolvoreado.</p>
+              <div class="featured-card__foot">
+                <span class="featured-card__price">a consultar</span>
+                <div class="product__add-slot" data-slot="cortado">
+                  <button class="product__add" data-add="cortado" aria-label="Agregar Capuchino">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="featured-card" data-product="prepizza">
+            <div class="featured-card__photo">
+              <img src="assets/images/photos/prod-salados-md.jpg" alt="Salados de hojaldre" loading="lazy" decoding="async" />
+            </div>
+            <div class="featured-card__body">
+              <h3 class="featured-card__name">Salados de hojaldre</h3>
+              <p class="featured-card__desc">Crocantes, recién hechos, para llevar.</p>
+              <div class="featured-card__foot">
+                <span class="featured-card__price">a consultar</span>
+                <div class="product__add-slot" data-slot="prepizza">
+                  <button class="product__add" data-add="prepizza" aria-label="Agregar Salados de hojaldre">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -127,7 +232,10 @@
     <!-- ============================== GRILLA DE CATEGORÍAS ============================== -->
     <section class="cat-grid-section" id="categorias">
       <div class="container">
-        <h2 class="cat-grid-title">Elegí una categoría</h2>
+        <header class="section-head section-head--center">
+          <span class="section-head__eyebrow">Explorá la carta</span>
+          <h2 class="section-head__title">5 categorías, todo a un toque.</h2>
+        </header>
         <div class="cat-grid">
           <a class="cat-card cat-card--facturas" href="pages/pedido/facturas.html" data-reveal>
             <span class="cat-card__icon" aria-hidden="true">
@@ -172,6 +280,62 @@
             <h3 class="cat-card__name">Bebidas</h3>
             <p class="cat-card__caption">El café que acompaña, y el resto también.</p>
             <span class="cat-card__cta">Ver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== CÓMO FUNCIONA ============================== -->
+    <section class="how" id="como-funciona">
+      <div class="container">
+        <header class="section-head section-head--center">
+          <span class="section-head__eyebrow">En 3 pasos</span>
+          <h2 class="section-head__title">Pedir es <em>simple</em>.</h2>
+        </header>
+
+        <ol class="how__steps">
+          <li class="how-step">
+            <span class="how-step__num">1</span>
+            <h3 class="how-step__title">Elegí lo que querés</h3>
+            <p class="how-step__desc">Recorré las categorías o sumá los destacados con un toque.</p>
+          </li>
+          <li class="how-step">
+            <span class="how-step__num">2</span>
+            <h3 class="how-step__title">Confirmá por WhatsApp</h3>
+            <p class="how-step__desc">Pedido con 24h de antelación. Te respondemos en minutos.</p>
+          </li>
+          <li class="how-step">
+            <span class="how-step__num">3</span>
+            <h3 class="how-step__title">Te lo llevamos a casa</h3>
+            <p class="how-step__desc">Pagás al recibir, en tarjeta o efectivo. Sin trámites online.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================== REMATE: AFICHE 'MENDIETA A CASA' ============================== -->
+    <section class="closing">
+      <div class="container closing__inner">
+        <figure class="closing__poster">
+          <img src="assets/images/promo/mendieta-a-casa.png"
+               alt="Afiche oficial de Mendieta a casa: el personaje en bicicleta llevando una caja de pedido"
+               width="340" height="540"
+               loading="lazy"
+               decoding="async" />
+        </figure>
+        <div class="closing__copy">
+          <span class="section-head__eyebrow">¿Listo?</span>
+          <h2 class="closing__title">Lo de siempre, pero <em>a casa</em>.</h2>
+          <p class="closing__lead">
+            Pedí lo que se te antoje y lo llevamos directo a tu mesa.
+            No hace falta esperar el sábado para una merienda con facturas.
+          </p>
+          <a href="#destacados" class="btn btn-primary closing__cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 4h2l2.3 12.5a2 2 0 0 0 2 1.5H18a2 2 0 0 0 2-1.6L21.5 8H6"/>
+              <circle cx="9.5" cy="20.5" r="1.5"/><circle cx="17" cy="20.5" r="1.5"/>
+            </svg>
+            <span>Hacer pedido</span>
           </a>
         </div>
       </div>

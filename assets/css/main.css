@@ -394,103 +394,293 @@ a { color: inherit; text-decoration: none; }
 /* Todas comparten el mismo rojo bordó para mantener identidad de marca,
    el toque de variedad lo dará el icono y la foto cuando lleguen. */
 
-/* ========================== PROMO BANNER 'A CASA' ==========================
-   Pieza principal de la home: afiche del cliente + condiciones del delivery
-   (24h antelacion, pago en tarjeta/efectivo, direccion + horario). */
-.promo-banner {
-  padding: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(1rem, 2vw, 1.5rem);
+/* ========================== SECTION HEAD (reusable) ========================== */
+.section-head {
+  margin-bottom: clamp(1.4rem, 3vw, 2rem);
+  max-width: 38rem;
 }
-.promo-banner__inner {
-  display: grid;
-  gap: clamp(1.4rem, 3vw, 2.5rem);
-  align-items: center;
+.section-head--center { margin-inline: auto; text-align: center; }
+.section-head--center .section-head__eyebrow { justify-content: center; }
+.section-head--center .section-head__eyebrow::before {
+  content: ''; width: 24px; height: 1.5px; background: currentColor; opacity: 0.7; margin-right: 0.6rem;
 }
-@media (min-width: 760px) {
-  .promo-banner__inner { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
+.section-head--center .section-head__eyebrow::after {
+  content: ''; width: 24px; height: 1.5px; background: currentColor; opacity: 0.7; margin-left: 0.6rem;
+}
+.section-head__eyebrow {
+  display: inline-flex; align-items: center;
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--color-brand);
+}
+.section-head__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 1.3rem + 2.2vw, 2.8rem);
+  line-height: 1.05;
+  letter-spacing: 0.005em;
+  margin: 0.5rem 0 0.4rem;
+  color: var(--color-ink);
+  text-transform: lowercase;
+}
+.section-head__title em { font-style: normal; color: var(--color-brand); }
+.section-head__lead {
+  font-size: 1rem; line-height: 1.55;
+  color: var(--color-ink-soft);
+  margin: 0;
 }
 
-.promo-banner__poster {
+/* ========================== HERO ========================== */
+.hero {
+  padding: clamp(2rem, 4vw, 3.5rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+  position: relative;
+  overflow: hidden;
+}
+.hero__inner {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+  align-items: center;
+}
+@media (min-width: 820px) {
+  .hero__inner { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4rem); }
+}
+
+.hero__copy { display: flex; flex-direction: column; gap: 1rem; max-width: 30rem; }
+.hero__eyebrow {
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--color-brand);
+}
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 1.5rem + 5vw, 4.6rem);
+  line-height: 1;
+  letter-spacing: 0.005em;
+  margin: 0.1rem 0 0;
+  color: var(--color-ink);
+  text-transform: lowercase;
+}
+.hero__title em { font-style: normal; color: var(--color-brand); }
+.hero__lead {
+  font-size: clamp(1.02rem, 0.95rem + 0.3vw, 1.18rem);
+  line-height: 1.55;
+  color: var(--color-ink-soft);
+  margin: 0;
+}
+.hero__cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 0.5rem; }
+.hero__cta .btn { width: auto; }
+
+/* Collage de fotos del hero — 3 fotos en composición orgánica */
+.hero__collage {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-width: 520px;
+  margin: 0 auto;
+  width: 100%;
+}
+.hero__photo {
+  margin: 0;
+  position: absolute;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 4px solid var(--color-bg);
+  box-shadow: var(--shadow-2);
+  background: var(--color-bg-cream);
+}
+.hero__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero__photo--big { width: 70%; height: 70%; top: 12%; left: 16%; z-index: 2; }
+.hero__photo--top { width: 38%; height: 38%; top: 0; right: 0; z-index: 3; border-radius: 50%; }
+.hero__photo--bot { width: 42%; height: 42%; bottom: 0; left: 0; z-index: 3; border-radius: 50%; }
+@media (max-width: 540px) {
+  .hero__collage { max-width: 360px; aspect-ratio: 1 / 0.9; }
+}
+
+/* ========================== STRIP DE BENEFICIOS ========================== */
+.benefits-strip {
+  padding: clamp(1.2rem, 2.5vw, 1.8rem) 0;
+  background: var(--color-bg-cream);
+  border-top: 1px solid color-mix(in srgb, var(--color-brand) 18%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-brand) 18%, transparent);
+  margin: clamp(1rem, 2vw, 1.5rem) 0;
+}
+.benefits-strip__inner {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) {
+  .benefits-strip__inner { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+}
+.benefit {
+  display: flex; gap: 0.85rem; align-items: start;
+  font-size: 0.92rem; line-height: 1.4; color: var(--color-ink-soft);
+}
+.benefit strong { display: block; color: var(--color-ink); font-weight: 600; font-size: 0.98rem; margin-bottom: 0.15rem; }
+.benefit__icon {
+  flex-shrink: 0; width: 40px; height: 40px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1.5px solid var(--color-brand);
+  color: var(--color-brand);
+  display: inline-grid; place-items: center;
+}
+.benefit__icon svg { width: 18px; height: 18px; }
+
+/* ========================== DESTACADOS ========================== */
+.featured { padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(1.5rem, 3vw, 2.5rem); }
+.featured__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+@media (min-width: 720px) { .featured__grid { grid-template-columns: repeat(3, 1fr); gap: 1.1rem; } }
+@media (min-width: 1080px) { .featured__grid { grid-template-columns: repeat(4, 1fr); } }
+
+.featured-card {
+  background: var(--color-card);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-1);
+  transition: transform 0.4s var(--ease), box-shadow 0.35s var(--ease-soft), border-color 0.3s var(--ease-soft);
+  display: flex; flex-direction: column;
+}
+.featured-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-3);
+  border-color: var(--color-brand);
+}
+.featured-card__photo {
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  background: var(--color-bg-cream);
+}
+.featured-card__photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.6s var(--ease);
+}
+.featured-card:hover .featured-card__photo img { transform: scale(1.06); }
+.featured-card__body { padding: 0.85rem 0.95rem 0.95rem; display: flex; flex-direction: column; gap: 0.25rem; flex: 1; }
+.featured-card__name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.15;
+  margin: 0;
+  letter-spacing: 0.005em;
+  color: var(--color-ink);
+  text-transform: lowercase;
+}
+.featured-card__desc {
+  font-size: 0.82rem; line-height: 1.4;
+  color: var(--color-ink-soft);
+  margin: 0;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  flex: 1;
+}
+.featured-card__foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.5rem; margin-top: 0.6rem;
+}
+.featured-card__price {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+/* ========================== CÓMO FUNCIONA ========================== */
+.how {
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
+  background: var(--color-bg-cream);
+  border-top: 1px solid color-mix(in srgb, var(--color-brand) 14%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-brand) 14%, transparent);
+  margin: clamp(2rem, 4vw, 3rem) 0;
+}
+.how__steps {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: 1fr;
+  counter-reset: how;
+}
+@media (min-width: 720px) { .how__steps { grid-template-columns: repeat(3, 1fr); gap: 1.4rem; } }
+
+.how-step {
+  background: var(--color-card);
+  border-radius: var(--r-lg);
+  padding: 1.5rem 1.4rem 1.6rem;
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-1);
+  position: relative;
+}
+.how-step__num {
+  display: inline-grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--color-brand);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  box-shadow: 0 4px 12px -3px color-mix(in srgb, var(--color-brand) 50%, transparent);
+}
+.how-step__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.1;
+  letter-spacing: 0.005em;
+  margin: 0 0 0.4rem;
+  color: var(--color-ink);
+  text-transform: lowercase;
+}
+.how-step__desc { font-size: 0.94rem; line-height: 1.5; color: var(--color-ink-soft); margin: 0; }
+
+/* ========================== CLOSING (afiche + CTA) ========================== */
+.closing {
+  padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(3rem, 5vw, 4rem);
+}
+.closing__inner {
+  display: grid;
+  gap: clamp(1.8rem, 3vw, 2.5rem);
+  align-items: center;
+}
+@media (min-width: 820px) {
+  .closing__inner { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+}
+.closing__poster {
   margin: 0;
   display: flex;
   justify-content: center;
 }
-.promo-banner__poster img {
+.closing__poster img {
   width: 100%;
-  max-width: 360px;
+  max-width: 340px;
   height: auto;
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-2);
   border: 1px solid var(--color-line);
 }
-
-.promo-banner__copy {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  background: var(--color-bg-cream);
-  border: 1px solid color-mix(in srgb, var(--color-brand) 18%, transparent);
-  border-radius: var(--r-lg);
-  padding: clamp(1.4rem, 3vw, 2rem);
-  box-shadow: var(--shadow-1);
-}
-
-.promo-banner__title {
+.closing__copy { display: flex; flex-direction: column; gap: 1rem; }
+.closing__title {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 1.6rem + 4vw, 4rem);
-  line-height: 1;
+  font-size: clamp(2rem, 1.4rem + 2.5vw, 3.2rem);
+  line-height: 1.02;
   letter-spacing: 0.005em;
-  margin: 0;
+  margin: 0.4rem 0 0;
   color: var(--color-ink);
   text-transform: lowercase;
 }
-.promo-banner__title em {
-  font-style: normal;
-  color: var(--color-brand);     /* "a casa" en naranja como acento dentro del título */
-}
-.promo-banner__lead {
+.closing__title em { font-style: normal; color: var(--color-brand); }
+.closing__lead {
   font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--color-ink-soft);
   margin: 0;
   max-width: 32rem;
 }
-
-.promo-banner__points {
-  list-style: none;
-  padding: 0;
-  margin: 0.6rem 0 0.4rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-}
-.promo-banner__points li {
-  display: flex;
-  gap: 0.85rem;
-  align-items: start;
-  font-size: 0.95rem;
-  line-height: 1.4;
-  color: var(--color-ink-soft);
-}
-.promo-banner__points strong { color: var(--color-ink); font-weight: 600; }
-
-.promo-banner__icon {
-  flex-shrink: 0;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: #FFFFFF;
-  border: 1.5px solid var(--color-brand);
-  color: var(--color-brand);
-  display: inline-grid;
-  place-items: center;
-}
-.promo-banner__icon svg { width: 18px; height: 18px; }
-
-.promo-banner__cta {
-  width: auto;
-  align-self: flex-start;
-  margin-top: 0.5rem;
-}
-.promo-banner__cta svg { width: 16px; height: 16px; }
+.closing__cta { width: auto; align-self: flex-start; margin-top: 0.4rem; }
 
 /* ========================== ORDER BAR ========================== */
 .order-bar {

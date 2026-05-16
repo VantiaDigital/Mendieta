@@ -32,6 +32,7 @@ window.MENDIETA_MENU = {
           name: 'Medialuna de manteca',
           description: 'Hojaldrada, brillante, dulce. La de siempre.',
           price: null,
+          image: 'assets/images/photos/prod-medialuna-md.jpg',
         },
         {
           id: 'medialuna-grasa',
@@ -218,6 +219,7 @@ window.MENDIETA_MENU = {
           name: 'Pre-pizza',
           description: 'Base de pizza casera, para llevar y hornear en casa.',
           price: null,
+          image: 'assets/images/photos/prod-salados-md.jpg',
         },
       ],
     },
@@ -239,7 +241,7 @@ window.MENDIETA_MENU = {
           name: 'Café con leche',
           description: 'Café con leche caliente, espuma cremosa.',
           price: null,
-          image: 'assets/images/photos/cafe-latte-art-1-md.jpg',
+          image: 'assets/images/photos/prod-cafe-latte-md.jpg',
         },
         {
           id: 'cafe-sin-lactosa',
@@ -261,6 +263,7 @@ window.MENDIETA_MENU = {
           name: 'Cortado',
           description: 'Espresso cortado con un toque de leche caliente.',
           price: null,
+          image: 'assets/images/photos/prod-capuchino-md.jpg',
         },
         {
           id: 'te',
