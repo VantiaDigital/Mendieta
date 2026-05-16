@@ -7,21 +7,21 @@
 ============================================================ */
 
 :root {
-  /* — Paleta cálida argentina (provisional, ajustable) — */
-  --color-bg: #F5EDDD;          /* crema papel kraft */
-  --color-bg-soft: #FAF4E6;
-  --color-card: #FFFFFF;
-  --color-ink: #1A1410;          /* texto principal (negro tipográfico cálido) */
-  --color-ink-soft: #4A3A2E;
-  --color-muted: #8A7A66;
+  /* — Paleta OFICIAL de Mendieta (extraída de los PDFs de Coolors) — */
+  --color-bg: #FEF9C0;            /* amarillo crema (fondo principal) */
+  --color-bg-soft: #FAF6CA;       /* variante más suave */
+  --color-card: #FFFCE8;          /* tarjetas (crema casi blanco) */
+  --color-ink: #2A2818;            /* texto principal (oliva muy oscuro) */
+  --color-ink-soft: #736E41;       /* oliva oscuro (secundario) */
+  --color-muted: #A7A177;          /* oliva claro */
 
-  --color-brand: #8C2D2D;        /* bordeaux argentino (acento principal) */
-  --color-brand-dark: #6E1F1F;
-  --color-butter: #E8B842;       /* dorado manteca */
-  --color-leche: #C98F4A;        /* dulce de leche */
+  --color-brand: #B4351D;          /* terracota (acento principal) */
+  --color-brand-dark: #8C2814;
+  --color-butter: #FAD25B;         /* amarillo mostaza */
+  --color-leche: #FFB759;          /* naranja claro / dulce de leche */
 
-  --color-line: rgba(26, 20, 16, 0.10);
-  --color-line-strong: rgba(26, 20, 16, 0.20);
+  --color-line: rgba(42, 40, 24, 0.12);
+  --color-line-strong: rgba(42, 40, 24, 0.22);
 
   /* — Tipografía — */
   --font-display: 'DM Serif Display', Georgia, serif;
@@ -226,10 +226,25 @@ a { color: inherit; text-decoration: none; }
 .order-bar__head {
   display: flex;
   flex-wrap: wrap;
-  align-items: end;
+  align-items: center;
   justify-content: space-between;
-  gap: 0.8rem 2rem;
+  gap: 1.2rem 2rem;
 }
+.order-bar__text { flex: 1 1 auto; min-width: 0; }
+.order-bar__photo {
+  display: none;
+  flex: 0 0 auto;
+  width: clamp(140px, 22vw, 200px);
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0;
+  border: 4px solid var(--color-card);
+  box-shadow: var(--shadow-2);
+}
+.order-bar__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (min-width: 760px) { .order-bar__photo { display: block; } }
+
 .order-bar__title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
@@ -356,11 +371,11 @@ a { color: inherit; text-decoration: none; }
   color: rgba(255,255,255,0.92);
 }
 .product__media svg { width: 60%; max-width: 80px; opacity: 0.95; }
-.product--shade-1 .product__media { background: linear-gradient(135deg, #E8B842 0%, #C98F4A 100%); }
-.product--shade-2 .product__media { background: linear-gradient(135deg, #C98F4A 0%, #8C5631 100%); }
-.product--shade-3 .product__media { background: linear-gradient(135deg, #D6694B 0%, #8C2D2D 100%); }
-.product--shade-4 .product__media { background: linear-gradient(135deg, #B58360 0%, #5A3A28 100%); }
-.product--shade-5 .product__media { background: linear-gradient(135deg, #EBC890 0%, #A37340 100%); }
+.product--shade-1 .product__media { background: linear-gradient(135deg, #FAD25B 0%, #FFB759 100%); }
+.product--shade-2 .product__media { background: linear-gradient(135deg, #FFB759 0%, #B4351D 100%); }
+.product--shade-3 .product__media { background: linear-gradient(135deg, #B4351D 0%, #8C2814 100%); }
+.product--shade-4 .product__media { background: linear-gradient(135deg, #A7A177 0%, #736E41 100%); }
+.product--shade-5 .product__media { background: linear-gradient(135deg, #FAD25B 0%, #A7A177 100%); }
 
 .product__tag {
   position: absolute;
@@ -770,6 +785,16 @@ a { color: inherit; text-decoration: none; }
 }
 .map iframe { width: 100%; height: 100%; min-height: 380px; border: 0; display: block; }
 
+.local-photo {
+  margin: 0;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  aspect-ratio: 16/10;
+  background: var(--color-bg-soft);
+}
+.local-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
 .cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .cta-row .btn { width: auto; }
 
@@ -815,16 +840,26 @@ a { color: inherit; text-decoration: none; }
 
 /* History */
 .story-image {
-  aspect-ratio: 4/5;
+  aspect-ratio: 11/10;        /* ratio del cartel original (1600x1452) */
   border-radius: var(--r-lg);
-  background:
-    radial-gradient(circle at 30% 20%, rgba(232, 184, 66, 0.4), transparent 60%),
-    linear-gradient(160deg, #C98F4A 0%, #6E1F1F 100%);
   position: relative;
   overflow: hidden;
   border: 1px solid var(--color-line);
+  background: var(--color-bg-soft);
+  margin: 0;
 }
-.story-image::after {
+.story-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.story-image--placeholder {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(250, 210, 91, 0.4), transparent 60%),
+    linear-gradient(160deg, #FFB759 0%, #B4351D 100%);
+}
+.story-image--placeholder::after {
   content: '';
   position: absolute; inset: 0;
   background-image: repeating-linear-gradient(0deg, transparent 0 22px, rgba(0,0,0,0.06) 22px 23px);
