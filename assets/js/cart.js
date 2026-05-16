@@ -1,38 +1,32 @@
 /* ============================================================
    CART + WHATSAPP CHECKOUT — Mendieta
    ------------------------------------------------------------
-   Gestiona el carrito flotante y el envío del pedido por WhatsApp.
+   Carrito persistente (localStorage) + envío de pedido por
+   WhatsApp con mensaje pre-formateado.
 
-   PARA EL CLIENTE: si cambia el número del local, modificar
-   la constante WHATSAPP_NUMBER (formato internacional, sin "+",
-   ni espacios, ni guiones). Ejemplo: '34696985385'.
+   PARA EL CLIENTE: cambiar WHATSAPP_NUMBER abajo si el número
+   del local cambia (formato internacional, sin "+").
 ============================================================ */
 
 (function () {
   'use strict';
 
-  // ───────────────────────────────────────────────────────────
-  // CONFIG — editable desde aquí
-  // ───────────────────────────────────────────────────────────
+  // ─────────────── CONFIG ───────────────
   const WHATSAPP_NUMBER = '34696985385';   // ← número del local (sin "+")
   const STORE_NAME = 'Mendieta';
   const STORAGE_KEY = 'mendieta-cart-v1';
-  // ───────────────────────────────────────────────────────────
+  const FORM_KEY = 'mendieta-form-v1';
+  // ──────────────────────────────────────
 
   const data = window.MENDIETA_MENU;
   if (!data) return;
 
-  // Index todos los productos por id para lookup rápido
   const productById = new Map();
-  data.categories.forEach((cat) => {
-    cat.items.forEach((it) => productById.set(it.id, it));
-  });
+  data.categories.forEach((cat) => cat.items.forEach((it) => productById.set(it.id, it)));
 
   const fmtPrice = (n) =>
     new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'EUR',
-      minimumFractionDigits: 2,
+      style: 'currency', currency: 'EUR', minimumFractionDigits: 2,
     }).format(n);
 
   /* ---- State ---- */
@@ -43,29 +37,26 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return [];
       const parsed = JSON.parse(raw);
-      // sanity: solo items que sigan existiendo
       return parsed.filter((it) => productById.has(it.id) && Number.isFinite(it.qty) && it.qty > 0);
-    } catch {
-      return [];
-    }
+    } catch { return []; }
   }
-
   function saveCart() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); } catch {}
   }
-
-  function totalItems() {
-    return cart.reduce((acc, it) => acc + it.qty, 0);
+  function qtyOf(id) {
+    const it = cart.find((x) => x.id === id);
+    return it ? it.qty : 0;
   }
+  function totalItems() { return cart.reduce((a, x) => a + x.qty, 0); }
   function totalPrice() {
-    return cart.reduce((acc, it) => {
-      const p = productById.get(it.id);
-      return acc + (p?.price ? p.price * it.qty : 0);
+    return cart.reduce((a, x) => {
+      const p = productById.get(x.id);
+      return a + (p?.price ? p.price * x.qty : 0);
     }, 0);
   }
 
   /* ---- DOM ---- */
-  const fab = document.getElementById('cartFab');
+  const cartBtn = document.getElementById('cartFab');
   const countEl = document.getElementById('cartCount');
   const drawer = document.getElementById('cartDrawer');
   const overlay = document.getElementById('drawerOverlay');
@@ -73,13 +64,28 @@
   const body = document.getElementById('drawerBody');
   const checkoutBtn = document.getElementById('checkoutBtn');
 
-  /* ---- Render ---- */
-  function renderFab() {
+  /* ---- Render del badge en el header ---- */
+  function renderCounter() {
     const n = totalItems();
-    countEl.textContent = n > 0 ? n : '';
-    fab.classList.toggle('is-visible', n > 0);
+    if (countEl) countEl.textContent = n > 0 ? n : '';
   }
 
+  /* ---- Render de los controles +/− en cada producto ---- */
+  function renderAddSlots() {
+    if (!window.MendietaMenuRender) return;
+    // Construir set de ids que están en el carrito
+    const map = new Map(cart.map((it) => [it.id, it.qty]));
+    // Re-renderizar todos los slots conocidos (los que tengan precio)
+    document.querySelectorAll('.product__add-slot[data-slot]').forEach((slot) => {
+      const id = slot.dataset.slot;
+      // Si el producto no tiene precio, no hacemos nada (queda "consultar")
+      const product = productById.get(id);
+      if (!product || product.price == null) return;
+      window.MendietaMenuRender.renderAddSlot(id, map.get(id) || 0);
+    });
+  }
+
+  /* ---- Render del drawer ---- */
   function renderDrawer() {
     if (cart.length === 0) {
       body.innerHTML = `
@@ -89,16 +95,13 @@
             <circle cx="28" cy="54" r="3"/>
             <circle cx="48" cy="54" r="3"/>
           </svg>
-          <p>Tu carrito todavía está vacío.<br>Elegí algo de la vitrina.</p>
+          <p>Tu carrito todavía está vacío.<br>Elegí algo del catálogo.</p>
         </div>
       `;
       checkoutBtn.disabled = true;
-      checkoutBtn.style.opacity = '0.5';
       return;
     }
-
     checkoutBtn.disabled = false;
-    checkoutBtn.style.opacity = '1';
 
     const itemsHtml = cart.map((it) => {
       const p = productById.get(it.id);
@@ -135,45 +138,41 @@
           <input id="ck-name" name="name" autocomplete="name" required placeholder="Tu nombre" />
           <span class="error-msg">Hace falta tu nombre.</span>
         </div>
-
         <div class="form-field" data-field="phone">
           <label for="ck-phone">Teléfono</label>
           <input id="ck-phone" name="phone" type="tel" autocomplete="tel" required placeholder="+34 …" />
           <span class="error-msg">Hace falta un teléfono.</span>
         </div>
-
         <div class="form-field" data-field="address">
           <label for="ck-address">Dirección de entrega</label>
           <input id="ck-address" name="address" autocomplete="street-address" required placeholder="Calle, número, piso · barrio" />
           <span class="error-msg">Necesitamos tu dirección.</span>
         </div>
-
         <div class="form-field" data-field="notes">
           <label for="ck-notes">Notas (opcional)</label>
           <textarea id="ck-notes" name="notes" placeholder="Alergias, hora preferida, indicaciones…"></textarea>
         </div>
       </div>
     `;
-
-    // Restaurar valores de form si los hay
     restoreFormValues();
   }
 
   function render() {
-    renderFab();
+    renderCounter();
+    renderAddSlots();
     renderDrawer();
   }
 
   /* ---- Operations ---- */
   function add(id) {
     const p = productById.get(id);
-    if (!p || p.price == null) return; // sin precio no se puede agregar al carrito
-    const existing = cart.find((it) => it.id === id);
+    if (!p || p.price == null) return;
+    const existing = cart.find((x) => x.id === id);
     if (existing) existing.qty += 1;
     else cart.push({ id, qty: 1 });
     saveCart();
     render();
-    pulseFab();
+    pulseBadge();
   }
   function inc(id) {
     const it = cart.find((x) => x.id === id);
@@ -196,9 +195,8 @@
     overlay.classList.add('is-open');
     document.body.style.overflow = 'hidden';
     drawer.setAttribute('aria-hidden', 'false');
-    // primer foco
     const firstInput = drawer.querySelector('input, button');
-    setTimeout(() => firstInput?.focus({ preventScroll: true }), 320);
+    setTimeout(() => firstInput?.focus({ preventScroll: true }), 300);
   }
   function closeDrawer() {
     drawer.classList.remove('is-open');
@@ -208,8 +206,7 @@
     lastFocus?.focus?.();
   }
 
-  /* ---- Form persistence (no pierde datos al cerrar drawer) ---- */
-  const FORM_KEY = 'mendieta-form-v1';
+  /* ---- Form persistence ---- */
   function getFormValues() {
     return {
       name: drawer.querySelector('#ck-name')?.value.trim() || '',
@@ -233,7 +230,6 @@
       if ($('#ck-notes')) $('#ck-notes').value = v.notes || '';
     } catch {}
   }
-
   function validateAndCollect() {
     const v = getFormValues();
     let ok = true;
@@ -246,6 +242,7 @@
     return ok ? v : null;
   }
 
+  /* ---- WhatsApp message ---- */
   function buildWhatsAppMessage(form) {
     const lines = [];
     lines.push(`🥐 *NUEVO PEDIDO — ${STORE_NAME}*`);
@@ -270,7 +267,6 @@
     }
     return lines.join('\n');
   }
-
   function sendOrder() {
     if (cart.length === 0) return;
     const form = validateAndCollect();
@@ -285,62 +281,53 @@
     window.open(url, '_blank', 'noopener');
   }
 
-  /* ---- Pulse del FAB cuando se agrega algo ---- */
-  function pulseFab() {
-    fab.animate(
-      [
-        { transform: 'scale(1)' },
-        { transform: 'scale(1.18)' },
-        { transform: 'scale(1)' },
-      ],
-      { duration: 380, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+  function pulseBadge() {
+    if (!cartBtn) return;
+    cartBtn.animate(
+      [{ transform: 'scale(1)' }, { transform: 'scale(1.08)' }, { transform: 'scale(1)' }],
+      { duration: 320, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
     );
   }
 
   /* ---- Eventos ---- */
 
-  // Agregar desde tarjeta de producto
+  // Botones + en producto y +/- en el control inline
   document.addEventListener('click', (ev) => {
     const addBtn = ev.target.closest('[data-add]');
-    if (addBtn) {
-      add(addBtn.dataset.add);
-      // micro feedback visual en el botón
-      addBtn.animate(
-        [{ transform: 'scale(1)' }, { transform: 'scale(0.92)' }, { transform: 'scale(1)' }],
-        { duration: 220 }
-      );
-    }
+    if (addBtn) { add(addBtn.dataset.add); return; }
+    const incBtn = ev.target.closest('.product__add-slot [data-inc]');
+    if (incBtn) { inc(incBtn.dataset.inc); return; }
+    const decBtn = ev.target.closest('.product__add-slot [data-dec]');
+    if (decBtn) { dec(decBtn.dataset.dec); return; }
   });
 
-  // Drawer open/close
-  fab.addEventListener('click', openDrawer);
-  closeBtn.addEventListener('click', closeDrawer);
-  overlay.addEventListener('click', closeDrawer);
+  cartBtn?.addEventListener('click', openDrawer);
+  closeBtn?.addEventListener('click', closeDrawer);
+  overlay?.addEventListener('click', closeDrawer);
 
   // Plus/minus dentro del drawer
-  body.addEventListener('click', (ev) => {
-    const inc$ = ev.target.closest('[data-inc]');
-    const dec$ = ev.target.closest('[data-dec]');
-    if (inc$) inc(inc$.dataset.inc);
-    else if (dec$) dec(dec$.dataset.dec);
+  body?.addEventListener('click', (ev) => {
+    const incEl = ev.target.closest('.cart-item__qty [data-inc]');
+    const decEl = ev.target.closest('.cart-item__qty [data-dec]');
+    if (incEl) inc(incEl.dataset.inc);
+    else if (decEl) dec(decEl.dataset.dec);
   });
-
-  // Persistir form al tipear
-  body.addEventListener('input', (ev) => {
+  body?.addEventListener('input', (ev) => {
     if (ev.target.matches('input, textarea')) saveFormValues();
   });
 
-  // Checkout
-  checkoutBtn.addEventListener('click', sendOrder);
+  checkoutBtn?.addEventListener('click', sendOrder);
 
-  // ESC cierra drawer
   document.addEventListener('keydown', (ev) => {
     if (ev.key === 'Escape' && drawer.classList.contains('is-open')) closeDrawer();
   });
 
-  // Expone API mínima por si se quiere abrir desde fuera
-  window.MendietaCart = { open: openDrawer, close: closeDrawer, add };
+  // Cuando menu.js termina de pintar, refrescamos los slots
+  // (los scripts cargan en orden con defer, pero el render de menú
+  // crea DOM en runtime; usamos un microtask para asegurar el orden)
+  Promise.resolve().then(render);
+  // Y también en window load por si acaso
+  window.addEventListener('load', render);
 
-  // Primer render
-  render();
+  window.MendietaCart = { open: openDrawer, close: closeDrawer, add };
 })();

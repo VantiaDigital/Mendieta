@@ -1,28 +1,17 @@
 /* ============================================================
    MAIN — Mendieta
    ------------------------------------------------------------
-   Header sticky, mobile nav, reveals on scroll, current year.
+   Mobile nav, reveals on scroll, año en footer.
 ============================================================ */
 
 (function () {
   'use strict';
 
-  /* ---- Año actual en el footer ---- */
+  /* Año actual en el footer */
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---- Header shadow on scroll ---- */
-  const header = document.getElementById('siteHeader');
-  let lastY = 0;
-  const onScroll = () => {
-    const y = window.scrollY;
-    if (header) header.classList.toggle('is-scrolled', y > 8);
-    lastY = y;
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  /* ---- Mobile nav toggle ---- */
+  /* Mobile nav toggle */
   const toggle = document.getElementById('navToggle');
   const mobileNav = document.getElementById('mobileNav');
   let mobileOpen = false;
@@ -42,12 +31,11 @@
   };
   toggle?.addEventListener('click', () => (mobileOpen ? closeMobile() : openMobile()));
   mobileNav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMobile));
-
   document.addEventListener('keydown', (ev) => {
     if (ev.key === 'Escape' && mobileOpen) closeMobile();
   });
 
-  /* ---- Reveals on scroll ---- */
+  /* Reveals on scroll */
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(
       (entries) => {
@@ -58,37 +46,15 @@
           }
         });
       },
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.04 }
     );
-
     const observeAll = () => {
-      document
-        .querySelectorAll('[data-reveal]:not(.is-visible), [data-reveal-stagger]:not(.is-visible)')
-        .forEach((el) => io.observe(el));
+      document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) => io.observe(el));
     };
     observeAll();
-
-    // Observamos también lo que añade menu.js / cart.js después
     const mo = new MutationObserver(observeAll);
     mo.observe(document.body, { childList: true, subtree: true });
   } else {
-    // Sin IO, mostrar todo
-    document.querySelectorAll('[data-reveal], [data-reveal-stagger]').forEach((el) =>
-      el.classList.add('is-visible')
-    );
+    document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-visible'));
   }
-
-  /* ---- Smooth scroll para anclas internas ---- */
-  document.querySelectorAll('a[href^="#"]').forEach((a) => {
-    a.addEventListener('click', (ev) => {
-      const href = a.getAttribute('href');
-      if (!href || href === '#' || href.length < 2) return;
-      const target = document.querySelector(href);
-      if (!target) return;
-      ev.preventDefault();
-      const headerH = header ? header.offsetHeight + 8 : 80;
-      const top = target.getBoundingClientRect().top + window.scrollY - headerH;
-      window.scrollTo({ top, behavior: 'smooth' });
-    });
-  });
 })();

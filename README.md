@@ -1,86 +1,141 @@
 # Mendieta · Pastelería Argentina
 
 Web del local **Mendieta** (Roupag S.L) — Carrer de Mallorca, 517, Barcelona.
-Sitio estático en HTML/CSS/JS vanilla. Pensado para desplegarse en **Cloudflare Pages**.
+Sitio estático en HTML/CSS/JS vanilla, sin build. Deploy en **Cloudflare Pages**.
+
+## Filosofía
+
+La web es **una app de pedido**, no un sitio institucional. La home (`index.html`)
+arranca directamente con el catálogo: la persona que llega desde el botón de
+Google Maps tiene que poder pedir en 5 toques. La información de marca
+(historia, local, contacto) vive en páginas separadas accesibles desde el header.
 
 ## Estructura
 
 ```
-mendieta/
-├── index.html              ← una sola página, todas las secciones
-├── _headers                ← cabeceras para Cloudflare Pages
-├── _redirects              ← redirecciones para Cloudflare Pages
+mendieta-web/
+├── index.html                ← home = catálogo de pedido directo
+├── pages/
+│   ├── historia.html         ← Quiénes somos
+│   ├── local.html            ← mapa, horarios, cómo llegar
+│   └── contacto.html         ← WhatsApp, teléfono, email, redes
+├── _headers                  ← cabeceras Cloudflare Pages
+├── _redirects                ← redirecciones Cloudflare Pages
 ├── robots.txt
 ├── README.md
 └── assets/
-    ├── css/main.css        ← todo el estilo
-    ├── js/menu-data.js     ← productos del menú (lo que más se edita)
-    ├── js/menu.js          ← renderiza el menú en pantalla
-    ├── js/cart.js          ← carrito + envío WhatsApp
-    ├── js/main.js          ← header, mobile nav, animaciones
-    └── images/             ← carpeta para fotos reales (cuando lleguen)
+    ├── css/main.css          ← todo el estilo (paleta centralizada en :root)
+    ├── js/menu-data.js       ← productos (← lo que más se edita)
+    ├── js/menu.js            ← renderiza catálogo + tabs
+    ├── js/cart.js            ← carrito + envío WhatsApp
+    ├── js/main.js            ← mobile nav, reveals, año footer
+    └── images/               ← fotos reales (cuando lleguen)
 ```
 
 ## Deploy en Cloudflare Pages
 
-1. Subir esta carpeta como repo en GitHub.
-2. Cloudflare Pages → Create project → Connect to Git.
-3. **Build command**: *vacío*
-4. **Build output directory**: `/`
-5. **Root directory**: `mendieta` (si la web está dentro de un repo más grande), o `/` si está sola.
-6. Conectar dominio personalizado (ej. `mendieta.bcn` o el que se decida).
+1. Push a un repo en GitHub.
+2. Cloudflare Pages → Create project → Connect to Git → seleccionar el repo.
+3. **Build command**: vacío (no hay build).
+4. **Build output directory**: `/`.
+5. **Root directory**: `/` (el repo es la web entera).
+6. Conectar dominio personalizado cuando lo tengas.
 
-No hay build. No hay dependencias. Cloudflare Pages sirve los archivos tal cual.
+Sin build, sin node, sin dependencias. Cloudflare sirve los archivos tal cual.
 
-## Cómo cambiar cosas básicas
+## Cómo cambiar cosas
 
-### 1. Cambiar el número de WhatsApp donde llegan los pedidos
-Editar `assets/js/cart.js` arriba del todo:
+### Cambiar el número de WhatsApp del local
+`assets/js/cart.js`, primera línea de CONFIG:
 ```js
-const WHATSAPP_NUMBER = '34696985385';  // ← cambiar aquí, formato internacional, sin "+"
+const WHATSAPP_NUMBER = '34696985385';  // ← formato internacional, sin "+"
 ```
 
-### 2. Editar el menú (precios, productos, descripciones)
-Toda la carta está en `assets/js/menu-data.js`. Cada producto:
+### Editar el menú (productos, precios, descripciones)
+Todo en `assets/js/menu-data.js`. Cada producto:
 ```js
 {
-  id: 'medialuna-manteca',        // único, no repetir
+  id: 'medialuna-manteca',
   name: 'Medialuna de manteca',
   description: 'Hojaldrada, brillante, dulce. La de siempre.',
-  price: 1.20,                    // número, o `null` si no hay precio fijo (sale "consultar")
-  tags: ['sin lactosa'],          // opcional
+  price: 1.20,            // número en €, o `null` si no hay precio fijo → muestra "consultar"
+  tags: ['sin lactosa'],  // opcional
 }
 ```
-- Para **quitar** un producto: borrar su bloque.
-- Para **agregar**: copiar el bloque, cambiar `id`, `name`, `description`, `price`.
-- Para **mostrar "consultar"** en lugar de precio: poner `price: null`.
+- **Quitar**: borrar el bloque.
+- **Agregar**: copiar un bloque, cambiar `id` (único) y `name`/`price`.
+- **Mostrar "consultar"**: poner `price: null`.
 
-### 3. Cambiar horarios
-Buscar en `index.html` los bloques que dicen `07:00` y `07:30` (están en HERO y en "Cómo llegar"). Son texto plano, fácil de editar.
+Los productos con `price: null` **no se pueden agregar al carrito**.
 
-### 4. Cambiar la dirección o el mapa
-- Texto: buscar `Carrer de Mallorca, 517` en `index.html`.
-- Mapa: el iframe de Google Maps usa `q=Carrer+de+Mallorca+517+Barcelona`. Reemplazar la dirección dentro del `src` del iframe (URL-encoded con `+` en lugar de espacios).
+### Cambiar paleta o tipografía
+Todo centralizado en `assets/css/main.css` arriba del archivo:
+```css
+:root {
+  --color-bg: #F5EDDD;        /* crema fondo */
+  --color-ink: #1A1410;       /* texto */
+  --color-brand: #8C2D2D;     /* bordeaux */
+  --color-butter: #E8B842;    /* dorado manteca */
+  --color-leche: #C98F4A;     /* dulce de leche */
+  /* ... */
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Inter', sans-serif;
+}
+```
+Cambiando esas 6 variables se actualiza toda la web.
 
-### 5. Cambiar redes sociales
-En el footer de `index.html`: enlaces a Instagram, Facebook y WhatsApp. Buscar `wa.me`, `instagram.com`, `facebook.com`.
+### Cambiar horarios o dirección
+- `index.html` (order-bar) y `pages/local.html` (info-list).
+- Mapa: iframe en `local.html` con `q=Carrer+de+Mallorca+517+Barcelona`.
 
-## Cómo funciona el carrito
+## Cómo funciona el flujo de pedido
 
-- El cliente toca **Agregar** en una tarjeta de producto.
-- Se acumula en el carrito flotante (botón abajo a la derecha).
-- Al tocar el carrito, se abre un panel con todos los items, cantidades, total, y un formulario (nombre, teléfono, dirección, notas).
-- Al tocar **Enviar pedido por WhatsApp**, se abre WhatsApp (web o app) con el mensaje ya escrito al número del local.
+1. Persona entra a la home → ve el catálogo directamente.
+2. Toca **+** en los productos que quiere → contador del header se actualiza.
+3. Toca el botón **Carrito** del header → se abre el drawer.
+4. Ajusta cantidades, llena nombre/teléfono/dirección/notas.
+5. Toca **Enviar pedido por WhatsApp** → se abre `wa.me/34696985385` con el
+   mensaje completo pre-escrito al local.
 
-Los productos **sin precio** (`price: null`) **no se pueden agregar al carrito** — aparecen como "consultar" y el cliente puede llamar/escribir directamente.
+El carrito persiste en `localStorage` y los datos del formulario en
+`sessionStorage` (no se pierden si cierra la pestaña por error).
 
-El carrito se guarda en `localStorage` — si el cliente cierra y vuelve más tarde, lo encuentra.
+## Mensaje de WhatsApp generado
+
+```
+🥐 *NUEVO PEDIDO — Mendieta*
+
+👤 Nombre: [nombre]
+📍 Dirección: [dirección]
+📞 Teléfono: [teléfono]
+
+🛒 *PEDIDO:*
+
+2x Medialuna de manteca — 2,40€
+1x Tarta de ricota — 4,50€
+
+💰 *TOTAL: 6,90€*
+
+📝 Notas: [si las hay]
+```
 
 ## Datos que faltan / a confirmar con el cliente
 
-Ver bloque al final del último mensaje del proyecto. Hay precios marcados como `null` que conviene confirmar y reemplazar.
+- **Precios reales**: solo 3 confirmados (facturas docena 8€, chapata jamón
+  y queso 2,40€, café con leche sin lactosa 1,70€). El resto está como
+  `null` y muestra "consultar". El cliente debe pasarnos el listado oficial.
+- **Lista de productos**: armada combinando carta.menu + Tripadvisor +
+  Encants Nous + Yelp + inferencia razonable. Confirmar qué tienen realmente.
+- **Imágenes**: hoy son placeholders SVG. Sustituir por las fotos de la
+  jornada de captura del 11/04 (carpeta `Documentos/Mendieta/`).
+- **Delivery**: la web hoy pide dirección obligatoria. Si Mendieta solo
+  hace recogida en tienda, hay que ajustar el formulario.
+- **Referencia visual del Instagram**: la paleta y tipografía actuales son
+  inferencia. Cuando el cliente vea esta primera versión, ajustar las
+  6 variables CSS de `:root` para acercarse al feel real del IG.
 
 ## Licencia
 
 © Roupag S.L · Todos los derechos reservados.
-Desarrollo: Vantia · Marketing Digital (incluido como caso de portfolio según contrato).
+Desarrollo: Vantia · Marketing Digital (incluido como caso de portfolio
+según contrato).
