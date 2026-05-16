@@ -19,8 +19,8 @@
   --color-red: #B4351D;            /* rojo terracota (zona INFO) */
   --color-red-dark: #8C2814;
   --color-orange-light: #FFB759;   /* naranja claro (acentos suaves) */
-  --color-orange: #D8551A;         /* NARANJA OSCURO (zona PEDIDO, legible para texto display) */
-  --color-orange-dark: #B53F0E;
+  --color-orange: #B5430E;         /* NARANJA CARTEL (extraído del cartel real del local, zona PEDIDO) */
+  --color-orange-dark: #8C320A;
   --color-butter: #FAD25B;         /* amarillo mostaza */
 
   /* Aliases que cambian según el tema en body.theme-* */
