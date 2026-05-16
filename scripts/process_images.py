@@ -33,6 +33,12 @@ JOBS = [
     {"src": "IMG_9729.JPG", "slug": "interior-estantes", "crop": (0.05, 0.05, 0.95, 0.95), "ratio": "landscape", "enhance": "medium"},
     {"src": "IMG_9730.JPG", "slug": "interior-madera", "crop": (0.0, 0.0, 0.95, 0.85), "ratio": "landscape", "enhance": "medium"},
     {"src": "IMG_9731.JPG", "slug": "interior-yerba-te", "crop": (0.05, 0.10, 0.95, 0.95), "ratio": "landscape", "enhance": "medium"},
+
+    # Exterior del local: frame extraído del Reel 1 (Download.mp4) en t=1s.
+    # Muestra la fachada con cartel MENDIETA, número 517, vidriera y calle.
+    # Crop top 0.30 para sacar el texto overlay "Cuando vas a Mendieta solo por un café"
+    # que viene del reel y duplicaría info de la página.
+    {"src": "exterior-local-frame.jpg", "slug": "exterior-local", "crop": (0.0, 0.30, 1.0, 1.0), "ratio": "portrait", "enhance": "medium"},
 ]
 
 RATIOS = {
