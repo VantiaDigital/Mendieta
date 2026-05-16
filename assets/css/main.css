@@ -16,17 +16,21 @@
   --color-ink-soft: #736E41;       /* oliva oscuro (secundario) */
   --color-muted: #A7A177;          /* oliva claro */
 
-  --color-red: #B4351D;            /* rojo terracota (zona INFO) */
-  --color-red-dark: #8C2814;
-  --color-orange-light: #FFB759;   /* naranja claro (acentos suaves) */
-  --color-orange: #B5430E;         /* NARANJA CARTEL (extraído del cartel real del local, zona PEDIDO) */
+  /* — Acentos principales — */
+  --color-orange: #B5430E;         /* NARANJA CARTEL (color principal de marca, extraído del cartel del local) */
   --color-orange-dark: #8C320A;
+  --color-orange-light: #FFB759;   /* naranja claro (acentos suaves) */
   --color-butter: #FAD25B;         /* amarillo mostaza */
 
-  /* Aliases que cambian según el tema en body.theme-* */
-  --color-brand: var(--color-red);
-  --color-brand-dark: var(--color-red-dark);
-  --color-display: var(--color-red);
+  /* Legacy (no usar en cosas nuevas; queda solo por si alguna pieza
+     puntual quisiera un rojo bordó como contraste estacional) */
+  --color-red: #B4351D;
+  --color-red-dark: #8C2814;
+
+  /* Color de marca (ahora UNIFICADO — un solo naranja en toda la web) */
+  --color-brand: var(--color-orange);
+  --color-brand-dark: var(--color-orange-dark);
+  --color-display: var(--color-orange);
 
   --color-line: rgba(42, 40, 24, 0.12);
   --color-line-strong: rgba(42, 40, 24, 0.22);
@@ -62,21 +66,12 @@
 }
 
 /* ========================== TEMAS ==========================
-   theme-order → páginas de pedido (home + categorías)
-      Todo en NARANJA OSCURO (#D8551A). Título display, eyebrows,
-      borde del logo, marco de cards, links hover, CTA.
-   theme-info  → páginas institucionales (historia/local/contacto)
-      Todo en ROJO TERRACOTA (#B4351D). Mismo tratamiento pero rojo. */
-body.theme-info {
-  --color-brand: var(--color-red);
-  --color-brand-dark: var(--color-red-dark);
-  --color-display: var(--color-red);
-}
-body.theme-order {
-  --color-brand: var(--color-orange);
-  --color-brand-dark: var(--color-orange-dark);
-  --color-display: var(--color-orange);
-}
+   Sistema UNIFICADO en naranja del cartel #B5430E.
+   Las clases theme-info y theme-order quedan como hooks vacíos
+   por si en el futuro se quiere reintroducir diferenciación
+   por zona (ej. estacional o eventos especiales). */
+body.theme-info,
+body.theme-order { /* placeholder — sin overrides */ }
 
 /* ========================== RESET ========================== */
 *, *::before, *::after { box-sizing: border-box; }
@@ -309,8 +304,8 @@ a { color: inherit; text-decoration: none; }
   gap: 0.7rem;
   padding: 2rem 1.5rem 1.6rem;
   border-radius: var(--r-lg);
-  background: var(--color-card);
-  border: 1px solid var(--color-line);
+  background: var(--color-bg-cream);    /* crema (estilo afiche) */
+  border: 1px solid color-mix(in srgb, var(--color-brand) 22%, transparent);
   color: var(--color-ink);
   min-height: 240px;
   overflow: hidden;
@@ -337,13 +332,14 @@ a { color: inherit; text-decoration: none; }
 .cat-card__icon {
   display: inline-grid;
   place-items: center;
-  width: 56px; height: 56px;
+  width: 60px; height: 60px;
   border-radius: 50%;
-  background: var(--color-bg-cream);    /* amarillo crema, estilo highlights de IG */
+  background: #FFFFFF;                  /* blanco puro para contraste sobre cat-card crema */
   border: 1.5px solid var(--color-brand);
   color: var(--color-brand);
   margin: 0 auto 0.4rem;
   transition: transform 0.4s var(--ease);
+  box-shadow: 0 4px 12px -4px rgba(140,67,14,0.15);
 }
 .cat-card:hover .cat-card__icon { transform: scale(1.08) rotate(-3deg); }
 .cat-card__icon svg { width: 30px; height: 30px; }
@@ -420,7 +416,16 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--color-line);
 }
 
-.promo-banner__copy { display: flex; flex-direction: column; gap: 1rem; }
+.promo-banner__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--color-bg-cream);
+  border: 1px solid color-mix(in srgb, var(--color-brand) 18%, transparent);
+  border-radius: var(--r-lg);
+  padding: clamp(1.4rem, 3vw, 2rem);
+  box-shadow: var(--shadow-1);
+}
 
 .promo-banner__title {
   font-family: var(--font-display);
@@ -465,7 +470,7 @@ a { color: inherit; text-decoration: none; }
   flex-shrink: 0;
   width: 36px; height: 36px;
   border-radius: 50%;
-  background: var(--color-bg-cream);
+  background: #FFFFFF;
   border: 1.5px solid var(--color-brand);
   color: var(--color-brand);
   display: inline-grid;
@@ -1153,16 +1158,20 @@ body.has-cart-bar { padding-bottom: 88px; }
 
 .info-list {
   list-style: none;
-  padding: 0;
+  padding: 0.4rem 1.3rem;
   margin: 0 0 1.5rem;
+  background: var(--color-bg-cream);
+  border: 1px solid color-mix(in srgb, var(--color-brand) 18%, transparent);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-1);
 }
 .info-list li {
   padding: 0.95rem 0;
-  border-top: 1px solid var(--color-line);
+  border-top: 1px solid color-mix(in srgb, var(--color-brand) 14%, transparent);
   display: flex;
   gap: 1rem;
 }
-.info-list li:last-child { border-bottom: 1px solid var(--color-line); }
+.info-list li:first-child { border-top: 0; }
 .info-list .lbl {
   flex: 0 0 110px;
   font-size: 0.72rem;
@@ -1195,11 +1204,17 @@ body.has-cart-bar { padding-bottom: 88px; }
   margin: 0;
   border-radius: var(--r-lg);
   overflow: hidden;
-  border: 1px solid var(--color-line);
-  aspect-ratio: 4/5;          /* portrait — calza con la foto del exterior (573x717) */
-  background: var(--color-bg-soft);
+  border: 1.5px solid color-mix(in srgb, var(--color-brand) 22%, transparent);
+  aspect-ratio: 4/5;
+  background: var(--color-bg-cream);
+  padding: 8px;
+  box-shadow: var(--shadow-2);
 }
-.local-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.local-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  border-radius: calc(var(--r-lg) - 8px);
+}
 
 .cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .cta-row .btn { width: auto; }
@@ -1211,14 +1226,15 @@ body.has-cart-bar { padding-bottom: 88px; }
 }
 @media (min-width: 720px) { .contact-grid { grid-template-columns: repeat(2, 1fr); } }
 .contact-card {
-  background: var(--color-card);
-  border: 1px solid var(--color-line);
+  background: var(--color-bg-cream);
+  border: 1px solid color-mix(in srgb, var(--color-brand) 18%, transparent);
   border-radius: var(--r-md);
   padding: 1.4rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   transition: transform 0.3s var(--ease), border-color 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
+  box-shadow: var(--shadow-1);
 }
 .contact-card:hover {
   transform: translateY(-3px);
@@ -1226,9 +1242,10 @@ body.has-cart-bar { padding-bottom: 88px; }
   border-color: var(--color-line-strong);
 }
 .contact-card__icon {
-  width: 40px; height: 40px;
+  width: 42px; height: 42px;
   border-radius: 50%;
-  background: var(--color-bg-soft);
+  background: #FFFFFF;
+  border: 1.5px solid var(--color-brand);
   display: inline-grid;
   place-items: center;
   color: var(--color-brand);
@@ -1246,14 +1263,17 @@ body.has-cart-bar { padding-bottom: 88px; }
 
 /* History */
 .story-image {
-  aspect-ratio: 11/10;        /* ratio del cartel original (1600x1452) */
+  aspect-ratio: 11/10;
   border-radius: var(--r-lg);
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--color-line);
-  background: var(--color-bg-soft);
+  border: 1.5px solid color-mix(in srgb, var(--color-brand) 22%, transparent);
+  background: var(--color-bg-cream);
   margin: 0;
+  padding: 8px;                 /* marco crema alrededor de la imagen, como afiche */
+  box-shadow: var(--shadow-2);
 }
+.story-image img { border-radius: calc(var(--r-lg) - 8px); }
 .story-image img {
   width: 100%;
   height: 100%;
