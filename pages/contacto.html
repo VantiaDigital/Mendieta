@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../assets/css/main.css?v=202605161400" />
+  <link rel="stylesheet" href="../assets/css/main.css?v=202605281513" />
   <link rel="icon" type="image/png" href="../assets/images/logo/mendieta-logo.png" />
 </head>
 <body class="theme-info page-contacto">
@@ -18,24 +18,28 @@
   <header class="site-header">
     <div class="container site-header__inner">
       <a href="../index.html" class="brand" aria-label="Mendieta · inicio"><img class="brand__logo" src="../assets/images/logo/mendieta-logo.png" alt="" width="36" height="36" />Mendieta<span class="brand__dot" aria-hidden="true"></span>
-        <span class="brand__sub">Pastelería Argentina</span>
+        <span class="brand__sub" data-i18n="nav.brandSub">Pastelería Argentina</span>
       </a>
       <nav class="nav" aria-label="Navegación principal">
-        <a href="../index.html">Pedir</a>
-        <a href="historia.html">Historia</a>
-        <a href="local.html">Local</a>
-        <a href="contacto.html" aria-current="page">Contacto</a>
+        <a href="../index.html" data-i18n="nav.order">Pedir</a>
+        <a href="historia.html" data-i18n="nav.history">Historia</a>
+        <a href="local.html" data-i18n="nav.local">Local</a>
+        <a href="contacto.html" aria-current="page" data-i18n="nav.contact">Contacto</a>
       </nav>
       <div class="header-actions">
-        <button class="cart-button" id="cartFab" aria-label="Ver carrito" aria-controls="cartDrawer">
+        <div class="lang-toggle" role="group" data-i18n-attr="aria-label:lang.aria">
+          <button class="lang-toggle__btn" type="button" data-lang="es" data-i18n="lang.es">ES</button>
+          <button class="lang-toggle__btn" type="button" data-lang="en" data-i18n="lang.en">EN</button>
+        </div>
+        <button class="cart-button" id="cartFab" aria-label="Ver carrito" data-i18n-attr="aria-label:nav.viewCart" aria-controls="cartDrawer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 4h2l2.3 12.5a2 2 0 0 0 2 1.5H18a2 2 0 0 0 2-1.6L21.5 8H6"/>
             <circle cx="9.5" cy="20.5" r="1.5"/><circle cx="17" cy="20.5" r="1.5"/>
           </svg>
-          <span class="cart-button__label">Carrito</span>
+          <span class="cart-button__label" data-i18n="nav.cart">Carrito</span>
           <span class="cart-button__count" id="cartCount"></span>
         </button>
-        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" data-i18n-attr="aria-label:nav.openMenu" aria-expanded="false">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/>
           </svg>
@@ -57,9 +61,9 @@
     <div class="container">
 
       <header class="page__head" data-reveal>
-        <span class="eyebrow">Contacto</span>
-        <h1 class="page__title">Estamos <em>a un mensaje</em>.</h1>
-        <p class="page__lead">
+        <span class="eyebrow" data-i18n="contact.eyebrow">Contacto</span>
+        <h1 class="page__title"><span data-i18n="contact.title.before">Estamos </span><em data-i18n="contact.title.em">a un mensaje</em><span data-i18n="contact.title.after">.</span></h1>
+        <p class="page__lead" data-i18n="contact.lead">
           Pedidos, consultas, encargos grandes, eventos. Lo más rápido es WhatsApp;
           si preferís teléfono o email, también.
         </p>
@@ -73,10 +77,10 @@
               <path d="M20 12.5a8 8 0 0 1-12 7l-5 1.5 1.5-4.6A8 8 0 1 1 20 12.5z"/>
             </svg>
           </span>
-          <h3>WhatsApp</h3>
-          <p>El canal preferido para pedidos. Te respondemos en minutos.</p>
+          <h3 data-i18n="contact.wa.title">WhatsApp</h3>
+          <p data-i18n="contact.wa.desc">El canal preferido para pedidos. Te respondemos en minutos.</p>
           <a href="https://wa.me/34696985385" target="_blank" rel="noopener" class="btn btn-brand btn--inline">
-            <span>Abrir WhatsApp</span>
+            <span data-i18n="contact.wa.cta">Abrir WhatsApp</span>
           </a>
         </div>
 
@@ -86,10 +90,10 @@
               <path d="M5 4h3l2 5-2 1a12 12 0 0 0 6 6l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>
             </svg>
           </span>
-          <h3>Teléfono</h3>
-          <p>+34 934 33 57 45 — para llamar al local directamente.</p>
+          <h3 data-i18n="contact.phone.title">Teléfono</h3>
+          <p data-i18n="contact.phone.desc">+34 934 33 57 45 — para llamar al local directamente.</p>
           <a href="tel:+34934335745" class="btn btn-ghost btn--inline">
-            <span>Llamar al local</span>
+            <span data-i18n="contact.phone.cta">Llamar al local</span>
           </a>
         </div>
 
@@ -100,8 +104,8 @@
               <path d="M3 7l9 6 9-6"/>
             </svg>
           </span>
-          <h3>Email</h3>
-          <p>Para encargos grandes, presupuestos o consultas que requieran detalle.</p>
+          <h3 data-i18n="contact.email.title">Email</h3>
+          <p data-i18n="contact.email.desc">Para encargos grandes, presupuestos o consultas que requieran detalle.</p>
           <a href="mailto:bemallorca@gmail.com" class="btn btn-ghost btn--inline">
             <span>bemallorca@gmail.com</span>
           </a>
@@ -115,10 +119,10 @@
               <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
             </svg>
           </span>
-          <h3>Instagram</h3>
-          <p>@pasteleriamendieta — vitrina, novedades, lo que sale del horno.</p>
+          <h3 data-i18n="contact.ig.title">Instagram</h3>
+          <p data-i18n="contact.ig.desc">@pasteleriamendieta — vitrina, novedades, lo que sale del horno.</p>
           <a href="https://www.instagram.com/pasteleriamendieta/" target="_blank" rel="noopener" class="btn btn-ghost btn--inline">
-            <span>Seguir en Instagram</span>
+            <span data-i18n="contact.ig.cta">Seguir en Instagram</span>
           </a>
         </div>
 
@@ -128,10 +132,10 @@
               <path d="M12 22s-7-7.5-7-13a7 7 0 0 1 14 0c0 5.5-7 13-7 13z"/><circle cx="12" cy="9" r="2.5"/>
             </svg>
           </span>
-          <h3>Pasar por el local</h3>
-          <p>Carrer de Mallorca, 517 · Barcelona. L–V 7:00–21:00, S–D 7:30–21:00.</p>
+          <h3 data-i18n="contact.visit.title">Pasar por el local</h3>
+          <p data-i18n="contact.visit.desc">Carrer de Mallorca, 517 · Barcelona. L–V 7:00–21:00, S–D 7:30–21:00.</p>
           <a href="local.html" class="btn btn-ghost btn--inline">
-            <span>Ver mapa y horarios</span>
+            <span data-i18n="contact.visit.cta">Ver mapa y horarios</span>
           </a>
         </div>
 
@@ -142,10 +146,10 @@
               <circle cx="9.5" cy="20.5" r="1.5"/><circle cx="17" cy="20.5" r="1.5"/>
             </svg>
           </span>
-          <h3>Hacer pedido online</h3>
-          <p>El catálogo completo, sumando al carrito y enviando por WhatsApp.</p>
+          <h3 data-i18n="contact.order.title">Hacer pedido online</h3>
+          <p data-i18n="contact.order.desc">El catálogo completo, sumando al carrito y enviando por WhatsApp.</p>
           <a href="../index.html" class="btn btn-primary btn--inline">
-            <span>Ir al pedido</span>
+            <span data-i18n="contact.order.cta">Ir al pedido</span>
           </a>
         </div>
 
@@ -159,10 +163,10 @@
       <div class="site-footer__top">
         <div>
           <p class="site-footer__brand">Mendieta<span style="color: var(--color-brand)">·</span></p>
-          <p class="site-footer__claim">Pastelería argentina en Barcelona. Recién hecho, cada día.</p>
+          <p class="site-footer__claim"><span data-i18n="footer.claim">Pastelería argentina en Barcelona. Recién hecho, cada día.</span></p>
         </div>
         <div class="footer-col">
-          <h4>Mendieta</h4>
+          <h4 data-i18n="footer.h.menu">Mendieta</h4>
           <ul>
             <li><a href="../index.html">Pedir</a></li>
             <li><a href="historia.html">Historia</a></li>
@@ -171,7 +175,7 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Redes</h4>
+          <h4 data-i18n="footer.h.social">Redes</h4>
           <ul>
             <li><a href="https://wa.me/34696985385" target="_blank" rel="noopener">WhatsApp</a></li>
             <li><a href="https://www.instagram.com/pasteleriamendieta/" target="_blank" rel="noopener">Instagram</a></li>
@@ -180,8 +184,8 @@
         </div>
       </div>
       <div class="site-footer__bottom">
-        <span>© <span id="year"></span> Mendieta · Roupag S.L</span>
-        <span><a href="https://vantia.digital" target="_blank" rel="noopener">Hecho con Vantia&nbsp;·&nbsp;Marketing Digital</a></span>
+        <span>© <span id="year"></span> <span data-i18n="footer.copyright">Mendieta · Roupag S.L</span></span>
+        <span><a href="https://vantia.digital" target="_blank" rel="noopener"><span data-i18n="footer.madeBy">Hecho con Vantia · Marketing Digital</span></a></span>
       </div>
     </div>
   </footer>
@@ -191,8 +195,8 @@
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true">
     <div class="drawer__head">
-      <h3 id="drawer-title">Tu pedido</h3>
-      <button class="drawer__close" id="drawerClose" aria-label="Cerrar carrito">
+      <h3 id="drawer-title" data-i18n="cart.title">Tu pedido</h3>
+      <button class="drawer__close" id="drawerClose" aria-label="Cerrar carrito" data-i18n-attr="aria-label:cart.close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
       </button>
     </div>
@@ -200,14 +204,16 @@
     <div class="drawer__foot">
       <button class="btn btn-primary" id="checkoutBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12.5a8 8 0 0 1-12 7l-5 1.5 1.5-4.6A8 8 0 1 1 20 12.5z"/></svg>
-        <span>Enviar pedido por WhatsApp</span>
+        <span data-i18n="cart.send">Enviar pedido por WhatsApp</span>
       </button>
-      <small>Abrimos un chat con el pedido ya escrito.</small>
+      <small data-i18n="cart.sendNote">Abrimos un chat con el pedido ya escrito.</small>
     </div>
   </aside>
 
+  <script src="../assets/js/i18n.js" defer></script>
   <script src="../assets/js/menu-data.js" defer></script>
   <script src="../assets/js/cart.js" defer></script>
   <script src="../assets/js/main.js" defer></script>
+
 </body>
 </html>

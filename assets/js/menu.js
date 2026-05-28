@@ -80,74 +80,100 @@
     return ICONS.default;
   }
 
-  /* ---- Render tabs (solo si existe el contenedor) ---- */
-  if (tabs) {
-    categoriesToRender.forEach((cat, i) => {
-      const t = document.createElement('button');
-      t.className = 'tab' + (i === 0 ? ' is-active' : '');
-      t.type = 'button';
-      t.dataset.cat = cat.id;
-      t.textContent = cat.name;
-      t.setAttribute('role', 'tab');
-      tabs.appendChild(t);
+  // Helper i18n: nombre/descripcion segun idioma actual
+  const T = (obj, field) => (window.MENDIETA_MENU_T ? window.MENDIETA_MENU_T(obj, field) : (obj[field] || ''));
+  const askLabel = () => (window.MendietaI18n ? window.MendietaI18n.t('featured.ask') : 'a consultar');
+  const addLabel = (n) => (window.MendietaI18n ? window.MendietaI18n.t('cart.add') + ' ' + n : 'Agregar ' + n);
+
+  function buildAll() {
+    // Limpiar tabs y root antes de re-renderizar (al cambiar idioma)
+    if (tabs) tabs.innerHTML = '';
+    root.innerHTML = '';
+
+    /* ---- Render tabs ---- */
+    if (tabs) {
+      categoriesToRender.forEach((cat, i) => {
+        const t = document.createElement('button');
+        t.className = 'tab' + (i === 0 ? ' is-active' : '');
+        t.type = 'button';
+        t.dataset.cat = cat.id;
+        t.textContent = T(cat, 'name');
+        t.setAttribute('role', 'tab');
+        tabs.appendChild(t);
+      });
+    }
+
+    /* ---- Render categorías + productos ---- */
+    categoriesToRender.forEach((cat, catIndex) => {
+      const section = document.createElement('section');
+      section.className = 'cat';
+      section.id = `cat-${cat.id}`;
+      section.dataset.cat = cat.id;
+
+      const catName = T(cat, 'name');
+      const catCaption = T(cat, 'caption');
+
+      section.innerHTML = `
+        <header class="cat__head">
+          <h2 class="cat__title">${catName}</h2>
+          ${catCaption ? `<p class="cat__caption">${catCaption}</p>` : ''}
+        </header>
+        <div class="cat__grid"></div>
+      `;
+      const grid = section.querySelector('.cat__grid');
+
+      cat.items.forEach((item, i) => {
+        const article = document.createElement('article');
+        article.className = `product ${shade(catIndex + i)}`;
+        article.dataset.id = item.id;
+        const priceLabel = fmt(item.price);
+        const itemName = T(item, 'name');
+        const itemDesc = T(item, 'description');
+        const tagHtml = (item.tags || []).slice(0, 1).map((t) => `<span class="product__tag">${t}</span>`).join('');
+
+        const mediaInner = item.image
+          ? `<img src="${item.image}" alt="${itemName}" loading="lazy" decoding="async" />`
+          : iconFor(item.name);
+
+        article.innerHTML = `
+          <div class="product__media ${item.image ? 'product__media--photo' : ''}" aria-hidden="true">
+            ${tagHtml}
+            ${mediaInner}
+          </div>
+          <div class="product__body">
+            <h3 class="product__name">${itemName}</h3>
+            <p class="product__desc">${itemDesc}</p>
+            <div class="product__foot">
+              ${
+                priceLabel
+                  ? `<span class="product__price">${priceLabel}</span>`
+                  : `<span class="product__price product__price--ask">${askLabel()}</span>`
+              }
+              <div class="product__add-slot" data-slot="${item.id}">
+                <button class="product__add" data-add="${item.id}" aria-label="${addLabel(itemName)}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(article);
+      });
+
+      root.appendChild(section);
     });
   }
 
-  /* ---- Render categorías ---- */
-  categoriesToRender.forEach((cat, catIndex) => {
-    const section = document.createElement('section');
-    section.className = 'cat';
-    section.id = `cat-${cat.id}`;
-    section.dataset.cat = cat.id;
+  buildAll();
 
-    section.innerHTML = `
-      <header class="cat__head">
-        <h2 class="cat__title">${cat.name}</h2>
-        ${cat.caption ? `<p class="cat__caption">${cat.caption}</p>` : ''}
-      </header>
-      <div class="cat__grid"></div>
-    `;
-    const grid = section.querySelector('.cat__grid');
-
-    cat.items.forEach((item, i) => {
-      const article = document.createElement('article');
-      article.className = `product ${shade(catIndex + i)}`;
-      article.dataset.id = item.id;
-      const priceLabel = fmt(item.price);
-      const tagHtml = (item.tags || []).slice(0, 1).map((t) => `<span class="product__tag">${t}</span>`).join('');
-
-      // Media: foto si existe, si no SVG ilustrativo
-      const mediaInner = item.image
-        ? `<img src="${item.image}" alt="${item.name}" loading="lazy" decoding="async" />`
-        : iconFor(item.name);
-
-      article.innerHTML = `
-        <div class="product__media ${item.image ? 'product__media--photo' : ''}" aria-hidden="true">
-          ${tagHtml}
-          ${mediaInner}
-        </div>
-        <div class="product__body">
-          <h3 class="product__name">${item.name}</h3>
-          <p class="product__desc">${item.description || ''}</p>
-          <div class="product__foot">
-            ${
-              priceLabel
-                ? `<span class="product__price">${priceLabel}</span>`
-                : `<span class="product__price product__price--ask">a consultar</span>`
-            }
-            <div class="product__add-slot" data-slot="${item.id}">
-              <button class="product__add" data-add="${item.id}" aria-label="Agregar ${item.name}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-      grid.appendChild(article);
+  // Re-render al cambiar idioma
+  if (window.MendietaI18n && window.MendietaI18n.on) {
+    window.MendietaI18n.on(() => {
+      buildAll();
+      // Re-aplicar visual de items en carrito (cart.js se subscribe aparte)
+      if (window.MendietaCart && window.MendietaCart.refresh) window.MendietaCart.refresh();
     });
-
-    root.appendChild(section);
-  });
+  }
 
   /* ---- Tabs activos según scroll (solo si hay tabs) ---- */
   if (!tabs) {

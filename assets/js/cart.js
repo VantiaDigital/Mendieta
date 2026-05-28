@@ -71,9 +71,9 @@
     mobileBar.className = 'mobile-cart-bar';
     mobileBar.id = 'mobileCartBar';
     mobileBar.innerHTML = `
-      <button class="mobile-cart-bar__btn" type="button" id="mobileCartBarBtn" aria-label="Ver pedido">
+      <button class="mobile-cart-bar__btn" type="button" id="mobileCartBarBtn" data-i18n-attr="aria-label:mcb.view">
         <span class="mobile-cart-bar__count" id="mobileCartBarCount">0</span>
-        <span class="mobile-cart-bar__label">Ver pedido</span>
+        <span class="mobile-cart-bar__label" data-i18n="mcb.view">Ver pedido</span>
         <span class="mobile-cart-bar__total" id="mobileCartBarTotal">€0,00</span>
         <span class="mobile-cart-bar__arrow" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -113,6 +113,11 @@
     });
   }
 
+  /* ---- Helpers i18n (caen al texto en ES si i18n.js no esta cargado) ---- */
+  const I18N = () => window.MendietaI18n;
+  const TT = (key, fallback) => (I18N() ? I18N().t(key) : fallback);
+  const productName = (p) => (window.MENDIETA_MENU_T ? window.MENDIETA_MENU_T(p, 'name') : p.name);
+
   /* ---- Render del drawer ---- */
   function renderDrawer() {
     if (cart.length === 0) {
@@ -123,7 +128,7 @@
             <circle cx="28" cy="54" r="3"/>
             <circle cx="48" cy="54" r="3"/>
           </svg>
-          <p>Tu carrito todavía está vacío.<br>Elegí algo del catálogo.</p>
+          <p>${TT('cart.empty.line1', 'Tu carrito todavía está vacío.')}<br>${TT('cart.empty.line2', 'Elegí algo del catálogo.')}</p>
         </div>
       `;
       checkoutBtn.disabled = true;
@@ -131,21 +136,27 @@
     }
     checkoutBtn.disabled = false;
 
+    const lblSubtotal = TT('cart.subtotal', 'subtotal');
+    const lblAsk = TT('cart.priceAsk', 'precio a consultar');
+    const lblMinus = TT('cart.qtyMinus', 'Restar uno');
+    const lblPlus = TT('cart.qtyPlus', 'Sumar uno');
+
     const itemsHtml = cart.map((it) => {
       const p = productById.get(it.id);
       if (!p) return '';
       const sub = p.price ? p.price * it.qty : 0;
+      const name = productName(p);
       return `
         <div class="cart-item" data-id="${p.id}">
           <div class="cart-item__thumb" aria-hidden="true"></div>
           <div class="cart-item__info">
-            <span class="cart-item__name">${p.name}</span>
-            <span class="cart-item__price">${p.price ? `${fmtPrice(p.price)} · subtotal ${fmtPrice(sub)}` : 'precio a consultar'}</span>
+            <span class="cart-item__name">${name}</span>
+            <span class="cart-item__price">${p.price ? `${fmtPrice(p.price)} · ${lblSubtotal} ${fmtPrice(sub)}` : lblAsk}</span>
           </div>
-          <div class="cart-item__qty" role="group" aria-label="Cantidad de ${p.name}">
-            <button type="button" data-dec="${p.id}" aria-label="Restar uno">−</button>
+          <div class="cart-item__qty" role="group" aria-label="${name}">
+            <button type="button" data-dec="${p.id}" aria-label="${lblMinus}">−</button>
             <span>${it.qty}</span>
-            <button type="button" data-inc="${p.id}" aria-label="Sumar uno">+</button>
+            <button type="button" data-inc="${p.id}" aria-label="${lblPlus}">+</button>
           </div>
         </div>
       `;
@@ -157,36 +168,36 @@
       <div class="cart-items">${itemsHtml}</div>
       <div class="checkout">
         <div class="checkout__totals">
-          <span>Total estimado</span>
+          <span>${TT('cart.total', 'Total estimado')}</span>
           <strong>${fmtPrice(total)}</strong>
         </div>
 
         <div class="checkout__notice">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
           <div>
-            <strong>24 h de antelación.</strong> Para preparar todo recién hecho.<br>
-            <span>Pago en tarjeta o efectivo al recibir.</span>
+            <strong>${TT('cart.notice.title', '24 h de antelación.')}</strong> ${TT('cart.notice.body1', 'Para preparar todo recién hecho.')}<br>
+            <span>${TT('cart.notice.body2', 'Pago en tarjeta o efectivo al recibir.')}</span>
           </div>
         </div>
 
         <div class="form-field" data-field="name">
-          <label for="ck-name">Nombre</label>
-          <input id="ck-name" name="name" autocomplete="name" required placeholder="Tu nombre" />
-          <span class="error-msg">Hace falta tu nombre.</span>
+          <label for="ck-name">${TT('form.name', 'Nombre')}</label>
+          <input id="ck-name" name="name" autocomplete="name" required placeholder="${TT('form.namePh', 'Tu nombre')}" />
+          <span class="error-msg">${TT('form.nameErr', 'Hace falta tu nombre.')}</span>
         </div>
         <div class="form-field" data-field="phone">
-          <label for="ck-phone">Teléfono</label>
-          <input id="ck-phone" name="phone" type="tel" autocomplete="tel" required placeholder="+34 …" />
-          <span class="error-msg">Hace falta un teléfono.</span>
+          <label for="ck-phone">${TT('form.phone', 'Teléfono')}</label>
+          <input id="ck-phone" name="phone" type="tel" autocomplete="tel" required placeholder="${TT('form.phonePh', '+34 …')}" />
+          <span class="error-msg">${TT('form.phoneErr', 'Hace falta un teléfono.')}</span>
         </div>
         <div class="form-field" data-field="address">
-          <label for="ck-address">Dirección de entrega</label>
-          <input id="ck-address" name="address" autocomplete="street-address" required placeholder="Calle, número, piso · barrio" />
-          <span class="error-msg">Necesitamos tu dirección.</span>
+          <label for="ck-address">${TT('form.address', 'Dirección de entrega')}</label>
+          <input id="ck-address" name="address" autocomplete="street-address" required placeholder="${TT('form.addressPh', 'Calle, número, piso · barrio')}" />
+          <span class="error-msg">${TT('form.addressErr', 'Necesitamos tu dirección.')}</span>
         </div>
         <div class="form-field" data-field="notes">
-          <label for="ck-notes">Notas (opcional)</label>
-          <textarea id="ck-notes" name="notes" placeholder="Alergias, hora preferida, indicaciones…"></textarea>
+          <label for="ck-notes">${TT('form.notes', 'Notas (opcional)')}</label>
+          <textarea id="ck-notes" name="notes" placeholder="${TT('form.notesPh', 'Alergias, hora preferida, indicaciones…')}"></textarea>
         </div>
       </div>
     `;
@@ -370,5 +381,10 @@
   // Y también en window load por si acaso
   window.addEventListener('load', render);
 
-  window.MendietaCart = { open: openDrawer, close: closeDrawer, add };
+  // Suscribir al cambio de idioma: re-renderizar drawer (textos cambian)
+  if (window.MendietaI18n && window.MendietaI18n.on) {
+    window.MendietaI18n.on(() => render());
+  }
+
+  window.MendietaCart = { open: openDrawer, close: closeDrawer, add, refresh: render };
 })();
