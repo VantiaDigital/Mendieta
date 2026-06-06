@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Crema",
+    "role": "FONDO PRINCIPAL",
+    "hex": "#FBF4C6",
+    "rgb": [
+      251,
+      244,
+      198
+    ],
+    "usage": "Fondo de posts, banners y stories. El amarillo crema del feed.",
+    "text_dark": true
+  },
+  {
+    "name": "Bordó",
+    "role": "TIPOGRAFÍA DISPLAY",
+    "hex": "#77231B",
+    "rgb": [
+      119,
+      35,
+      27
+    ],
+    "usage": "'MENDIETA', 'BINGO', 'Favoritos'. Solo en titulares grandes.",
+    "text_dark": false
+  },
+  {
+    "name": "Cacao",
+    "role": "TIPOGRAFÍA SECUNDARIA",
+    "hex": "#533118",
+    "rgb": [
+      83,
+      49,
+      24
+    ],
+    "usage": "'de Mendieta', 'Año Nuevo'. Subtítulos display.",
+    "text_dark": false
+  },
+  {
+    "name": "Caramelo",
+    "role": "ACENTO DECORATIVO",
+    "hex": "#936D4C",
+    "rgb": [
+      147,
+      109,
+      76
+    ],
+    "usage": "Iconos, líneas, sellos pequeños, ilustraciones.",
+    "text_dark": false
+  },
+  {
+    "name": "Mostaza",
+    "role": "ACENTO CÁLIDO",
+    "hex": "#EDC77D",
+    "rgb": [
+      237,
+      199,
+      125
+    ],
+    "usage": "Bordes de highlights, badges, detalles que destacan.",
+    "text_dark": true
+  },
+  {
+    "name": "Tinta",
+    "role": "CUERPO · CAPTIONS",
+    "hex": "#1B1613",
+    "rgb": [
+      27,
+      22,
+      19
+    ],
+    "usage": "Texto largo, párrafos, captions de IG. No para titulares.",
+    "text_dark": false
+  }
+]
