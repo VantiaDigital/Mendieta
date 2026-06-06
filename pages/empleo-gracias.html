@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#FBF4C6" />
+  <meta name="robots" content="noindex" />
+  <title>¡Gracias! · Mendieta</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rye&family=Playfair+Display:ital@0;1&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="../assets/brand/logos/mendieta-avatar-circulo.png" />
+
+  <style>
+    :root{
+      --crema:#FBF4C6; --crema-soft:#FEF9C0; --bordo:#77231B; --cacao:#533118;
+      --caramelo:#936D4C; --tinta:#1B1613;
+      --font-display:'Rye',Georgia,serif; --font-serif:'Playfair Display',Georgia,serif;
+      --font-body:'Montserrat',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    body{margin:0; background:var(--crema); color:var(--tinta); font-family:var(--font-body);
+      min-height:100dvh; display:grid; place-items:center; text-align:center;
+      padding:2rem 1.2rem;
+      background-image:radial-gradient(ellipse 70% 50% at 50% 0%, rgba(237,199,125,.25), transparent 60%);}
+    .box{max-width:460px;}
+    .logo{width:120px;height:120px;border-radius:50%;border:2px solid var(--bordo);
+      background:var(--crema-soft); display:block; margin:0 auto 1.4rem;}
+    .check{width:64px;height:64px;border-radius:50%;background:var(--bordo); color:#fff;
+      display:inline-grid; place-items:center; margin-bottom:1.2rem;}
+    .check svg{width:32px;height:32px;}
+    h1{font-family:var(--font-display); color:var(--bordo); text-transform:uppercase;
+      font-size:clamp(2rem,1.5rem+3vw,2.8rem); line-height:1.05; margin:.2rem 0 .6rem; letter-spacing:.01em;}
+    .lead{font-family:var(--font-serif); font-style:italic; color:var(--cacao);
+      font-size:1.2rem; margin:0 0 1rem;}
+    p{color:var(--tinta); font-size:1rem; line-height:1.6; margin:0 auto 1.6rem; max-width:30rem;}
+    .btn{display:inline-flex; align-items:center; gap:.5rem; background:var(--bordo); color:#fff;
+      font-weight:600; text-decoration:none; border-radius:999px; padding:.85rem 1.4rem;
+      box-shadow:0 6px 18px -5px rgba(119,35,27,.5);}
+    .ig{display:block; margin-top:1.2rem; color:var(--caramelo); text-decoration:none; font-size:.9rem;}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <img class="logo" src="../assets/brand/logos/mendieta-avatar-circulo.png" alt="Mendieta" width="120" height="120" />
+    <div class="check" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    </div>
+    <h1>¡Gracias!</h1>
+    <p class="lead">Recibimos tu postulación.</p>
+    <p>Vamos a revisar tu CV con cariño. Si encajás con lo que buscamos, te escribimos. ¡Suerte y gracias por querer sumarte a Mendieta!</p>
+    <a class="btn" href="../index.html">Volver a la web</a>
+    <a class="ig" href="https://www.instagram.com/pasteleriamendieta/" target="_blank" rel="noopener">Seguinos en Instagram · @pasteleriamendieta</a>
+  </div>
+</body>
+</html>
