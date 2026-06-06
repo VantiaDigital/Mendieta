@@ -15,6 +15,33 @@ Si una pieza no transmite **calidez + cercanía + producto rico**, no es Mendiet
 
 ---
 
+## ⚠️ Regla innegociable: NEUTRALIDAD
+
+Mendieta **NO toma posición sobre ningún tema sensible ni de coyuntura**. El
+público es muy sensible a esto.
+
+**NUNCA**: política (partidos, gobiernos, coyuntura) · feminismo · racismo ·
+género · religión · orientación sexual · política migratoria · ni sumarse a
+campañas, hashtags o "días de" con carga ideológica. Tampoco opinar, ironizar
+o tomar partido en posts, respuestas ni comentarios.
+
+**SIEMPRE en terreno seguro**: producto, comida, nostalgia gastronómica
+argentina (mate, facturas, merienda), calidez, comunidad, celebraciones
+neutrales (Navidad, Año Nuevo, Día del Amigo).
+
+**Matices**:
+- La identidad argentina/inmigrante es parte de la marca, pero como celebración
+  y nostalgia, nunca como debate.
+- Fechas patrias (ej. 9 de Julio): solo festejo compartido y excusa para comer
+  rico. Sin discurso, sin nacionalismo, sin bajada política.
+- El guiño a Fontanarrosa es homenaje cultural cariñoso, nunca asociado a
+  ninguna postura.
+
+> Ante la duda con cualquier tema: **NO se publica**. Mejor perder un post que
+> tomar un lado.
+
+---
+
 ## 2. Logo
 
 Personaje: el **perro con gorro de cocinero** (Mendieta, de Inodoro Pereyra).

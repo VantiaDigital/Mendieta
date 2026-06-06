@@ -5,6 +5,40 @@ Versión definitiva (decisiones confirmadas con el cliente/Facu).
 
 ---
 
+## 0. NEUTRALIDAD — regla innegociable
+
+Mendieta **NO toma posición sobre ningún tema sensible ni de coyuntura**. El
+público es muy sensible a esto y la marca debe quedar siempre en terreno seguro.
+
+NUNCA:
+- Política (partidos, gobiernos, elecciones, figuras públicas, coyuntura).
+- Temas sociales sensibles: feminismo, racismo, género, religión, orientación
+  sexual, política migratoria, conflictos.
+- Sumarse a campañas, hashtags o "días de" con carga ideológica o que polaricen.
+- Opinar, ironizar o "tomar partido" sobre nada controvertido, ni siquiera en
+  chiste o en comentarios/respuestas.
+
+SIEMPRE en terreno seguro:
+- Producto, comida, recetas, sabor.
+- Nostalgia y cultura gastronómica argentina (mate, facturas, merienda, café).
+- Calidez, comunidad ("mendieteros"), cercanía.
+- Celebraciones neutrales y unificadoras (Navidad/Año Nuevo como festejo cálido,
+  Día del Amigo, fechas gastronómicas).
+
+Matices:
+- La identidad argentina/inmigrante ("argentinos viviendo en Barcelona") es
+  parte de la marca, pero como CELEBRACIÓN y nostalgia — nunca como debate
+  migratorio ni reivindicación.
+- Fechas patrias (ej. 9 de Julio): se usan solo como festejo compartido y excusa
+  para comer rico. Sin discurso, sin nacionalismo, sin bajada política.
+- El guiño a Fontanarrosa/Inodoro Pereyra es homenaje cultural y cariñoso —
+  nunca asociado a ninguna postura.
+
+> Ante la duda con cualquier tema: NO se publica. Mejor perder un post que
+> tomar un lado.
+
+---
+
 ## 1. Esencia
 
 Mendieta es una pastelería argentina de barrio en Barcelona. Vende un pedacito
@@ -21,7 +55,8 @@ El nombre y el personaje vienen de Mendieta, el perro de Inodoro Pereyra (la
 historieta de Fontanarrosa). El logo es ese perro, ahora con gorro de cocinero.
 
 - El guiño a Fontanarrosa es parte del ADN de la marca, pero se usa de vez en
-  cuando, no como mensaje permanente.
+  cuando, como homenaje cultural cálido — nunca como mensaje permanente ni
+  asociado a ninguna postura.
 - Razón social: Roupag S.L
 - Local: Carrer de Mallorca, 517 · 08026 Barcelona (barrio Camp de l'Arpa del Clot)
 
@@ -129,18 +164,23 @@ Mendieta escribe como un argentino cálido que extraña su tierra y la comparte.
   Argentina en cada bocado", "un sabor que nace lejos pero se disfruta cerca".
 - Cercano y con humor, sin venta agresiva: invita, no presiona.
 - La comunidad se llama "mendieteros".
+- Neutral siempre (ver sección 0): el humor y la cercanía nunca se meten en
+  temas sensibles.
 
 Frases marca (del feed, sin fijar un eslogan único):
 "Al mal tiempo, un cafecito pa'l cuerpo" · "El plan perfecto, si existe" ·
 "Nuestras irresistibles medialunas" · "Argentinos viviendo en Barcelona" ·
 "Un pedacito de Argentina en cada bocado".
 
-NO: tono corporativo o frío · español neutro/peninsular forzado · clickbait.
+NO: tono corporativo o frío · español neutro/peninsular forzado · clickbait ·
+y nunca opinar sobre temas sensibles (ni en posts, ni en respuestas, ni en
+comentarios).
 
 ---
 
 ## 10. Checklist antes de publicar
 
+- ¿El tema es 100% seguro y neutral? (si roza algo sensible: NO publicar)
 - ¿Fondo crema (o foto cálida)?
 - ¿Titular en bordó con Rye o Playfair?
 - ¿Máximo 3 colores y 2 fuentes?
