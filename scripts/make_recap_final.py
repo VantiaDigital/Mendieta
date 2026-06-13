@@ -128,17 +128,17 @@ def main():
     N = int(round(final_dur * FPS))
 
     DUR_IN = 0.52
-    SCRIM_T0, SCRIM_T1 = 10.2, 15.3
+    SCRIM_T0, SCRIM_T1 = 10.2, 14.9
     SCRIM_A0, SCRIM_A1 = 150, 228
 
     # bloques: t0, draw_fn, efecto, parámetros
     DEFS = [
-        (10.40, block_header, "pop", 0.80),
-        (11.30, block_24h, "left", -190),
-        (12.30, block_wpp, "pop", 0.80),
-        (13.50, block_pago, "right", 190),
-        (14.70, block_comprobante, "left", -190),
-        (15.90, block_arroba, "rise", 70),
+        (10.35, block_header, "pop", 0.80),
+        (11.20, block_24h, "left", -190),
+        (12.15, block_wpp, "pop", 0.80),
+        (13.30, block_pago, "right", 190),
+        (14.40, block_comprobante, "left", -190),
+        (15.45, block_arroba, "rise", 70),
     ]
     BLOCKS = []
     for t0, fn, fx, p in DEFS:
