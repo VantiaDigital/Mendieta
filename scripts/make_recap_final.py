@@ -197,37 +197,21 @@ def main():
         f"[0:v]trim={CHAT_OUT},setpts=PTS-STARTPTS[c];"
         f"[a][b][c]concat=n=3:v=1:a=0,fps={FPS},setpts=PTS-STARTPTS[vc];"
     )
-    def enc(args, out):
-        r = subprocess.run([FF, "-y", *args, "-map", "[v]", "-an",
-                            "-c:v", "libx264", "-preset", "slow", "-crf", "15",
-                            "-x264-params", "aq-mode=3", str(out)],
-                           capture_output=True, text=True)
+    # 9:16 (Reel, full) y 4:5 (carrusel). El movil del chat ya entra en la zona
+    # de recorte, asi que el 4:5 es un crop centrado a pantalla completa (sin
+    # barras): bandera, chat y comida llenan el cuadro.
+    for out, extra in [(OUT, ""), (OUT45, ",crop=1080:1350:0:285")]:
+        fc = retime + f"[vc][1:v]overlay=0:0:format=auto{extra},format=yuv420p[v]"
+        r = subprocess.run(
+            [FF, "-y", "-i", str(SRC), "-framerate", str(FPS), "-i", str(TDIR / "f%04d.png"),
+             "-filter_complex", fc, "-map", "[v]", "-an",
+             "-c:v", "libx264", "-preset", "slow", "-crf", "15",
+             "-x264-params", "aq-mode=3", str(out)],
+            capture_output=True, text=True)
         if r.returncode != 0:
             print("FFMPEG ERROR\n", r.stderr[-1800:])
             raise SystemExit(1)
         print(f"OK: {out}  ({out.stat().st_size // 1024} KB)")
-
-    # 1) 9:16 (Reel, pantalla completa)
-    fc916 = retime + "[vc][1:v]overlay=0:0:format=auto,format=yuv420p[v]"
-    enc(["-i", str(SRC), "-framerate", str(FPS), "-i", str(TDIR / "f%04d.png"),
-         "-filter_complex", fc916], OUT)
-
-    # 2) 4:5 carrusel (desde el 9:16): bandera/buscador y comida a PANTALLA
-    #    COMPLETA (crop centrado); solo el chat con relleno DESENFOCADO para que
-    #    el movil se vea entero sin barras planas amarillas.
-    B0 = CHAT_IN
-    B1 = CHAT_IN + (CHAT_OUT - CHAT_IN) / SPEED
-    f45 = (
-        f"[0:v]trim=0:{B0:.3f},setpts=PTS-STARTPTS,crop=1080:1350:0:285,setsar=1[a];"
-        f"[0:v]trim={B0:.3f}:{B1:.3f},setpts=PTS-STARTPTS,split=2[bs][bf];"
-        f"[bs]scale=1080:1350:force_original_aspect_ratio=increase,crop=1080:1350,"
-        f"boxblur=24:2,eq=brightness=-0.05:saturation=1.05[bb];"
-        f"[bf]scale=-2:1350[bfs];"
-        f"[bb][bfs]overlay=(W-w)/2:(H-h)/2,setsar=1[b];"
-        f"[0:v]trim={B1:.3f}:999,setpts=PTS-STARTPTS,crop=1080:1350:0:285,setsar=1[c];"
-        f"[a][b][c]concat=n=3:v=1:a=0,format=yuv420p[v]"
-    )
-    enc(["-i", str(OUT), "-filter_complex", f45], OUT45)
     print(f"   {final_dur:.2f}s, {N} frames")
 
 
