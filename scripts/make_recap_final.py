@@ -197,8 +197,10 @@ def main():
         f"[0:v]trim={CHAT_OUT},setpts=PTS-STARTPTS[c];"
         f"[a][b][c]concat=n=3:v=1:a=0,fps={FPS},setpts=PTS-STARTPTS[vc];"
     )
-    # 9:16 (Reel) y 4:5 (carrusel, recorte centrado que conserva todo)
-    for out, extra in [(OUT, ""), (OUT45, ",crop=1080:1350:0:285")]:
+    # 9:16 (Reel, full) y 4:5 (carrusel: encaja TODO sobre fondo crema de marca,
+    # nada se recorta -> el movil del chat y el card de pedidos se ven enteros)
+    pad45 = ",scale=-2:1350,pad=1080:1350:(ow-iw)/2:(oh-ih)/2:0xFBF4C6"
+    for out, extra in [(OUT, ""), (OUT45, pad45)]:
         fc = retime + f"[vc][1:v]overlay=0:0:format=auto{extra},format=yuv420p[v]"
         r = subprocess.run(
             [FF, "-y", "-i", str(SRC), "-framerate", str(FPS), "-i", str(TDIR / "f%04d.png"),
