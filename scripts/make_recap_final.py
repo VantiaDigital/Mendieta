@@ -23,7 +23,8 @@ FF = r"C:/Users/facun/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Micros
 FP = r"C:/Users/facun/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.1-full_build/bin/ffprobe.exe"
 D = Path(r"C:/Users/facun/Documentos/Mendieta/reel-mundial/editados")
 SRC = D / "Video para celular recap aesthetic gris.mp4"
-OUT = D / "recap-mundial-final.mp4"
+OUT = D / "recap-mundial-final.mp4"          # 9:16 (Reel)
+OUT45 = D / "recap-mundial-carrusel.mp4"     # 4:5 (carrusel de feed)
 TDIR = Path(r"C:/Users/facun/AppData/Local/Temp/mendieta-mundial/recap/titles")
 TDIR.mkdir(parents=True, exist_ok=True)
 
@@ -190,23 +191,26 @@ def main():
         frame.save(TDIR / f"f{f:04d}.png")
 
     # retiming + overlay del track de títulos (image2 sequence)
-    fc = (
+    retime = (
         f"[0:v]trim=0:{CHAT_IN},setpts=PTS-STARTPTS[a];"
         f"[0:v]trim={CHAT_IN}:{CHAT_OUT},setpts=(PTS-STARTPTS)/{SPEED}[b];"
         f"[0:v]trim={CHAT_OUT},setpts=PTS-STARTPTS[c];"
         f"[a][b][c]concat=n=3:v=1:a=0,fps={FPS},setpts=PTS-STARTPTS[vc];"
-        f"[vc][1:v]overlay=0:0:format=auto,format=yuv420p[v]"
     )
-    r = subprocess.run(
-        [FF, "-y", "-i", str(SRC), "-framerate", str(FPS), "-i", str(TDIR / "f%04d.png"),
-         "-filter_complex", fc, "-map", "[v]", "-an",
-         "-c:v", "libx264", "-preset", "slow", "-crf", "15",
-         "-x264-params", "aq-mode=3", str(OUT)],
-        capture_output=True, text=True)
-    if r.returncode != 0:
-        print("FFMPEG ERROR\n", r.stderr[-1800:])
-        raise SystemExit(1)
-    print(f"OK: {OUT}  ({OUT.stat().st_size // 1024} KB, {final_dur:.2f}s, {N} frames)")
+    # 9:16 (Reel) y 4:5 (carrusel, recorte centrado que conserva todo)
+    for out, extra in [(OUT, ""), (OUT45, ",crop=1080:1350:0:285")]:
+        fc = retime + f"[vc][1:v]overlay=0:0:format=auto{extra},format=yuv420p[v]"
+        r = subprocess.run(
+            [FF, "-y", "-i", str(SRC), "-framerate", str(FPS), "-i", str(TDIR / "f%04d.png"),
+             "-filter_complex", fc, "-map", "[v]", "-an",
+             "-c:v", "libx264", "-preset", "slow", "-crf", "15",
+             "-x264-params", "aq-mode=3", str(out)],
+            capture_output=True, text=True)
+        if r.returncode != 0:
+            print("FFMPEG ERROR\n", r.stderr[-1800:])
+            raise SystemExit(1)
+        print(f"OK: {out}  ({out.stat().st_size // 1024} KB)")
+    print(f"   {final_dur:.2f}s, {N} frames")
 
 
 if __name__ == "__main__":
