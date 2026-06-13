@@ -32,6 +32,13 @@ def font(p, s):
     return ImageFont.truetype(p, s)
 
 
+def mont(s, w=600):
+    """Montserrat es variable (default Thin 100). Forzamos peso real."""
+    f = ImageFont.truetype(F_MONT, s)
+    f.set_variation_by_axes([w])
+    return f
+
+
 def tw(d, t, f):
     b = d.textbbox((0, 0), t, font=f)
     return b[2] - b[0], b[3] - b[1], b[1]
@@ -68,7 +75,7 @@ def step(d, cy, num, lines):
     # badge
     bx, r = 150, 40
     d.ellipse([bx - r, cy - r, bx + r, cy + r], fill=BORDO)
-    fn = font(F_MONT, 44)
+    fn = mont(44, 700)
     w, h, oy = tw(d, num, fn)
     d.text((bx - w // 2, cy - h // 2 - oy), num, font=fn, fill=CREMA)
     # text block (left aligned), vertically centered around cy
@@ -100,14 +107,14 @@ def main():
     img.paste(lg, ((W - lg.width) // 2, 66), lg)
 
     # eyebrow + título
-    cline(d, 250, "PASTELERÍA ARGENTINA · BARCELONA", font(F_MONT, 24), CARAMELO, ls=4)
+    cline(d, 250, "PASTELERÍA ARGENTINA · BARCELONA", mont(24, 600), CARAMELO, ls=4)
     cline(d, 296, "PEDÍ PARA EL PARTIDO", font(F_RYE, 60), BORDO)
     cline(d, 392, "Encargá con tiempo y disfrutá sin apuro", font(F_PLAY, 33), CACAO)
 
     divider(d, 470)
 
-    fT = font(F_MONT, 40)      # línea principal de paso
-    fS = font(F_MONT, 33)      # línea secundaria
+    fT = mont(40, 600)      # línea principal de paso
+    fS = mont(33, 500)      # línea secundaria
     step(d, 565, "1", [("Encargá con 24h de antelación", fT, BORDO)])
     step(d, 700, "2", [("Pedí por WhatsApp", fS, CACAO),
                        ("696 98 53 85", font(F_RYE, 56), BORDO)])
@@ -118,8 +125,8 @@ def main():
 
     divider(d, 1130)
     cline(d, 1175, "Sándwiches de miga · Empanadas · Tartas y más salado",
-          font(F_MONT, 27), CARAMELO)
-    cline(d, 1240, "@pasteleriamendieta", font(F_MONT, 34), BORDO)
+          mont(27, 500), CARAMELO)
+    cline(d, 1240, "@pasteleriamendieta", mont(34, 700), BORDO)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     img.save(OUT, quality=96)

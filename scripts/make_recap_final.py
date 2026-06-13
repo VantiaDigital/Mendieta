@@ -45,13 +45,19 @@ def font(p, s):
     return ImageFont.truetype(p, s)
 
 
-def cline(d, y, t, f, fill, sh=True):
-    b = d.textbbox((0, 0), t, font=f)
+def mont(s, w=700):
+    """Montserrat es variable (default Thin 100). Forzamos peso real."""
+    f = ImageFont.truetype(F_MONT, s)
+    f.set_variation_by_axes([w])
+    return f
+
+
+def cline(d, y, t, f, fill, stroke=5, scol=(16, 9, 5)):
+    b = d.textbbox((0, 0), t, font=f, stroke_width=stroke)
     x = (W - (b[2] - b[0])) // 2 - b[0]
-    if sh:
-        for off in ((3, 4), (2, 2)):
-            d.text((x + off[0], y + off[1]), t, font=f, fill=(0, 0, 0, 230))
-    d.text((x, y), t, font=f, fill=fill)
+    # sombra suave + contorno -> legible sobre cualquier foto
+    d.text((x + 2, y + 4), t, font=f, fill=(0, 0, 0, 150), stroke_width=stroke, stroke_fill=(0, 0, 0, 150))
+    d.text((x, y), t, font=f, fill=fill, stroke_width=stroke, stroke_fill=scol)
 
 
 def render_sprite(draw_fn):
@@ -66,38 +72,38 @@ def render_sprite(draw_fn):
 
 
 def block_header(d):
-    cline(d, 372, "·  MENDIETA  ·", font(F_MONT, 34), MOSTAZA)
-    cline(d, 432, "PEDÍ PARA", font(F_RYE, 82), CREMA)
-    cline(d, 540, "EL PARTIDO", font(F_RYE, 82), CREMA)
+    cline(d, 368, "·  MENDIETA  ·", mont(36, 700), MOSTAZA, stroke=3)
+    cline(d, 430, "PEDÍ PARA", font(F_RYE, 84), CREMA, stroke=6)
+    cline(d, 540, "EL PARTIDO", font(F_RYE, 84), CREMA, stroke=6)
 
 
 def block_24h(d):
     t = "Encargá con 24h de antelación"
-    fp = font(F_MONT, 38)
+    fp = mont(40, 700)
     b = d.textbbox((0, 0), t, font=fp); tw = b[2] - b[0]
-    pw = tw + 104; px = (W - pw) // 2; y = 690
-    d.rounded_rectangle([px + 4, y + 5, px + pw + 4, y + 97], radius=47, fill=(0, 0, 0, 120))
-    d.rounded_rectangle([px, y, px + pw, y + 92], radius=47, fill=MOSTAZA)
+    pw = tw + 110; px = (W - pw) // 2; y = 688
+    d.rounded_rectangle([px + 4, y + 5, px + pw + 4, y + 99], radius=49, fill=(0, 0, 0, 130))
+    d.rounded_rectangle([px, y, px + pw, y + 94], radius=49, fill=MOSTAZA)
     d.text(((W - tw) // 2, y + 25), t, font=fp, fill=CACAO)
 
 
 def block_wpp(d):
-    cline(d, 838, "Pedí por WhatsApp", font(F_MONT, 42), CREMA)
-    cline(d, 895, "696 98 53 85", font(F_RYE, 92), CREMA)
+    cline(d, 836, "Pedí por WhatsApp", mont(44, 700), CREMA, stroke=5)
+    cline(d, 894, "696 98 53 85", font(F_RYE, 98), CREMA, stroke=6)
 
 
 def block_pago(d):
-    cline(d, 1105, "Pago por Bizum o", font(F_MONT, 46), CREMA)
-    cline(d, 1163, "transferencia bancaria", font(F_MONT, 46), CREMA)
+    cline(d, 1103, "Pago por Bizum o", mont(48, 700), CREMA, stroke=5)
+    cline(d, 1163, "transferencia bancaria", mont(48, 700), CREMA, stroke=5)
 
 
 def block_comprobante(d):
-    cline(d, 1290, "Confirmamos tu pedido", font(F_PLAY, 46), CREMA)
-    cline(d, 1352, "al recibir el comprobante", font(F_PLAY, 46), CREMA)
+    cline(d, 1288, "Confirmamos tu pedido", mont(44, 800), CREMA, stroke=5)
+    cline(d, 1350, "al recibir el comprobante", mont(40, 700), MOSTAZA, stroke=4)
 
 
 def block_arroba(d):
-    cline(d, 1505, "@pasteleriamendieta", font(F_MONT, 44), MOSTAZA)
+    cline(d, 1505, "@pasteleriamendieta", mont(46, 700), MOSTAZA, stroke=4)
 
 
 def eoc(u):
@@ -122,7 +128,7 @@ def main():
 
     DUR_IN = 0.52
     SCRIM_T0, SCRIM_T1 = 10.2, 15.3
-    SCRIM_A0, SCRIM_A1 = 95, 210
+    SCRIM_A0, SCRIM_A1 = 150, 228
 
     # bloques: t0, draw_fn, efecto, parámetros
     DEFS = [
@@ -194,7 +200,8 @@ def main():
     r = subprocess.run(
         [FF, "-y", "-i", str(SRC), "-framerate", str(FPS), "-i", str(TDIR / "f%04d.png"),
          "-filter_complex", fc, "-map", "[v]", "-an",
-         "-c:v", "libx264", "-preset", "slow", "-crf", "18", str(OUT)],
+         "-c:v", "libx264", "-preset", "slow", "-crf", "15",
+         "-x264-params", "aq-mode=3", str(OUT)],
         capture_output=True, text=True)
     if r.returncode != 0:
         print("FFMPEG ERROR\n", r.stderr[-1800:])
