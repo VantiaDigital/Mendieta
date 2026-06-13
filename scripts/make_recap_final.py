@@ -45,65 +45,70 @@ def font(p, s):
     return ImageFont.truetype(p, s)
 
 
-def ctext(d, y, t, f, fill):
+def cline(d, y, t, f, fill, sh=True):
     b = d.textbbox((0, 0), t, font=f)
-    w = b[2] - b[0]
-    x = (W - w) // 2
-    for off in ((3, 4), (2, 2)):
-        d.text((x + off[0], y + off[1]), t, font=f, fill=(0, 0, 0, 220))
+    x = (W - (b[2] - b[0])) // 2 - b[0]
+    if sh:
+        for off in ((3, 4), (2, 2)):
+            d.text((x + off[0], y + off[1]), t, font=f, fill=(0, 0, 0, 230))
     d.text((x, y), t, font=f, fill=fill)
 
 
-def scrim(d):
-    for y in range(H - 840, H):
-        u = (y - (H - 840)) / 840
-        a = int(232 * (u ** 1.45))
-        d.line([(0, y), (W, y)], fill=(22, 12, 7, a))
+def render_sprite(draw_fn):
+    """Dibuja el bloque en un lienzo full y lo recorta. Devuelve (sprite, centro)."""
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    draw_fn(ImageDraw.Draw(img))
+    bb = img.getbbox()
+    sp = img.crop(bb)
+    cx = (bb[0] + bb[2]) / 2
+    cy = (bb[1] + bb[3]) / 2
+    return sp, (cx, cy)
 
 
-def pill(d, y, t, fs=38):
-    fp = font(F_MONT, fs)
-    b = d.textbbox((0, 0), t, font=fp)
-    tw = b[2] - b[0]
-    pw = tw + 104
-    px = (W - pw) // 2
+def block_header(d):
+    cline(d, 372, "·  MENDIETA  ·", font(F_MONT, 34), MOSTAZA)
+    cline(d, 432, "PEDÍ PARA", font(F_RYE, 82), CREMA)
+    cline(d, 540, "EL PARTIDO", font(F_RYE, 82), CREMA)
+
+
+def block_24h(d):
+    t = "Encargá con 24h de antelación"
+    fp = font(F_MONT, 38)
+    b = d.textbbox((0, 0), t, font=fp); tw = b[2] - b[0]
+    pw = tw + 104; px = (W - pw) // 2; y = 690
     d.rounded_rectangle([px + 4, y + 5, px + pw + 4, y + 97], radius=47, fill=(0, 0, 0, 120))
     d.rounded_rectangle([px, y, px + pw, y + 92], radius=47, fill=MOSTAZA)
     d.text(((W - tw) // 2, y + 25), t, font=fp, fill=CACAO)
 
 
-# --- contenido de cada título (a opacidad plena; el fade se aplica después) ---
-def title_A():
-    img = Image.new("RGBA", (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(img); scrim(d)
-    ctext(d, 1330, "·  MENDIETA  ·", font(F_MONT, 34), MOSTAZA)
-    ctext(d, 1400, "Pedí para el partido", font(F_PLAY, 66), CREMA)
-    return img
+def block_wpp(d):
+    cline(d, 838, "Pedí por WhatsApp", font(F_MONT, 42), CREMA)
+    cline(d, 895, "696 98 53 85", font(F_RYE, 92), CREMA)
 
 
-def title_B():
-    img = Image.new("RGBA", (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(img); scrim(d)
-    ctext(d, 1335, "Encargá con tiempo", font(F_PLAY, 60), CREMA)
-    pill(d, 1430, "24h de antelación")
-    return img
+def block_pago(d):
+    cline(d, 1105, "Pago por Bizum o", font(F_MONT, 46), CREMA)
+    cline(d, 1163, "transferencia bancaria", font(F_MONT, 46), CREMA)
 
 
-def title_C():
-    img = Image.new("RGBA", (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(img); scrim(d)
-    ctext(d, 1360, "Hacé tu pedido", font(F_PLAY, 60), CREMA)
-    ctext(d, 1440, "por WhatsApp", font(F_RYE, 78), MOSTAZA)
-    return img
+def block_comprobante(d):
+    cline(d, 1290, "Confirmamos tu pedido", font(F_PLAY, 46), CREMA)
+    cline(d, 1352, "al recibir el comprobante", font(F_PLAY, 46), CREMA)
 
 
-def title_D():
-    img = Image.new("RGBA", (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(img); scrim(d)
-    ctext(d, 1300, "WhatsApp", font(F_MONT, 44), CREMA)
-    ctext(d, 1360, "696 98 53 85", font(F_RYE, 104), CREMA)
-    ctext(d, 1515, "@pasteleriamendieta", font(F_MONT, 42), MOSTAZA)
-    return img
+def block_arroba(d):
+    cline(d, 1505, "@pasteleriamendieta", font(F_MONT, 44), MOSTAZA)
 
 
-# ventanas en timeline FINAL (source - SHIFT). Source: A 11.7-13.5, B 13.7-15.3,
-# C 15.5-17.2, D 17.4-fin
+def eoc(u):
+    return 1 - (1 - u) ** 3
+
+
+def eob(u):
+    c1 = 1.70158; c3 = c1 + 1
+    return 1 + c3 * (u - 1) ** 3 + c1 * (u - 1) ** 2
+
+
 def src_dur():
     r = subprocess.run([FP, "-v", "error", "-show_entries", "format=duration",
                         "-of", "default=nw=1:nk=1", str(SRC)], capture_output=True, text=True)
@@ -115,41 +120,68 @@ def main():
     final_dur = CHAT_IN + (CHAT_OUT - CHAT_IN) / SPEED + (sd - CHAT_OUT)
     N = int(round(final_dur * FPS))
 
-    def fin(s):  # source time -> final time
-        return s - SHIFT
+    DUR_IN = 0.52
+    SCRIM_T0, SCRIM_T1 = 10.2, 15.3
+    SCRIM_A0, SCRIM_A1 = 95, 210
 
-    TITLES = [
-        (fin(11.75), fin(13.45), title_A()),
-        (fin(13.70), fin(15.30), title_B()),
-        (fin(15.55), fin(17.15), title_C()),
-        (fin(17.35), final_dur, title_D()),
+    # bloques: t0, draw_fn, efecto, parámetros
+    DEFS = [
+        (10.40, block_header, "pop", 0.80),
+        (11.30, block_24h, "left", -190),
+        (12.30, block_wpp, "pop", 0.80),
+        (13.50, block_pago, "right", 190),
+        (14.70, block_comprobante, "left", -190),
+        (15.90, block_arroba, "rise", 70),
     ]
-    FADE = 0.32
+    BLOCKS = []
+    for t0, fn, fx, p in DEFS:
+        sp, c = render_sprite(fn)
+        BLOCKS.append({"t0": t0, "sp": sp, "c": c, "fx": fx, "p": p})
 
-    # frame transparente reutilizable para los tramos sin título
     blank = TDIR / "_blank.png"
     Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(blank)
 
     for f in range(N):
         t = f / FPS
-        active = None
-        for (t0, t1, ov) in TITLES:
-            if t0 - FADE <= t <= t1 + 0.05:
-                fo = FADE if t1 < final_dur - 0.1 else 0.0   # D no hace fade-out
-                a_in = min(1.0, max(0.0, (t - t0) / FADE)) if t >= t0 else 0.0
-                a_in = min(1.0, max(0.0, (t - (t0 - FADE)) / FADE))
-                a_out = 1.0 if fo == 0 else min(1.0, max(0.0, (t1 - t) / fo))
-                a = max(0.0, min(a_in, a_out))
-                if a > 0:
-                    active = (ov, a)
-                break
-        dst = TDIR / f"f{f:04d}.png"
-        if active is None:
-            shutil.copyfile(blank, dst)
-        else:
-            ov, a = active
-            al = ov.split()[3].point(lambda p: int(p * a))
-            Image.merge("RGBA", (*ov.split()[:3], al)).save(dst)
+        if t < SCRIM_T0 - 0.05:
+            shutil.copyfile(blank, TDIR / f"f{f:04d}.png")
+            continue
+
+        frame = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        # panel oscuro que crece -> va cubriendo la pantalla
+        sp_ramp = min(1.0, max(0.0, (t - SCRIM_T0) / (SCRIM_T1 - SCRIM_T0)))
+        pa = int(SCRIM_A0 + (SCRIM_A1 - SCRIM_A0) * eoc(sp_ramp))
+        if pa > 0:
+            frame.alpha_composite(Image.new("RGBA", (W, H), (20, 11, 6, pa)))
+
+        for blk in BLOCKS:
+            if t < blk["t0"]:
+                continue
+            u = min(1.0, (t - blk["t0"]) / DUR_IN)
+            a = eoc(u)
+            ox = oy = 0.0
+            sc = 1.0
+            if blk["fx"] == "pop":
+                sc = blk["p"] + (1 - blk["p"]) * eob(u)
+            elif blk["fx"] == "left":
+                ox = blk["p"] * (1 - eob(u))
+            elif blk["fx"] == "right":
+                ox = blk["p"] * (1 - eob(u))
+            elif blk["fx"] == "rise":
+                oy = blk["p"] * (1 - eob(u))
+
+            sp = blk["sp"]; cx, cy = blk["c"]
+            if abs(sc - 1.0) > 0.01:
+                nw = max(1, int(sp.width * sc)); nh = max(1, int(sp.height * sc))
+                sp = sp.resize((nw, nh), Image.LANCZOS)
+            if a < 1.0:
+                al = sp.split()[3].point(lambda p: int(p * a))
+                sp = Image.merge("RGBA", (*sp.split()[:3], al))
+            px = int(round(cx + ox - sp.width / 2))
+            py = int(round(cy + oy - sp.height / 2))
+            frame.alpha_composite(sp, (px, py))
+
+        frame.save(TDIR / f"f{f:04d}.png")
 
     # retiming + overlay del track de títulos (image2 sequence)
     fc = (
