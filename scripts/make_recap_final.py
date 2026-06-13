@@ -129,7 +129,7 @@ def main():
 
     DUR_IN = 0.52
     SCRIM_T0, SCRIM_T1 = 10.2, 14.9
-    SCRIM_A0, SCRIM_A1 = 150, 228
+    SCRIM_A0, SCRIM_A1 = 70, 120
 
     # bloques: t0, draw_fn, efecto, parámetros
     DEFS = [
