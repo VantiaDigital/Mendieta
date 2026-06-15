@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw, ImageFont
 BASE = Path(__file__).resolve().parent.parent
 LOGO = BASE / "assets" / "brand" / "logos" / "mendieta-perro-tinta.png"
 OUT = BASE / "assets" / "brand" / "templates" / "pedidos-detalles-post.png"
-OUT2 = Path(r"C:/Users/facun/Documentos/Mendieta/reel-mundial/editados/pedidos-detalles-post.png")
+OUT2 = Path(r"C:/Users/facun/Documentos/Mendieta/reel-mundial/FINAL/pedidos-detalles-post.png")
 
 W, H = 1080, 1350
 CREMA = (251, 244, 198)

@@ -13,7 +13,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 FF = r"C:/Users/facun/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.1-full_build/bin/ffmpeg.exe"
-SRC = Path(r"C:/Users/facun/Documentos/Mendieta")
+SRC = Path(r"C:/Users/facun/Documentos/Mendieta/1-material-bruto")
 LARA = Path(r"C:/Users/facun/AppData/Local/Temp/mendieta-mundial/lara")
 WORK = Path(r"C:/Users/facun/AppData/Local/Temp/mendieta-mundial/build")
 WORK.mkdir(parents=True, exist_ok=True)

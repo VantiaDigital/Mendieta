@@ -21,10 +21,12 @@ from PIL import Image, ImageDraw, ImageFont
 
 FF = r"C:/Users/facun/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.1-full_build/bin/ffmpeg.exe"
 FP = r"C:/Users/facun/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.1-full_build/bin/ffprobe.exe"
-D = Path(r"C:/Users/facun/Documentos/Mendieta/reel-mundial/editados")
+D = Path(r"C:/Users/facun/Documentos/Mendieta/reel-mundial/editados")   # fuente + intermedios
+FINAL = Path(r"C:/Users/facun/Documentos/Mendieta/reel-mundial/FINAL")  # entregables para subir
+FINAL.mkdir(parents=True, exist_ok=True)
 SRC = D / "Video para celular recap aesthetic gris.mp4"
-OUT = D / "recap-mundial-final.mp4"          # 9:16 (Reel)
-OUT45 = D / "recap-mundial-carrusel.mp4"     # 4:5 (carrusel de feed)
+OUT = FINAL / "recap-mundial-final.mp4"          # 9:16 (Reel)
+OUT45 = FINAL / "recap-mundial-carrusel.mp4"     # 4:5 (carrusel de feed)
 TDIR = Path(r"C:/Users/facun/AppData/Local/Temp/mendieta-mundial/recap/titles")
 TDIR.mkdir(parents=True, exist_ok=True)
 

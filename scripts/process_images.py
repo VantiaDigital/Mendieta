@@ -13,7 +13,7 @@ Salida: assets/images/photos/*.jpg
 from PIL import Image, ImageOps, ImageEnhance
 from pathlib import Path
 
-SRC = Path(r"C:/Users/facun/Documentos/Mendieta")
+SRC = Path(r"C:/Users/facun/Documentos/Mendieta/1-material-bruto")
 DST = Path(__file__).resolve().parent.parent / "assets" / "images" / "photos"
 DST.mkdir(parents=True, exist_ok=True)
 
