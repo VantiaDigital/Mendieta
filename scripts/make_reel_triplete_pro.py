@@ -146,11 +146,10 @@ def main():
     dbg = dark_bg()
     # foto entera IMG_1364 (fondo claro original tal cual), grande, card redondeada con sombra
     src = Image.open(TILESRC).convert("RGB")
-    cwd = 1020; crop = src.resize((cwd, int(src.height * cwd / src.width)), Image.LANCZOS)
+    cwd = 1180; crop = src.resize((cwd, int(src.height * cwd / src.width)), Image.LANCZOS)
     crop = ImageEnhance.Color(crop).enhance(1.06); crop = ImageEnhance.Contrast(crop).enhance(1.04)
-    mk = Image.new("L", crop.size, 0); ImageDraw.Draw(mk).rounded_rectangle([0, 0, crop.width, crop.height], radius=30, fill=255)
-    card = Image.new("RGBA", crop.size, (0, 0, 0, 0)); card.paste(crop, (0, 0), mk)
-    cx = W // 2; CARD_Y = 1015; CARD_T0 = 4.0
+    card = crop.convert("RGBA")   # foto a sangre: ancho completo, sale un poco por los lados
+    cx = W // 2; CARD_Y = 1010; CARD_T0 = 4.0
 
     n = int(DUR*FPS)
     for k in range(n):
@@ -183,7 +182,7 @@ def main():
                 fa = 1.0
                 if t > 6.6: fa = max(0.0, (7.0-t)/0.4)
                 cl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-                caption(cl, ["Que un triplete", "de Mendieta"], 470, F_RYE, t, 3.95, scrim=False)
+                caption(cl, ["Que un triplete", "de Mendieta"], 410, F_RYE, t, 3.95, scrim=False)
                 if fa < 1.0: cl.putalpha(cl.split()[3].point(lambda v: int(v*fa)))
                 lay = Image.alpha_composite(lay, cl)
             frame = Image.alpha_composite(frame, lay)
