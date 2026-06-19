@@ -144,14 +144,13 @@ def main():
     flagframes = extract_flag(); nf = len(flagframes)
     flag_cache = [ImageEnhance.Brightness(Image.open(p).convert("RGB")).enhance(0.72) for p in flagframes]
     dbg = dark_bg()
-    # foto real de los 3 sándwiches (recorte de IMG_1364), card redondeada con sombra
-    src = Image.open(TILESRC).convert("RGB"); Wp, Hp = src.size
-    crop = src.crop((int(.03 * Wp), int(.33 * Hp), int(.97 * Wp), int(.90 * Hp)))
-    cwd = 800; crop = crop.resize((cwd, int(crop.height * cwd / crop.width)), Image.LANCZOS)
-    crop = ImageEnhance.Color(crop).enhance(1.08); crop = ImageEnhance.Contrast(crop).enhance(1.05)
-    mk = Image.new("L", crop.size, 0); ImageDraw.Draw(mk).rounded_rectangle([0, 0, crop.width, crop.height], radius=34, fill=255)
+    # foto entera IMG_1364 (fondo claro original tal cual), grande, card redondeada con sombra
+    src = Image.open(TILESRC).convert("RGB")
+    cwd = 1020; crop = src.resize((cwd, int(src.height * cwd / src.width)), Image.LANCZOS)
+    crop = ImageEnhance.Color(crop).enhance(1.06); crop = ImageEnhance.Contrast(crop).enhance(1.04)
+    mk = Image.new("L", crop.size, 0); ImageDraw.Draw(mk).rounded_rectangle([0, 0, crop.width, crop.height], radius=30, fill=255)
     card = Image.new("RGBA", crop.size, (0, 0, 0, 0)); card.paste(crop, (0, 0), mk)
-    cx = W // 2; CARD_Y = 1120; CARD_T0 = 4.0
+    cx = W // 2; CARD_Y = 1015; CARD_T0 = 4.0
 
     n = int(DUR*FPS)
     for k in range(n):
@@ -188,10 +187,10 @@ def main():
                 if fa < 1.0: cl.putalpha(cl.split()[3].point(lambda v: int(v*fa)))
                 lay = Image.alpha_composite(lay, cl)
             frame = Image.alpha_composite(frame, lay)
-            # foto real de los 3 sándwiches: fade-in + zoom sutil (sin caída)
+            # foto entera: fade-in + zoom sutil
             if t >= CARD_T0:
                 a = min(1.0, (t-CARD_T0)/0.5)
-                z = 1.0 + 0.045*min(1.0, (t-CARD_T0)/3.0)
+                z = 1.0 + 0.028*min(1.0, (t-CARD_T0)/3.0)
                 sp = card.resize((int(card.width*z), int(card.height*z)), Image.LANCZOS)
                 paste_shadow(frame, sp, cx, CARD_Y, 0, alpha=a)
 
