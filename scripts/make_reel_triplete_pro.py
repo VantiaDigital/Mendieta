@@ -144,14 +144,14 @@ def main():
     flagframes = extract_flag(); nf = len(flagframes)
     flag_cache = [ImageEnhance.Brightness(Image.open(p).convert("RGB")).enhance(0.72) for p in flagframes]
     dbg = dark_bg()
-    A = M / "6 partido-austria" / "assets"
-    sangs = []   # 3 sándwiches reales recortados, de atrás hacia adelante
-    for name, w in [("sang-c", 600), ("sang-b", 580), ("sang-a", 630)]:
-        im = Image.open(A / (name + ".png")).convert("RGBA"); sc = w / im.width
-        sangs.append(im.resize((w, int(im.height * sc)), Image.LANCZOS))
-    cx = W//2
-    s_dest = [(cx-18, 1085, -5), (cx+48, 1150, 6), (cx-30, 1215, -3)]
-    s_start = [4.05, 4.95, 5.85]; SFALL = 0.62; SFROM = 720
+    # foto real de los 3 sándwiches (recorte de IMG_1364), card redondeada con sombra
+    src = Image.open(TILESRC).convert("RGB"); Wp, Hp = src.size
+    crop = src.crop((int(.03 * Wp), int(.33 * Hp), int(.97 * Wp), int(.90 * Hp)))
+    cwd = 800; crop = crop.resize((cwd, int(crop.height * cwd / crop.width)), Image.LANCZOS)
+    crop = ImageEnhance.Color(crop).enhance(1.08); crop = ImageEnhance.Contrast(crop).enhance(1.05)
+    mk = Image.new("L", crop.size, 0); ImageDraw.Draw(mk).rounded_rectangle([0, 0, crop.width, crop.height], radius=34, fill=255)
+    card = Image.new("RGBA", crop.size, (0, 0, 0, 0)); card.paste(crop, (0, 0), mk)
+    cx = W // 2; CARD_Y = 1120; CARD_T0 = 4.0
 
     n = int(DUR*FPS)
     for k in range(n):
@@ -188,11 +188,12 @@ def main():
                 if fa < 1.0: cl.putalpha(cl.split()[3].point(lambda v: int(v*fa)))
                 lay = Image.alpha_composite(lay, cl)
             frame = Image.alpha_composite(frame, lay)
-            # sándwiches cayendo de a uno
-            for sp, (dx, dy, ang), st in zip(sangs, s_dest, s_start):
-                if t < st: continue
-                u = min(1.0, (t-st)/SFALL); y = SFROM+(dy-SFROM)*bounce(u)
-                paste_shadow(frame, sp, dx, y, ang, alpha=min(1.0, (t-st)/0.12))
+            # foto real de los 3 sándwiches: fade-in + zoom sutil (sin caída)
+            if t >= CARD_T0:
+                a = min(1.0, (t-CARD_T0)/0.5)
+                z = 1.0 + 0.045*min(1.0, (t-CARD_T0)/3.0)
+                sp = card.resize((int(card.width*z), int(card.height*z)), Image.LANCZOS)
+                paste_shadow(frame, sp, cx, CARD_Y, 0, alpha=a)
 
         # ---- CTA ----
         if t >= 7.2:
