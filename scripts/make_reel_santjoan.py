@@ -84,7 +84,8 @@ def main():
         {"photo": REC / "coca2.png", "lines": ["De crema, llardons", "o fruta confitada"]},
         {"photo": REC / "coca1.png", "lines": ["Hacé tu pedido,", "no te quedes sin la tuya"]},
         {"photo": REC / "coca2.png", "lines": ["Encargá con 24h de antelación"],
-         "eyebrow": "SANT JOAN · 23 DE JUNIO", "phone": "WhatsApp 696 98 53 85", "last": True},
+         "eyebrow": "SANT JOAN · 23 DE JUNIO", "phone": "WhatsApp 696 98 53 85",
+         "note": "Pagá con Bizum o transferencia", "last": True},
     ]
 
     fidx = 0
@@ -106,8 +107,10 @@ def main():
             ys.append(yy); yy += h + gl
 
         eyebrow = b.get("eyebrow"); phone = b.get("phone"); last = b.get("last", False)
+        note = b.get("note")
         feb = mont(34, 600) if eyebrow else None
         fp = ImageFont.truetype(F_RYE, 84) if phone else None
+        fnote = mont(40, 600) if note else None
 
         # tiempos de tipeo por línea
         starts = []; t_acc = 0.0
@@ -145,6 +148,10 @@ def main():
                 wp = d.textlength(phone, font=fp); yp = ys[-1] + hts[-1] + 64
                 pl = Image.new("RGBA", (W, H), (0, 0, 0, 0)); dp = ImageDraw.Draw(pl)
                 dp.text(((W - wp) // 2, yp), phone, font=fp, fill=CREMA, stroke_width=5, stroke_fill=SHADOW)
+                if note:
+                    wn = dp.textlength(note, font=fnote)
+                    yn = yp + fp.getmetrics()[0] + fp.getmetrics()[1] + 28
+                    dp.text(((W - wn) // 2, yn), note, font=fnote, fill=CREMA, stroke_width=4, stroke_fill=SHADOW)
                 pl.putalpha(pl.split()[3].point(lambda v: int(v * pa)))
                 layer = Image.alpha_composite(layer, pl)
             if a < 1.0:
