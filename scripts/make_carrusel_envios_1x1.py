@@ -109,11 +109,12 @@ def slide1():
     cline(d, 604, "Pago por anticipado", mont(34, 700), BORDO)
     cline(d, 652, "Bizum o transferencia inmediata", mont(30, 600), CACAO)
     divider(d, 726)
-    cline(d, 760, "ENVÍOS", mont(26, 700), MOSTAZA, ls=5)
-    cline(d, 812, "A domicilio según tu zona", mont(36, 600), BORDO)
-    cline(d, 866, "o retirá en tienda · Mallorca 517, BCN", mont(30, 600), BORDO)
-    pill(d, 932, "Deslizá para ver tu zona y precio  →", mont(28, 700), MOSTAZA, CACAO, pad=40, h=62)
-    cline(d, 1018, "@pasteleriamendieta", mont(30, 700), BORDO)
+    cline(d, 752, "ENVÍOS", mont(26, 700), MOSTAZA, ls=5)
+    cline(d, 802, "A domicilio según tu zona o retirá en tienda", mont(32, 600), BORDO)
+    cline(d, 848, "Mallorca 517, Barcelona", mont(28, 500), CACAO)
+    cline(d, 896, "+2€ de recogida · suplemento por express o lluvia", mont(23, 600), CARAMELO)
+    pill(d, 942, "Deslizá para ver tu zona y precio  →", mont(27, 700), MOSTAZA, CACAO, pad=36, h=56)
+    cline(d, 1022, "@pasteleriamendieta", mont(30, 700), BORDO)
     return img
 
 
@@ -124,6 +125,7 @@ def slide_zones(za, zb, last=False):
     divider(d, max(232+136+((len(ZONAS[za][2])+1)//2)*40+22, 600))
     zb_y = max(232+136+((len(ZONAS[za][2])+1)//2)*40+58, 636)
     zone_block(d, zb_y, zb, *ZONAS[zb])
+    cline(d, 980, "Precios + 2€ recogida · suplemento express +50% / lluvia +30%", mont(21, 600), CARAMELO)
     foot = "¿No ves tu código? Escribinos por WhatsApp" if last else "Seguí deslizando  →"
     cline(d, 1024, foot, mont(26, 600), CARAMELO)
     return img
