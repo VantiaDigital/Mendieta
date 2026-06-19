@@ -75,7 +75,8 @@ def main():
     cline(d, 492, "Encargá con 24h de antelación", mont(40, 600), BORDO)
     cline(d, 560, "Pedí por WhatsApp", mont(34, 500), CACAO)
     cline(d, 606, "696 98 53 85", font(F_RYE, 66), BORDO)
-    cline(d, 712, "Pago: Bizum, transferencia o en tienda", mont(34, 600), BORDO)
+    cline(d, 700, "Pago por anticipado", mont(36, 700), BORDO)
+    cline(d, 752, "Bizum o transferencia inmediata", mont(34, 600), CACAO)
 
     divider(d, 800)
 
@@ -85,9 +86,8 @@ def main():
     cline(d, 962, "o retirá en tienda · Mallorca 517, BCN", mont(36, 600), BORDO)
     cline(d, 1024, "Consultá tu zona por WhatsApp", font(F_PLAY, 34), CACAO)
 
-    divider(d, 1118)
-    cline(d, 1162, "Sándwiches de miga · Empanadas · Tartas y más", mont(26, 500), CARAMELO)
-    cline(d, 1224, "@pasteleriamendieta", mont(34, 700), BORDO)
+    divider(d, 1130)
+    cline(d, 1188, "@pasteleriamendieta", mont(36, 700), BORDO)
 
     OUT.parent.mkdir(parents=True, exist_ok=True); img.save(OUT, quality=96)
     OUT2.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(OUT, OUT2)

@@ -85,12 +85,11 @@ def main():
     fT = mont(40, 600); fS = mont(33, 500)
     step(d, 565, "1", [("Encargá con 24h de antelación", fT, BORDO)])
     step(d, 700, "2", [("Pedí por WhatsApp", fS, CACAO), ("696 98 53 85", font(F_RYE, 56), BORDO)])
-    step(d, 858, "3", [("Pagá por Bizum o", fT, BORDO), ("transferencia bancaria", fT, BORDO)])
+    step(d, 858, "3", [("Pago por anticipado", fT, BORDO), ("Bizum o transferencia inmediata", fS, CACAO)])
     step(d, 1010, "4", [("Mandá el comprobante", fT, BORDO), ("y confirmamos tu pedido", fS, CACAO)])
 
-    divider(d, 1130)
-    cline(d, 1175, "Sándwiches de miga · Empanadas · Tartas y más salado", mont(27, 500), CARAMELO)
-    cline(d, 1240, "@pasteleriamendieta", mont(34, 700), BORDO)
+    divider(d, 1135)
+    cline(d, 1192, "@pasteleriamendieta", mont(36, 700), BORDO)
 
     OUT.parent.mkdir(parents=True, exist_ok=True); img.save(OUT, quality=96)
     OUT2.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(OUT, OUT2)
