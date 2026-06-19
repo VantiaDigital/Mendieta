@@ -143,10 +143,15 @@ def scoreboard(layer, t, t0):
 def main():
     flagframes = extract_flag(); nf = len(flagframes)
     flag_cache = [ImageEnhance.Brightness(Image.open(p).convert("RGB")).enhance(0.72) for p in flagframes]
-    dbg = dark_bg(); tile = make_tile()
+    dbg = dark_bg()
+    A = M / "6 partido-austria" / "assets"
+    sangs = []   # 3 sándwiches reales recortados, de atrás hacia adelante
+    for name, w in [("sang-c", 600), ("sang-b", 580), ("sang-a", 630)]:
+        im = Image.open(A / (name + ".png")).convert("RGBA"); sc = w / im.width
+        sangs.append(im.resize((w, int(im.height * sc)), Image.LANCZOS))
     cx = W//2
-    s_dest = [(cx-34, 1240, -6), (cx+50, 1175, 6), (cx-6, 1120, -3)]
-    s_start = [4.05, 4.85, 5.65]; SFALL = 0.62; SFROM = 740
+    s_dest = [(cx-18, 1085, -5), (cx+48, 1150, 6), (cx-30, 1215, -3)]
+    s_start = [4.05, 4.95, 5.85]; SFALL = 0.62; SFROM = 720
 
     n = int(DUR*FPS)
     for k in range(n):
@@ -184,10 +189,10 @@ def main():
                 lay = Image.alpha_composite(lay, cl)
             frame = Image.alpha_composite(frame, lay)
             # sándwiches cayendo de a uno
-            for (dx, dy, ang), st in zip(s_dest, s_start):
+            for sp, (dx, dy, ang), st in zip(sangs, s_dest, s_start):
                 if t < st: continue
                 u = min(1.0, (t-st)/SFALL); y = SFROM+(dy-SFROM)*bounce(u)
-                paste_shadow(frame, tile, dx, y, ang, alpha=min(1.0, (t-st)/0.12))
+                paste_shadow(frame, sp, dx, y, ang, alpha=min(1.0, (t-st)/0.12))
 
         # ---- CTA ----
         if t >= 7.2:
@@ -200,7 +205,7 @@ def main():
             cc(1528, "Encargá con 24h · pago por anticipado", mont(32, 700), CREMA)
             cc(1584, "WhatsApp", mont(36, 700), MOSTAZA)
             cc(1632, "696 98 53 85", ImageFont.truetype(F_RYE, 80), CREMA)
-            cc(1742, "Bizum o transferencia · @pasteleriamendieta", mont(29, 600), CREMA)
+            cc(1742, "Bizum o transferencia", mont(29, 600), CREMA)
             if a < 1.0: lay.putalpha(lay.split()[3].point(lambda v: int(v*a)))
             frame = Image.alpha_composite(frame, lay)
 
