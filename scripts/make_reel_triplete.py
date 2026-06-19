@@ -132,30 +132,49 @@ def main():
         fr = Image.alpha_composite(fr, ov)
         write(fr)
 
-    # ---------- Escena 2: marcador "ARGENTINA 3" ----------
-    n = int(2.2 * FPS)
+    # ---------- Escena 2: marcador animado (letras caen + goles 0->1->2->3) ----------
+    FROM_Y = -220
+    f_name = mont(54, 800); f_dig = mont(150, 800); f_eyeb = mont(30, 700); f_trip = mont(64, 800)
+    NAMES_Y = 820; SCORE_Y = 940; CX = W // 2
+    goals = [1.65, 2.25, 2.85]
+    n = int(4.7 * FPS)
+
+    def fy(rest, delay, t, dur=0.5):
+        if t <= delay: return FROM_Y
+        u = min(1.0, (t - delay) / dur)
+        return FROM_Y + (rest - FROM_Y) * bounce(u)
+
+    def word_fall(d, word, x0, rest_y, f, fill, t, t0, per=0.045):
+        x = x0
+        for i, ch in enumerate(word):
+            d.text((x, fy(rest_y, t0 + i * per, t)), ch, font=f, fill=fill)
+            x += d.textlength(ch, font=f)
+
     for k in range(n):
         t = k / FPS
         fr = Image.new("RGBA", (W, H), (*TINTA, 255)); d = ImageDraw.Draw(fr)
-        # franjas celestes arriba/abajo (guiño bandera)
         d.rectangle([0, 0, W, 70], fill=CELESTE); d.rectangle([0, H - 70, W, H], fill=CELESTE)
-        u = min(1.0, t / 0.45); e = eob(u)
-        # panel marcador
-        pw, ph = 820, 620; px = (W - pw) // 2; py = int(H / 2 - ph / 2)
-        panel = Image.new("RGBA", (W, H), (0, 0, 0, 0)); pd = ImageDraw.Draw(panel)
-        pd.rounded_rectangle([px, py, px + pw, py + ph], radius=40, fill=(248, 246, 240, 255))
-        pd.rounded_rectangle([px, py, px + pw, py + 96], radius=40, fill=BORDO)
-        pd.rectangle([px, py + 60, px + pw, py + 96], fill=BORDO)
-        ctext(pd, py + 26, "EL TRIPLETE DE LA SELECCIÓN", mont(30, 700), CREMA)
-        ctext(pd, py + 150, "ARGENTINA", mont(76, 800), BORDO)
-        ctext(pd, py + 250, "3", ImageFont.truetype(F_RYE, 240), CELESTE)
-        ctext(pd, py + 530, "· HAT-TRICK ·", mont(34, 700), CACAO)
-        sc = 0.7 + 0.3 * e
-        panel2 = panel.resize((int(W * sc), int(H * sc)), Image.LANCZOS)
-        ox = (W - panel2.width) // 2; oy = (H - panel2.height) // 2
-        ap = min(1.0, t / 0.3)
-        panel2.putalpha(panel2.split()[3].point(lambda v: int(v * ap)))
-        fr.alpha_composite(panel2, (ox, oy))
+        ctext(d, 700, "EL ÚLTIMO PARTIDO", f_eyeb, MOSTAZA)
+        # nombres (caen letra a letra)
+        word_fall(d, "ARGENTINA", 150, NAMES_Y, f_name, BLANCO, t, 0.0)
+        wadel = sum(d.textlength(c, font=f_name) for c in "ARGELIA")
+        word_fall(d, "ARGELIA", int(W - 150 - wadel), NAMES_Y, f_name, BLANCO, t, 0.45)
+        # guion + marcador derecha (caen)
+        dy = fy(SCORE_Y, 0.75, t); d.text((CX - d.textlength("-", font=f_dig) / 2, dy), "-", font=f_dig, fill=CREMA)
+        ry = fy(SCORE_Y, 0.85, t); d.text((CX + 150 - d.textlength("0", font=f_dig) / 2, ry), "0", font=f_dig, fill=CREMA)
+        # marcador Argentina: 0 al inicio, luego 1/2/3 (cada gol cae)
+        val = sum(1 for g in goals if t >= g)
+        last = 0.8
+        for g in goals:
+            if t >= g: last = g
+        ly = fy(SCORE_Y, last, t, dur=0.42)
+        ds = str(val); d.text((CX - 150 - d.textlength(ds, font=f_dig) / 2, ly), ds, font=f_dig, fill=CELESTE)
+        # ¡TRIPLETE! tras el 3er gol
+        if t >= goals[-1] + 0.45:
+            a = min(1.0, (t - goals[-1] - 0.45) / 0.4)
+            ov = Image.new("RGBA", (W, H), (0, 0, 0, 0)); od = ImageDraw.Draw(ov)
+            ctext(od, 1200, "¡TRIPLETE!", f_trip, MOSTAZA, sh=(0, 0, 0))
+            ov.putalpha(ov.split()[3].point(lambda v: int(v * a))); fr = Image.alpha_composite(fr, ov)
         write(fr)
 
     # ---------- Escena 3: "...que un triplete" + 3 sándwiches cayendo ----------
