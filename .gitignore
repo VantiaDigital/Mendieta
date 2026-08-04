@@ -5,3 +5,16 @@ node_modules/
 .vscode/
 .idea/
 *.log
+
+# Contenido de redes: vive en Clientes/Mendieta/, no aqui.
+# Este repo es SOLO la web; todo lo que entre aqui se publica en
+# mendieta.vantia.digital, y las piezas de redes no pintan nada ahi.
+scripts/make_reel_*.py
+scripts/make_story_*.py
+scripts/make_carrusel_*.py
+scripts/make_post_*.py
+scripts/make_fondo_*.py
+assets/brand/reels/
+assets/images/stories/
+*.mp4
+*.mov

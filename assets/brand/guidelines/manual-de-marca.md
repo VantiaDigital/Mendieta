@@ -111,23 +111,23 @@ Fondo Crema  +  Titular Bordó con filete (Rye)  +  Destello bordó
 
 Tres roles. Las tres están en Canva.
 
+Dos roles. Las dos están en el kit de Canva del cliente.
+
 | Rol | Fuente | Para qué |
 |---|---|---|
-| **Decorativa / firma** | **Rye** | Titulares con filete: BINGO, MEDIALUNAS, BARCELONA |
-| **Elegante** | **Playfair Display** | "Favoritos de Mendieta", subtítulos refinados |
-| **Cuerpo** | **Montserrat** | Párrafos, captions, info |
+| **Display / titular** | **Playfair Display** | Titulares: "SÁNDWICH DE MIGA", "CÓMO ENCARGARLOS" |
+| **Cuerpo** | **Montserrat** | Párrafos, listas, captions, info |
 
 ### Reglas de tipografía
-- **Máximo 2 fuentes por pieza** (una display + cuerpo). No mezcles Rye + Playfair
-  + Montserrat todas juntas.
-- **Rye** solo en MAYÚSCULAS y titulares cortos (3-4 palabras). En textos largos
-  es ilegible.
+- **Máximo 2 fuentes por pieza**: Playfair Display (display) + Montserrat (cuerpo).
+- **Playfair Display** en titulares cortos, normalmente en MAYÚSCULAS.
 - **Montserrat** para todo lo que se lea de corrido.
 - Jerarquía clara: titular grande → subtítulo medio → cuerpo chico.
 
-> La firma decorativa real del cliente puede ser una fuente exacta distinta a
-> Rye (Rye es la más parecida disponible en Canva). Si el cliente confirma el
-> nombre real, actualizar acá.
+> ⚠️ **Rye NO es la letra de Mendieta.** Figuraba acá como "la más parecida
+> disponible en Canva", pero era solo una aproximación y se coló como si fuera la
+> real en varias piezas. Facundo lo confirmó el 17/07/2026: la display del kit es
+> **Playfair Display**. No usar Rye en piezas de Mendieta.
 
 ---
 
