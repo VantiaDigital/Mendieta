@@ -4,5 +4,11 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
 
+# Un ano e "immutable" solo es seguro cuando el nombre del fichero cambia al
+# cambiar su contenido. Aqui los nombres son fijos, asi que si algo se publica
+# por error queda cacheado un ano y ni siquiera se revalida: paso con un reel
+# de 15 MB que siguio sirviendose despues de borrarlo del repo.
+# Un dia con revalidacion da practicamente el mismo rendimiento y permite
+# corregir un error el mismo dia.
 /assets/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, must-revalidate
