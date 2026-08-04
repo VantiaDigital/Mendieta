@@ -14,7 +14,10 @@ scripts/make_story_*.py
 scripts/make_carrusel_*.py
 scripts/make_post_*.py
 scripts/make_fondo_*.py
-assets/brand/reels/
-assets/images/stories/
-*.mp4
-*.mov
+assets/**/reels/
+assets/**/stories/
+assets/**/carruseles/
+scripts/make_video_*.py
+# Ojo: no se excluyen los .mp4 en bloque. Un video de fondo si es parte del
+# sitio (en Parrilleros lo es), asi que se excluyen las CARPETAS de piezas
+# de redes, no la extension.
